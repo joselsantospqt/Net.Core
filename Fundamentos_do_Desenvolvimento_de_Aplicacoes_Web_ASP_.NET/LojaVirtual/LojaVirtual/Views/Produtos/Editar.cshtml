@@ -1,0 +1,15 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model LojaVirtual.Models.Produto
+@{
+    ViewData["title"] = "Página Edição de Produtos";
+    var produto = Model;
+}
+
+<form action="/produtos/editar" method="post">
+    Identificador: <input name="id" value="@produto.Id" readonly />
+    nome: <input name="nome" value="@produto.Nome" />
+    preco: <input name="preco" value="@produto.Preco" />
+    <input type="submit" value="Salvar Alterações" />
+</form>

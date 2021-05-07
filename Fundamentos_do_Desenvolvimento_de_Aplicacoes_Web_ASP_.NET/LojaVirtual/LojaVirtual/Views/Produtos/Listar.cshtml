@@ -2,14 +2,18 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 
+@model List<LojaVirtual.Models.Produto>
 @{
-    @model List<LojaVirtual.Controllers.Produto>
     var listaDeProdutos = Model;
 }
 
 
-
 <h3>Lista de Produtos</h3>
+
+<form action="/produtos/listar" method="get">
+    <input typet="text" name="pesquisa" placeholder="Pesquisa" />
+    <input type="submit" value="Pesquisar" />
+</form>
 
 <table class="table">
     <thead>
@@ -17,6 +21,7 @@
             <th scope="col">#</th>
             <th scope="col">nome</th>
             <th scope="col">preço</th>
+            <th scope="col">*</th>
         </tr>
     </thead>
     <tbody>
@@ -27,6 +32,7 @@
                     <th scope="row">@listaDeProdutos.IndexOf(item)</th>
                     <td>@item.Nome</td>
                     <td>@item.Preco</td>
+                    <td><a href="/produtos/editar?Id=@item.Id">Editar</a> / <a href="/produtos/excluir?Id=@item.Id">Excluir</a></td>
                 </tr>
 
             }

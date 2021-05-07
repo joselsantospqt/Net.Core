@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using LojaVirtual.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,31 +12,55 @@ namespace LojaVirtual.Controllers
     {
 
         [HttpGet]
+        [Route("produtos/cadastrar")]
+        [Route("prod/cadastrar")]
         public ActionResult Cadastrar()
         {
             return View();
         }
 
         [HttpGet]
-        public ActionResult Listar()
+        [Route("produtos/listar")]
+        public ActionResult Listar(string pesquisa, string ordenarpelonome)
         {
-            GerenciadoDeProduto gerenciador = new GerenciadoDeProduto();
+            if (pesquisa != null)
+            {
+                var produtosPesquisados = produtos.Where(x => x.Nome == pesquisa).ToList();
+                return View(produtosPesquisados);
 
-            List<Produto> listaDeProdutos = gerenciador.ListarProdutos();
+            }
 
-            return View(listaDeProdutos);
+            if (ordenarpelonome == "asc")
+            {
+                return View(produtos.OrderBy(produto => produto.Nome).ToList());
+            }
+
+            return View(produtos);
         }
 
         [HttpPost]
         public ActionResult ExecutarCadastroDeProduto(String nome, decimal preco)
         {
+            Produto produto = new Produto();
+            produto.Nome = nome;
+            produto.Preco = preco;
+            produto.Id = produtos.Count + 1;
+            produtos.Add(produto);
 
-            GerenciadoDeProduto gerenciador = new GerenciadoDeProduto();
-
-            gerenciador.CadastrarProduto(nome, preco);
-
-            return RedirectToAction("ProdutoCadastrado");
+            return Redirect("/produtos/listar");
         }
+
+        static List<Produto> produtos = new List<Produto>();
+
+        //public ActionResult ExecutarCadastroDeProduto(String nome, decimal preco)
+        //{
+
+        //    GerenciadoDeProduto gerenciador = new GerenciadoDeProduto();
+
+        //    gerenciador.CadastrarProduto(nome, preco);
+
+        //    return RedirectToAction("ProdutoCadastrado");
+        //}
 
         [HttpGet]
         public ActionResult ProdutoCadastrado()
@@ -43,47 +68,45 @@ namespace LojaVirtual.Controllers
             return View();
         }
 
-    }
 
-
-    public class GerenciadoDeProduto
-    {
-        static List<Produto> listaDeProdutos = new List<Produto>();
-
-        public string CadastrarProduto(string nome, decimal preco)
+        [HttpGet]
+        [Route("produtos/editar")]
+        public ActionResult Editar(int id)
         {
-            //var vDados= (Produto)Session["Produtos"];
+            var produto = produtos.First(produto => produto.Id == id);
+            return View(produto);
+        }
 
-            Produto produto = new Produto();
+        [HttpPost]
+        [Route("produtos/editar")]
+        [Route("prod/editar")]
+        public ActionResult Editar(int id, string nome, decimal preco)
+        {
+            Produto produto = produtos.First(produto => produto.Id == id);
             produto.Nome = nome;
             produto.Preco = preco;
 
-            listaDeProdutos.Add(produto);
-
-            return "Produto Cadastrado";
-
+            return Redirect("/produtos/listar");
         }
 
-        public List<Produto> ListarProdutos()
+        [HttpGet]
+        [Route("produtos/excluir")]
+        public ActionResult ExcluirGet(int id)
         {
-
-            return listaDeProdutos;
-
+            var produto = produtos.First(produto => produto.Id == id);
+            return View("Excluir", produto);
         }
 
-        void AlterarProduto() { }
+        [HttpPost]
+        [Route("produtos/excluir")]
+        public ActionResult ExcluirPost(int id)
+        {
+            var produto = produtos.First(produto => produto.Id == id);
 
-        void ExcluirProduto() { }
+            produtos.Remove(produto);
 
-
+            return Redirect("/produtos/listar");
+        }
     }
-    public class ProdutoCadastrado { }
-
-    public class Produto { public string Nome; public decimal Preco; public int Quantidade; }
-
-    public class Contato { public string Nome; public int Telefone; }
-
-    public class Cliente { }
-
 
 }
