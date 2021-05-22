@@ -7,15 +7,10 @@ namespace LojaVirtual.Models
 {
     public class Produto
     {
-        public int Id;
-        public string Nome;
-        public decimal Preco;
-        public int Quantidade;
+        public int ID;
+        public string NM_NOME;
+        public string NR_PRECO;
+        public int NR_QUANTIDADE;
 
-    }
-
-    public class Pessoa
-    {
-        public string Cpf { get; set; }
     }
 }

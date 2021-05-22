@@ -8,8 +8,9 @@
 }
 
 <form action="/produtos/editar" method="post">
-    Identificador: <input name="id" value="@produto.Id" readonly />
-    nome: <input name="nome" value="@produto.Nome" />
-    preco: <input name="preco" value="@produto.Preco" />
+    Identificador: <input name="id" value="@produto.ID" readonly />
+    nome: <input name="nome"  type="text" value="@produto.NM_NOME" />
+    preco: <input name="preco"  type="text" value="@produto.NR_PRECO" />
+    quantidade: <input name="quantidade"  type="number" step=0.01 value="@produto.NR_QUANTIDADE" />
     <input type="submit" value="Salvar Alterações" />
 </form>

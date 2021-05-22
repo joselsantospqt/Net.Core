@@ -21,6 +21,7 @@
             <th scope="col">#</th>
             <th scope="col">nome</th>
             <th scope="col">preço</th>
+            <th scope="col">quantidade</th>
             <th scope="col">*</th>
         </tr>
     </thead>
@@ -30,9 +31,10 @@
             {
                 <tr>
                     <th scope="row">@listaDeProdutos.IndexOf(item)</th>
-                    <td>@item.Nome</td>
-                    <td>@item.Preco</td>
-                    <td><a href="/produtos/editar?Id=@item.Id">Editar</a> / <a href="/produtos/excluir?Id=@item.Id">Excluir</a></td>
+                    <td>@item.NM_NOME</td>
+                    <td>@item.NR_PRECO</td>
+                    <td>@item.NR_QUANTIDADE</td>
+                    <td><a href="/produtos/editar?Id=@item.ID">Editar</a> / <a href="/produtos/excluir?Id=@item.ID">Excluir</a></td>
                 </tr>
 
             }

@@ -9,10 +9,12 @@
 }
 
 <form action="/produtos/excluir" method="post">
-    <input type="hidden" name="Id" value="@produto.Id" />
-    <label>Identificador: </label><p>@produto.Id</p>
-    <label>Nome: </label><p>@produto.Nome</p>
-    <label>Preço: </label><p>@produto.Preco</p>
+    <input type="hidden" name="Id" value="@produto.ID" />
+    <label>Identificador: </label><p>@produto.ID</p>
+    <label>Nome: </label><p>@produto.NM_NOME</p>
+    <label>Preço: </label><p>@produto.NR_PRECO</p>
+    <label>Quantidade: </label><p>@produto.NR_QUANTIDADE</p>
+
     <input type="submit" value="Salvar Alterações" />
     <a href="/produtos/listar">Voltar para Lista</a>
 </form>

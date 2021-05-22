@@ -6,7 +6,9 @@
 }
 
 <form action="/produtos/executarcadastrodeproduto" method="post">
-    nome: <input name="nome" />
-    preco: <input name="preco" />
+    nome: <input name="nome" type="text"/>
+    preco: <input name="preco" type="text"/>
+    quantidade: <input name="quantidade"  type="number" step=0.01/>
+
     <input type="submit" value="Cadastrar" />
 </form>
