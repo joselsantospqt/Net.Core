@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "654Y7d2GV/WI7p2MGbiZhhv0QFREOKCYW/TEL6DQeMqODkZY+vqIYhmTIcIHVclQcH0eW9WbisysrEFoH3TVbQ==",
+  "success": true,
+  "projectFilePath": "C:\\Git\\ASP.net\\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\\LojaVirtual\\VendaDeCelular\\VendaDeCelular.fsproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\ricar\\.nuget\\packages\\fsharp.core\\4.7.0\\fsharp.core.4.7.0.nupkg.sha512"
+  ],
+  "logs": []
+}
