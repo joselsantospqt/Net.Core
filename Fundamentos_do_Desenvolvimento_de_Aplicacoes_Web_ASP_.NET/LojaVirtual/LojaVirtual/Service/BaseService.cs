@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LojaVirtual.Service
 {
-    public abstract class BaseService
+    public abstract class BaseService: TrataErro
     {
         protected SqlCommand command { get; set; }
 
@@ -26,9 +26,14 @@ namespace LojaVirtual.Service
             return command.ExecuteReader();
         }
 
-        public int Registrar()
+        public int ExecutarQuery()
         {
             return command.ExecuteNonQuery();
+        }
+
+        public void FecharQuery()
+        {
+           command.Connection.Close();
         }
     }
 }

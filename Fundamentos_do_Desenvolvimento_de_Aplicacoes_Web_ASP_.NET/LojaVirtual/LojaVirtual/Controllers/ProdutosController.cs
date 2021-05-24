@@ -1,4 +1,5 @@
 ﻿using LojaVirtual.Models;
+using LojaVirtual.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -39,7 +40,7 @@ namespace LojaVirtual.Controllers
         public ActionResult Listar(string pesquisa, string ordenarpelonome)
         {
 
-            var conexao = new Service.INewService();
+            var conexao = new ProdutoService();
             produtos = conexao.BuscarListaProdutos();
 
             if (pesquisa != null)
@@ -61,7 +62,7 @@ namespace LojaVirtual.Controllers
         [HttpPost]
         public ActionResult ExecutarCadastroDeProduto(string nome, string preco, int quantidade)
         {
-            var conexao = new Service.INewService();
+            var conexao = new ProdutoService();
             conexao.CadastrarProduto(nome, preco, quantidade);
 
             return Redirect("/produtos/listar");
@@ -71,7 +72,7 @@ namespace LojaVirtual.Controllers
         [Route("produtos/BuscarProdutos")]
         public IActionResult BuscarProdutos(string nome)
         {
-            var conexao = INewService();
+            var conexao = new ProdutoService();
             var produto = conexao.BuscaProdutoNome(nome);
             return View("Buscar", produto);
         }
@@ -80,7 +81,7 @@ namespace LojaVirtual.Controllers
         [Route("produtos/editar")]
         public ActionResult Editar(int id)
         {
-            var conexao = new Service.INewService();
+            var conexao = new ProdutoService();
             Produto produto = conexao.BuscarProdutoId(id);
             return View(produto);
         }
@@ -90,7 +91,7 @@ namespace LojaVirtual.Controllers
         [Route("prod/editar")]
         public ActionResult Editar(int id, string nome, string preco, int quantidade)
         {
-            var conexao = new Service.INewService();
+            var conexao = new ProdutoService();
             Produto produto = new Produto();
             produto.NM_NOME = nome;
             produto.NR_PRECO = preco;
@@ -104,7 +105,7 @@ namespace LojaVirtual.Controllers
         [Route("produtos/excluir")]
         public ActionResult ExcluirGet(int id)
         {
-            var conexao = Service.INewService();
+            var conexao = new ProdutoService();
             Produto produto = conexao.BuscarProdutoId(id);
             return View("Excluir", produto);
         }
@@ -113,7 +114,7 @@ namespace LojaVirtual.Controllers
         [Route("produtos/excluir")]
         public ActionResult ExcluirPost(int id)
         {
-            var conexao = new Service.INewService();
+            var conexao = new ProdutoService();
 
             conexao.RemoverProduto(id);
 
