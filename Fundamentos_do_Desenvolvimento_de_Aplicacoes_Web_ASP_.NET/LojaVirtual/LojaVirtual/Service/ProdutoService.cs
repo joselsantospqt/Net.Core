@@ -21,9 +21,7 @@ namespace LojaVirtual.Service
             command.Parameters.AddWithValue("@NOME", nome.ToUpper());
             command.Parameters.AddWithValue("@PRECO", String.Format("R$ {0:C}", preco));
             command.Parameters.AddWithValue("@QUANTIDADE", quantidade);
-            command.ExecuteNonQuery();
-
-            command.Connection.Close();
+            ExecutarQuery(command);
         }
 
         public void AlterarProduto(Produto produto)
@@ -35,8 +33,7 @@ namespace LojaVirtual.Service
             command.Parameters.AddWithValue("@NOME", produto.NM_NOME.ToUpper());
             command.Parameters.AddWithValue("@PRECO", produto.NR_PRECO);
             command.Parameters.AddWithValue("@QUANTIDADE", produto.NR_QUANTIDADE);
-            ExecutarQuery();
-            FecharQuery();
+            ExecutarQuery(command);
         }
 
         public void RemoverProduto(int id)
@@ -44,8 +41,7 @@ namespace LojaVirtual.Service
             var command = ConnectDataBase();
             command.CommandText = "DELETE FROM PRODUTO WHERE ID = @ID";
             command.Parameters.AddWithValue("@ID", id);
-            ExecutarQuery();
-            FecharQuery();
+            ExecutarQuery(command);
 
         }
 
@@ -55,7 +51,7 @@ namespace LojaVirtual.Service
             var command = ConnectDataBase();
             command.CommandText = "SELECT  * FROM PRODUTO WHERE NM_NOME = @NOME";
             command.Parameters.AddWithValue("@NOME", nome.ToUpper());
-            var vLer = command.ExecuteReader();
+            var vLer = ExecutarBusca(command);
 
             while (vLer.Read())
             {
@@ -86,7 +82,7 @@ namespace LojaVirtual.Service
             var command = ConnectDataBase();
 
             command.CommandText = "SELECT  * FROM PRODUTO";
-            var vLer = command.ExecuteReader();
+            var vLer = ExecutarBusca(command);
 
             while (vLer.Read())
             {
@@ -102,7 +98,7 @@ namespace LojaVirtual.Service
                 produto.NR_QUANTIDADE = quantidade;
                 ListaProduto.Add(produto);
             }
-            FecharQuery();
+            command.Connection.Close();
             return ListaProduto;
         }
 
@@ -111,7 +107,6 @@ namespace LojaVirtual.Service
             var produto = new Produto();
             command = ConnectDataBase();
             command.CommandText = "SELECT  * FROM PRODUTO WHERE ID = @ID";
-            command.Parameters.AddWithValue("@ID", id);
             var vLer = ObterPorID(id);
 
             while (vLer.Read())
@@ -126,7 +121,7 @@ namespace LojaVirtual.Service
                 produto.NR_QUANTIDADE = nr_quantidade;
 
             }
-            FecharQuery();
+            command.Connection.Close();
             return produto;
         }
     }

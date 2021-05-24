@@ -34,7 +34,7 @@ namespace LojaVirtual.Service
             return pessoa;
         }
 
-        public int Registrar(string nome, string sobreNome, DateTime aniversario)
+        public void Registrar(string nome, string sobreNome, DateTime aniversario)
         {
 
             Pessoa pessoa = new Pessoa();
@@ -48,7 +48,7 @@ namespace LojaVirtual.Service
             command.Parameters.AddWithValue("@NOME", nome.ToUpper());
             command.Parameters.AddWithValue("@SOBRENOME", sobreNome.ToUpper());
             command.Parameters.AddWithValue("@ANIVERSARIO", aniversario.ToString("MM/dd/yyyy"));
-            return ExecutarQuery();
+            ExecutarQuery(command);
         }
 
         public Pessoa buscaPeloNome(string nome)
