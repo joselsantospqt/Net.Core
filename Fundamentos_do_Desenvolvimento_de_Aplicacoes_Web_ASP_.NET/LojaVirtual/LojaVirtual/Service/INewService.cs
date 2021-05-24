@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LojaVirtual.Service
 {
-    internal class INewService : TrataErro
+    public interface INewService : TrataErro
     {
         #region CONEXÃO GERAL 
         public SqlCommand ConnectDataBase()

@@ -33,6 +33,7 @@ namespace LojaVirtual.Controllers
         {
             return View();
         }
+         
         [HttpGet]
         [Route("produtos/listar")]
         public ActionResult Listar(string pesquisa, string ordenarpelonome)
@@ -70,12 +71,10 @@ namespace LojaVirtual.Controllers
         [Route("produtos/BuscarProdutos")]
         public IActionResult BuscarProdutos(string nome)
         {
-            var conexao = new Service.INewService();
+            var conexao = INewService();
             var produto = conexao.BuscaProdutoNome(nome);
             return View("Buscar", produto);
         }
-
-
 
         [HttpGet]
         [Route("produtos/editar")]
@@ -105,7 +104,7 @@ namespace LojaVirtual.Controllers
         [Route("produtos/excluir")]
         public ActionResult ExcluirGet(int id)
         {
-            var conexao = new Service.INewService();
+            var conexao = Service.INewService();
             Produto produto = conexao.BuscarProdutoId(id);
             return View("Excluir", produto);
         }
