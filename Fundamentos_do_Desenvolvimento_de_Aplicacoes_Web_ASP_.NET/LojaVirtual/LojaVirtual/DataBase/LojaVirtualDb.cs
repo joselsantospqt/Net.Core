@@ -11,6 +11,23 @@ namespace LojaVirtual.DataBase
 {
     public class LojaVirtualDb : DbContext
     {
-        public DbSet<Produto> TabelaProduto { get; set; }
+
+        public LojaVirtualDb(DbContextOptions options) : base(options) { }
+
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer(
+        //        @"Data Source=RICO-PC;Initial Catalog=LojaVirtual;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+        //}
+
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<Produto>(builder =>
+        //    {
+        //        builder.ToTable("PRODUTO");
+        //    });
+        //}
+
+        public DbSet<Produto> Produto { get; set; }
     }
 }

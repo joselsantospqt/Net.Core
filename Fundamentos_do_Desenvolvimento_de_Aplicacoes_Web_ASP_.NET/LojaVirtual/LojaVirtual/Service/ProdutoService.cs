@@ -18,47 +18,48 @@ namespace LojaVirtual.Service
             db = bancoDeDados;
         }
 
-        public void CadastrarProduto(string nome, string preco, int quantidade)
+        public void CadastrarProduto(int id, string nome, string preco, int quantidade)
         {
             Produto produto = new Produto();
+            produto.ID = id;
             produto.NM_NOME = nome;
             produto.NR_PRECO = String.Format("R$ {0:C}", preco);
             produto.NR_QUANTIDADE = quantidade;
 
-            db.TabelaProduto.Add(produto);
+            db.Produto.Add(produto);
             db.SaveChanges();
         }
 
         public void AlterarProduto(Produto produto)
         {
-            db.TabelaProduto.Update(produto);
+            db.Produto.Update(produto);
             db.SaveChanges();
         }
 
         public void RemoverProduto(int id)
         {
-            var produto = db.TabelaProduto.Find(id);
-            db.TabelaProduto.Remove(produto);
+            var produto = db.Produto.Find(id);
+            db.Produto.Remove(produto);
             db.SaveChanges();
         }
 
         public List<Produto> BuscaProdutoNome(string nome)
         {
             List<Produto> ListaProdutos = new List<Produto>();
-            ListaProdutos.Add(db.TabelaProduto.Find(nome));
+            ListaProdutos.Add(db.Produto.Find(nome));
 
             return ListaProdutos;
         }
 
         public List<Produto> BuscarListaProdutos()
         {
-            var ListaProduto = db.TabelaProduto.ToList();
+            var ListaProduto = db.Produto.ToList();
             return ListaProduto;
         }
 
         public Produto BuscarProdutoId(int id)
         {
-            var produto = db.TabelaProduto.Find(id);
+            var produto = db.Produto.Find(id);
             return produto;
         }
     }

@@ -48,8 +48,7 @@ namespace LojaVirtual.Controllers
         [Route("produtos/listar")]
         public ActionResult Listar(string pesquisa, string ordenarpelonome)
         {
-
-            produtos = db.TabelaProduto.ToList();
+            produtos = db.Produto.ToList();
 
             if (pesquisa != null)
             {
@@ -71,7 +70,9 @@ namespace LojaVirtual.Controllers
         public ActionResult ExecutarCadastroDeProduto(string nome, string preco, int quantidade)
         {
             var conexao = new ProdutoService(db);
-            conexao.CadastrarProduto(nome, preco, quantidade);
+            int id = conexao.BuscarListaProdutos().Count() + 1;
+
+            conexao.CadastrarProduto(id, nome, preco, quantidade);
 
             return Redirect("/produtos/listar");
         }
@@ -101,6 +102,7 @@ namespace LojaVirtual.Controllers
         {
             var conexao = new ProdutoService(db);
             Produto produto = new Produto();
+            produto.ID = id;
             produto.NM_NOME = nome;
             produto.NR_PRECO = preco;
             produto.NR_QUANTIDADE = quantidade;

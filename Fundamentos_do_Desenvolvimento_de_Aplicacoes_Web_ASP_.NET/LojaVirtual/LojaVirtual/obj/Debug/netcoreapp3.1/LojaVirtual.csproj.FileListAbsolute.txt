@@ -91,9 +91,6 @@ C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVir
 C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp3.1\LojaVirtual.runtimeconfig.json
 C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp3.1\LojaVirtual.runtimeconfig.dev.json
 C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp3.1\LojaVirtual.dll
-C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp3.1\LojaVirtual.pdb
-C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp3.1\LojaVirtual.Views.dll
-C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp3.1\LojaVirtual.Views.pdb
 C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp3.1\EntityFramework.SqlServer.dll
 C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp3.1\EntityFramework.dll
 C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp3.1\Humanizer.dll
@@ -146,8 +143,6 @@ C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVir
 C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp3.1\LojaVirtual.csprojAssemblyReference.cache
-C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp3.1\LojaVirtual.csproj.CoreCompileInputs.cache
-C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp3.1\LojaVirtual.MvcApplicationPartsAssemblyInfo.cache
 C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp3.1\LojaVirtual.RazorAssemblyInfo.cache
 C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp3.1\LojaVirtual.RazorAssemblyInfo.cs
 C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp3.1\LojaVirtual.AssemblyInfoInputs.cache
@@ -170,10 +165,15 @@ C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVir
 C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp3.1\Razor\Views\_ViewStart.cshtml.g.cs
 C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp3.1\LojaVirtual.RazorTargetAssemblyInfo.cache
 C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp3.1\LojaVirtual.RazorTargetAssemblyInfo.cs
-C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp3.1\LojaVirtual.Views.pdb
 C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp3.1\LojaVirtual.csproj.CopyComplete
 C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp3.1\staticwebassets\LojaVirtual.StaticWebAssets.Manifest.cache
 C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp3.1\staticwebassets\LojaVirtual.StaticWebAssets.xml
+C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp3.1\LojaVirtual.genruntimeconfig.cache
+C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp3.1\LojaVirtual.csproj.CoreCompileInputs.cache
+C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp3.1\LojaVirtual.MvcApplicationPartsAssemblyInfo.cache
 C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp3.1\LojaVirtual.dll
 C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp3.1\LojaVirtual.pdb
-C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp3.1\LojaVirtual.genruntimeconfig.cache
+C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp3.1\LojaVirtual.pdb
+C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp3.1\LojaVirtual.Views.dll
+C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp3.1\LojaVirtual.Views.pdb
+C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp3.1\LojaVirtual.Views.pdb

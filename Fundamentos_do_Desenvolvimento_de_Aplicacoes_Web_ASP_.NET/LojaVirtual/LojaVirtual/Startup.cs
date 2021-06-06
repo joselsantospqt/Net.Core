@@ -26,13 +26,17 @@ namespace LojaVirtual
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.PropertyNamingPolicy = null;
+            });
+
+            string connectionString = Configuration.GetConnectionString("dbLocal");
 
             services.AddDbContext<LojaVirtualDb>(config =>
             {
-                config.UseSqlServer(Configuration.GetConnectionString("dbLocal"));
+                config.UseSqlServer(connectionString);
             });
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,5 +66,6 @@ namespace LojaVirtual
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
+ 
     }
 }
