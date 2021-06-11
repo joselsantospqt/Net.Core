@@ -10,8 +10,6 @@
     <title>@ViewData["Title"] - LojaVirtual</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-
 </head>
 <body>
     <header>
@@ -30,8 +28,23 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Produtos" asp-action="Cadastrar">Cadastrar um Produto</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPessoas" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Pessoas
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownPessoas">
+                                <a class="dropdown-item" href="/pessoas/cadastrar">Cadastrar</a>
+                                <a class="dropdown-item" href="/pessoas/listar">Pesquisar</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownProdutos" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Produtos
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownProdutos">
+                                <a class="dropdown-item" href="/produtos/cadastrar">Cadastrar</a>
+                                <a class="dropdown-item" href="/produtos/listar">Pesquisar</a>
+                            </div>
                         </li>
                     </ul>
                 </div>

@@ -29,5 +29,8 @@ namespace LojaVirtual.DataBase
         //}
 
         public DbSet<Produto> Produto { get; set; }
+
+        public DbSet<Pessoa> Pessoa { get; set; }
+
     }
 }

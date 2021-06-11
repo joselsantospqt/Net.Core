@@ -6077,41 +6077,39 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ricar\\.nuget\\packages\\": {},
-    "C:\\Microsoft\\Xamarin\\NuGet\\": {},
+    "C:\\Users\\José Ricardo\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Git\\ASP.net\\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\\LojaVirtual\\LojaVirtual\\LojaVirtual.csproj",
+      "projectUniqueName": "C:\\Users\\José Ricardo\\Desktop\\Ricardo\\ASP.net\\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\\LojaVirtual\\LojaVirtual\\LojaVirtual.csproj",
       "projectName": "LojaVirtual",
-      "projectPath": "C:\\Git\\ASP.net\\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\\LojaVirtual\\LojaVirtual\\LojaVirtual.csproj",
-      "packagesPath": "C:\\Users\\ricar\\.nuget\\packages\\",
-      "outputPath": "C:\\Git\\ASP.net\\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\\LojaVirtual\\LojaVirtual\\obj\\",
+      "projectPath": "C:\\Users\\José Ricardo\\Desktop\\Ricardo\\ASP.net\\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\\LojaVirtual\\LojaVirtual\\LojaVirtual.csproj",
+      "packagesPath": "C:\\Users\\José Ricardo\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\José Ricardo\\Desktop\\Ricardo\\ASP.net\\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\\LojaVirtual\\LojaVirtual\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Microsoft\\Xamarin\\NuGet\\",
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\ricar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\José Ricardo\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 18.1.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 20.1.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 18.2.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
       ],
       "sources": {
         "C:\\Program Files (x86)\\DevExpress 18.1\\Components\\System\\Components\\Packages": {},
-        "C:\\Program Files (x86)\\DevExpress 20.1\\Components\\System\\Components\\Packages": {},
+        "C:\\Program Files (x86)\\DevExpress 18.2\\Components\\System\\Components\\Packages": {},
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "projectReferences": {}
         }
       },
@@ -6123,6 +6121,7 @@
     },
     "frameworks": {
       "netcoreapp3.1": {
+        "targetAlias": "netcoreapp3.1",
         "dependencies": {
           "EntityFramework": {
             "target": "Package",
@@ -6171,7 +6170,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.204\\RuntimeIdentifierGraph.json"
       }
     }
   }

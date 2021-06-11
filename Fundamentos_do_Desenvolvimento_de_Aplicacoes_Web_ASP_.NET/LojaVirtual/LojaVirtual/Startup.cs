@@ -31,7 +31,7 @@ namespace LojaVirtual
                 options.JsonSerializerOptions.PropertyNamingPolicy = null;
             });
 
-            string connectionString = Configuration.GetConnectionString("dbLocal");
+            string connectionString = Configuration.GetConnectionString("dbLocalTrust");
 
             services.AddDbContext<LojaVirtualDb>(config =>
             {

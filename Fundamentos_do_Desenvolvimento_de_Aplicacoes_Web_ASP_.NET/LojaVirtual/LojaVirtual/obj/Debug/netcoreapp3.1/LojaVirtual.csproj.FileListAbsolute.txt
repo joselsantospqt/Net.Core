@@ -39,7 +39,6 @@ C:\Users\José Ricardo\Desktop\Ricardo\ASP.net\Fundamentos_do_Desenvolvimento_de
 C:\Users\José Ricardo\Desktop\Ricardo\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp3.1\Razor\Views\Produtos\Editar.cshtml.g.cs
 C:\Users\José Ricardo\Desktop\Ricardo\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp3.1\Razor\Views\Produtos\Excluir.cshtml.g.cs
 C:\Users\José Ricardo\Desktop\Ricardo\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp3.1\Razor\Views\Produtos\Listar.cshtml.g.cs
-C:\Users\José Ricardo\Desktop\Ricardo\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp3.1\Razor\Views\Produtos\ProdutoCadastrado.cshtml.g.cs
 C:\Users\José Ricardo\Desktop\Ricardo\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp3.1\Humanizer.dll
 C:\Users\José Ricardo\Desktop\Ricardo\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp3.1\Microsoft.Data.SqlClient.dll
 C:\Users\José Ricardo\Desktop\Ricardo\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.dll
@@ -82,7 +81,6 @@ C:\Users\José Ricardo\Desktop\Ricardo\ASP.net\Fundamentos_do_Desenvolvimento_de
 C:\Users\José Ricardo\Desktop\Ricardo\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.pdb
 C:\Users\José Ricardo\Desktop\Ricardo\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 C:\Users\José Ricardo\Desktop\Ricardo\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-C:\Users\José Ricardo\Desktop\Ricardo\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp3.1\Razor\Views\Produtos\Buscar.cshtml.g.cs
 C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp3.1\appsettings.Development.json
 C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp3.1\appsettings.json
 C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
@@ -177,3 +175,16 @@ C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVir
 C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp3.1\LojaVirtual.Views.dll
 C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp3.1\LojaVirtual.Views.pdb
 C:\Git\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp3.1\LojaVirtual.Views.pdb
+C:\Users\José Ricardo\Desktop\Ricardo\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp3.1\EntityFramework.SqlServer.dll
+C:\Users\José Ricardo\Desktop\Ricardo\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp3.1\EntityFramework.dll
+C:\Users\José Ricardo\Desktop\Ricardo\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp3.1\System.CodeDom.dll
+C:\Users\José Ricardo\Desktop\Ricardo\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp3.1\System.Data.SqlClient.dll
+C:\Users\José Ricardo\Desktop\Ricardo\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp3.1\runtimes\win-arm64\native\sni.dll
+C:\Users\José Ricardo\Desktop\Ricardo\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\sni.dll
+C:\Users\José Ricardo\Desktop\Ricardo\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\sni.dll
+C:\Users\José Ricardo\Desktop\Ricardo\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\José Ricardo\Desktop\Ricardo\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\José Ricardo\Desktop\Ricardo\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp3.1\Razor\Views\Pessoas\Cadastrar.cshtml.g.cs
+C:\Users\José Ricardo\Desktop\Ricardo\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp3.1\Razor\Views\Pessoas\Editar.cshtml.g.cs
+C:\Users\José Ricardo\Desktop\Ricardo\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp3.1\Razor\Views\Pessoas\Excluir.cshtml.g.cs
+C:\Users\José Ricardo\Desktop\Ricardo\ASP.net\Fundamentos_do_Desenvolvimento_de_Aplicacoes_Web_ASP_.NET\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp3.1\Razor\Views\Pessoas\Listar.cshtml.g.cs
