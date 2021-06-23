@@ -64,6 +64,15 @@ namespace LojaVirtual.Controllers
 
             return View(pessoas);
         }
+        [HttpGet]
+        [Route("pessoas/calendario")]
+        public ActionResult Calendario()
+        {
+            pessoas = db.Pessoa.ToList();
+            DateTime DataHoje = Convert.ToDateTime(DateTime.Now.ToString("dd/MM/yyyy"));
+
+            return View(pessoas.OrderBy(x => x.DT_NASCIMENTO.Day).OrderByDescending(x => x.DT_NASCIMENTO.Month >= DataHoje.Month).ToList());
+        }
 
         [HttpPost]
         public ActionResult ExecutarCadastroDePessoas(string nome, string sobrenome, DateTime nascimento)
