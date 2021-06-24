@@ -1,7 +1,7 @@
 # ASP.net MVC 
 Olá, para iniciar qualquer projeto, você vai precisar ter o Visual Studio instalado em sua maquina.
-
-- não esqueça de utilizar os seguintes pacotes:
+- Neste repositorio você vai encontrar um projeto de crud com caléndario aonde você vai poder verificar quando as pessoas cadastradas faram aniversário.
+- Não esqueça de utilizar os seguintes pacotes:
 
 ## Microsoft.EntityFrameworkCore:
 ```
