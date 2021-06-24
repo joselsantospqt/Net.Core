@@ -1,0 +1,20 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model LojaVirtual.Models.Pessoa
+
+@{
+    ViewData["title"] = "Página Excluir Pessoa";
+    var pessoa = Model;
+}
+
+<form action="/Pessoas/excluir" method="post">
+    <input type="hidden" name="Id" value="@pessoa.ID" />
+    <label>Identificador: </label><p>@pessoa.ID</p>
+    <label>Nome: </label><p>@pessoa.NM_NOME</p>
+    <label>Sobrenome: </label><p>@pessoa.NM_SOBRENOME</p>
+    <label>Data Nascimento: </label><p>@pessoa.DT_NASCIMENTO</p>
+
+    <input type="submit" value="Salvar Alterações" />
+    <a href="/pessoas/listar">Voltar para Lista</a>
+</form>

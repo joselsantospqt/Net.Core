@@ -1,4 +1,5 @@
-﻿using LojaVirtual.Models;
+﻿using LojaVirtual.DataBase;
+using LojaVirtual.Models;
 using LojaVirtual.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,14 @@ namespace LojaVirtual.Controllers
 {
     public class ProdutosController : Controller
     {
+        private LojaVirtualDb db;
+
+        public ProdutosController(LojaVirtualDb bancoDeDados)
+        {
+            db = bancoDeDados;
+        }
+
+
         static List<Produto> produtos = new List<Produto>();
 
         [HttpGet]
@@ -39,9 +48,7 @@ namespace LojaVirtual.Controllers
         [Route("produtos/listar")]
         public ActionResult Listar(string pesquisa, string ordenarpelonome)
         {
-
-            var conexao = new ProdutoService();
-            produtos = conexao.BuscarListaProdutos();
+            produtos = db.Produto.ToList();
 
             if (pesquisa != null)
             {
@@ -62,8 +69,10 @@ namespace LojaVirtual.Controllers
         [HttpPost]
         public ActionResult ExecutarCadastroDeProduto(string nome, string preco, int quantidade)
         {
-            var conexao = new ProdutoService();
-            conexao.CadastrarProduto(nome, preco, quantidade);
+            var conexao = new ProdutoService(db);
+            int id = conexao.BuscarListaProdutos().Count() + 1;
+
+            conexao.CadastrarProduto(id, nome, preco, quantidade);
 
             return Redirect("/produtos/listar");
         }
@@ -72,7 +81,7 @@ namespace LojaVirtual.Controllers
         [Route("produtos/BuscarProdutos")]
         public IActionResult BuscarProdutos(string nome)
         {
-            var conexao = new ProdutoService();
+            var conexao = new ProdutoService(db);
             var produto = conexao.BuscaProdutoNome(nome);
             return View("Buscar", produto);
         }
@@ -81,7 +90,7 @@ namespace LojaVirtual.Controllers
         [Route("produtos/editar")]
         public ActionResult Editar(int id)
         {
-            var conexao = new ProdutoService();
+            var conexao = new ProdutoService(db);
             Produto produto = conexao.BuscarProdutoId(id);
             return View(produto);
         }
@@ -91,8 +100,9 @@ namespace LojaVirtual.Controllers
         [Route("prod/editar")]
         public ActionResult Editar(int id, string nome, string preco, int quantidade)
         {
-            var conexao = new ProdutoService();
+            var conexao = new ProdutoService(db);
             Produto produto = new Produto();
+            produto.ID = id;
             produto.NM_NOME = nome;
             produto.NR_PRECO = preco;
             produto.NR_QUANTIDADE = quantidade;
@@ -105,7 +115,7 @@ namespace LojaVirtual.Controllers
         [Route("produtos/excluir")]
         public ActionResult ExcluirGet(int id)
         {
-            var conexao = new ProdutoService();
+            var conexao = new ProdutoService(db);
             Produto produto = conexao.BuscarProdutoId(id);
             return View("Excluir", produto);
         }
@@ -114,7 +124,7 @@ namespace LojaVirtual.Controllers
         [Route("produtos/excluir")]
         public ActionResult ExcluirPost(int id)
         {
-            var conexao = new ProdutoService();
+            var conexao = new ProdutoService(db);
 
             conexao.RemoverProduto(id);
 

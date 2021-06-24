@@ -10,13 +10,14 @@
 
 <h3>Lista de Produtos</h3>
 
-<form action="/produtos/listar" method="get">
+<form action="/produtos/listar" method="get" class="float-right pb-2">
     <input typet="text" name="pesquisa" placeholder="Pesquisa" />
     <input type="submit" value="Pesquisar" />
 </form>
 
+
 <table class="table">
-    <thead>
+    <thead class="thead-dark">
         <tr>
             <th scope="col">#</th>
             <th scope="col">nome</th>
@@ -41,3 +42,7 @@
         }
     </tbody>
 </table>
+
+<i class="fas fa-camera"></i> <!-- this icon's 1) style prefix == fas and 2) icon name == camera -->
+<i class="fas fa-camera"></i> <!-- using an <i> element to reference the icon -->
+<span class="fas fa-camera"></span> <!-- using a <span> element to reference the icon -->

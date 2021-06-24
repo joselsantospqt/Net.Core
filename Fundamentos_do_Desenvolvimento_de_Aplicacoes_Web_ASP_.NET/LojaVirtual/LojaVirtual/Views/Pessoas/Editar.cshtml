@@ -1,0 +1,16 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model LojaVirtual.Models.Pessoa
+@{
+    ViewData["title"] = "Página Edição de Pessoa";
+    var pessoa = Model;
+}
+
+<form action="/pessoas/editar" method="post">
+    Identificador: <input name="id" value="@pessoa.ID" readonly />
+    nome: <input name="nome"  type="text" value="@pessoa.NM_NOME" />
+    preco: <input name="sobrenome"  type="text" value="@pessoa.NM_SOBRENOME" />
+    Data Nascimento: <input name="nascimento"  type="datetime" value="@pessoa.DT_NASCIMENTO" />
+    <input type="submit" value="Salvar Alterações" />
+</form>

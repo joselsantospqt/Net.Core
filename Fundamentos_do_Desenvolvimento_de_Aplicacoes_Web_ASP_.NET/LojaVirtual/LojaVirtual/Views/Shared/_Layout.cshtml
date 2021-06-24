@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿
+@{
+    var cdn = "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css";
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -24,9 +28,26 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Produtos" asp-action="Cadastrar">Cadastrar um Produto</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPessoas" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Pessoas
+                            </a>
+                            <div class="dropdown-menu text-dark" aria-labelledby="navbarDropdownPessoas">
+                                <a class="dropdown-item" href="/pessoas/cadastrar">Cadastrar</a>
+                                <a class="dropdown-item" href="/pessoas/listar">Pesquisar</a>
+                                <a class="dropdown-item" href="/pessoas/calendario">Calendário</a>
+
+                            </div>
                         </li>
+                        @*<li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownProdutos" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Produtos
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownProdutos">
+                                <a class="dropdown-item" href="/produtos/cadastrar">Cadastrar</a>
+                                <a class="dropdown-item" href="/produtos/listar">Pesquisar</a>
+                            </div>
+                        </li>*@
                     </ul>
                 </div>
             </div>

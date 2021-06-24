@@ -1,0 +1,43 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model List<LojaVirtual.Models.Pessoa>
+@{
+    var listaDePessoas = Model;
+}
+
+
+<h3>Lista de Pessoas</h3>
+
+<form action="/pessoas/listar" method="get" class="float-right pb-2">
+    <input typet="text" name="pesquisa" placeholder="Pesquisa" />
+    <input type="submit" value="Pesquisar" />
+</form>
+
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Sobrenome</th>
+            <th scope="col">Data nascimento</th>
+            <th scope="col">*</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var item in listaDePessoas)
+            {
+                <tr>
+                    <th scope="row">@listaDePessoas.IndexOf(item)</th>
+                    <td>@item.NM_NOME</td>
+                    <td>@item.NM_SOBRENOME</td>
+                    <td>@item.DT_NASCIMENTO</td>
+                    <td><a href="/pessoas/editar?Id=@item.ID">Editar</a> / <a href="/pessoas/excluir?Id=@item.ID">Excluir</a></td>
+                </tr>
+
+            }
+        }
+    </tbody>
+</table>
