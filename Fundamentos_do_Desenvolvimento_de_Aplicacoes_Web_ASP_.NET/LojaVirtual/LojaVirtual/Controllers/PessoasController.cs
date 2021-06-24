@@ -4,6 +4,7 @@ using LojaVirtual.Service;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,7 +12,7 @@ namespace LojaVirtual.Controllers
 {
     public class PessoasController : Controller
     {
-        private LojaVirtualDb db;
+        private LojaVirtualDb db { get; set; }
 
         public PessoasController(LojaVirtualDb bancoDeDados)
         {
@@ -64,21 +65,33 @@ namespace LojaVirtual.Controllers
 
             return View(pessoas);
         }
+
         [HttpGet]
         [Route("pessoas/calendario")]
         public ActionResult Calendario()
         {
             pessoas = db.Pessoa.ToList();
             DateTime DataHoje = Convert.ToDateTime(DateTime.Now.ToString("dd/MM/yyyy"));
+            var obj = pessoas.OrderByDescending(x => x.DT_NASCIMENTO.Day).OrderByDescending(x => x.DT_NASCIMENTO.Month == DataHoje.Month).ToList();
 
-            return View(pessoas.OrderBy(x => x.DT_NASCIMENTO.Day).OrderByDescending(x => x.DT_NASCIMENTO.Month >= DataHoje.Month).ToList());
+            return View(obj);
+
         }
 
         [HttpPost]
         public ActionResult ExecutarCadastroDePessoas(string nome, string sobrenome, DateTime nascimento)
         {
+            int id = pessoas.Count();
             var conexao = new PessoaService(db);
-            int id = conexao.BuscarListaPessoas().Count() + 1;
+            pessoas = db.Pessoa.ToList();
+            Pessoa pessoa = new Pessoa();
+            if (id != 0)
+            {
+                pessoa = pessoas.LastOrDefault();
+                id = pessoa.ID + 1;
+            }
+            else
+                id = id + 1;
 
             conexao.CadastrarPessoa(id, nome, sobrenome, nascimento);
 

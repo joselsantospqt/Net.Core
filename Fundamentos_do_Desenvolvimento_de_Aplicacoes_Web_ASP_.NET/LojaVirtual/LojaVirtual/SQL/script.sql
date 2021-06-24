@@ -13,3 +13,8 @@ CREATE TABLE [dbo].[PRODUTO] (
     [NR_QUANTIDADE] INT          NOT NULL,
     PRIMARY KEY CLUSTERED ([ID] ASC)
 );
+
+
+
+--COMANDO PARA FAZER O MIGRATION -> Console do NugetPacker
+--PM => EntityFrameworkCore\Add-Migration "IniciarBanco"
