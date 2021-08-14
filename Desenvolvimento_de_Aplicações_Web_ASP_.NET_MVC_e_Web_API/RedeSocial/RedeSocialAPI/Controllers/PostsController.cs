@@ -33,7 +33,9 @@ namespace RedeSocialAPI.Controllers
         [HttpGet("getAll")]
         public ActionResult GetAll()
         {
-            var todosPosts = db.Post.ToList();
+            var conexao = new PostService(db);
+            var todosPosts = conexao.GetAll();
+
             return Ok(todosPosts);
         }
 
@@ -41,10 +43,10 @@ namespace RedeSocialAPI.Controllers
         [HttpGet]
         public ActionResult GetByAuthor([FromQuery] string author)
         {
-            if (IsNullOrWhiteSpace(author))
-                return Ok(db.Post.Find(author));
+            var conexao = new PostService(db);
+            var post = conexao.GetAuthor(author);
 
-            return Ok(db.Post.Where(x => x.Author == author).ToList());
+            return Ok(post);
         }
 
 

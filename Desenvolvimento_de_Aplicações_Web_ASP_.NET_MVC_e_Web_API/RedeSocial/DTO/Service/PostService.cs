@@ -21,10 +21,29 @@ namespace DTO.Service
         {
             db = bancoDeDados;
         }
+
+        public List<Post> GetAll()
+        {
+            var list = new List<Post>();
+            list.AddRange(db.Post.ToList());
+
+            return list;
+        }
         public Post GetPost(Guid id)
         {
             var post = db.Post.Find(id);
             return post;
+        }
+
+        public Post GetAuthor(string author)
+        {
+            if (IsNullOrWhiteSpace(author))
+            {
+                return db.Post.Find(author);
+            }
+
+            return db.Post.Where(x => x.Author == author).FirstOrDefault();
+
         }
 
         public Post CreatePost(Post create)
@@ -39,9 +58,10 @@ namespace DTO.Service
             return post;
         }
 
-        public Post UpdatePost(Guid id, Post update) {
+        public Post UpdatePost(Guid id, Post update)
+        {
 
-            var post = db.Find(id);
+            var post = db.Post.Find(id);
             post.Subject = update.Subject;
             post.UpdatedAt = DateTime.UtcNow;
 
@@ -78,13 +98,15 @@ namespace DTO.Service
             return comment;
         }
 
-        public void DeletePost(Guid id) {
+        public void DeletePost(Guid id)
+        {
             var post = db.Post.Find(id);
             db.Post.Remove(post);
             db.SaveChanges();
         }
 
-        public interface IBancoDeDados {
+        public interface IBancoDeDados
+        {
 
             void Save(Post post);
             void Remove(Guid post);
