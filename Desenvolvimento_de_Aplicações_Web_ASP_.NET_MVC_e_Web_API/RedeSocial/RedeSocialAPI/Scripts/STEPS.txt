@@ -1,0 +1,11 @@
+﻿//STEPS POWRSHELL
+00 - dotnet tool install --global dotnet-ef --version 3.0.0
+00- dotnet tool update --global dotnet-ef
+00 - cd .\RedeSocialAPI
+01 - dotnet ef migrations add "init"
+02 - dotnet ef database update
+//NUGET-CONSOLE
+03 - add-migration "addCommentTable"
+04 - database-update
+05 - add-migration "addPessoaTable"
+06 - database-update

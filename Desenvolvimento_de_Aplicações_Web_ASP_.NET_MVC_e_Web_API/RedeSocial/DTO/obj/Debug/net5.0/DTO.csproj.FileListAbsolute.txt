@@ -1,0 +1,15 @@
+C:\Git\ASP.net\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\RedeSocial\DTO\bin\Debug\net5.0\DTO.deps.json
+C:\Git\ASP.net\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\RedeSocial\DTO\bin\Debug\net5.0\DTO.runtimeconfig.json
+C:\Git\ASP.net\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\RedeSocial\DTO\bin\Debug\net5.0\DTO.runtimeconfig.dev.json
+C:\Git\ASP.net\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\RedeSocial\DTO\bin\Debug\net5.0\DTO.dll
+C:\Git\ASP.net\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\RedeSocial\DTO\bin\Debug\net5.0\ref\DTO.dll
+C:\Git\ASP.net\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\RedeSocial\DTO\bin\Debug\net5.0\DTO.pdb
+C:\Git\ASP.net\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\RedeSocial\DTO\obj\Debug\net5.0\DTO.GeneratedMSBuildEditorConfig.editorconfig
+C:\Git\ASP.net\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\RedeSocial\DTO\obj\Debug\net5.0\DTO.AssemblyInfoInputs.cache
+C:\Git\ASP.net\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\RedeSocial\DTO\obj\Debug\net5.0\DTO.AssemblyInfo.cs
+C:\Git\ASP.net\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\RedeSocial\DTO\obj\Debug\net5.0\DTO.csproj.CoreCompileInputs.cache
+C:\Git\ASP.net\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\RedeSocial\DTO\obj\Debug\net5.0\DTO.dll
+C:\Git\ASP.net\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\RedeSocial\DTO\obj\Debug\net5.0\ref\DTO.dll
+C:\Git\ASP.net\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\RedeSocial\DTO\obj\Debug\net5.0\DTO.pdb
+C:\Git\ASP.net\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\RedeSocial\DTO\obj\Debug\net5.0\DTO.genruntimeconfig.cache
+C:\Git\ASP.net\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\RedeSocial\DTO\obj\Debug\net5.0\DTO.csproj.AssemblyReference.cache

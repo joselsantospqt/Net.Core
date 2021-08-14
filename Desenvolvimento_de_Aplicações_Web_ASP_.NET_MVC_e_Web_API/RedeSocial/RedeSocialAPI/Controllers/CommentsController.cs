@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace RedeSocialAPI.Controllers
 {
@@ -6,5 +7,11 @@ namespace RedeSocialAPI.Controllers
     [ApiController]
     public class CommentsController : ControllerBase
     {
+        [HttpGet("{id}")]
+        public ActionResult GetComments(Guid id)
+        {
+
+            return Ok();
+        }
     }
 }
