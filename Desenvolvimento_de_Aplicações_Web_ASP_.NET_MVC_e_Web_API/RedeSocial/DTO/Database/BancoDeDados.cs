@@ -43,7 +43,6 @@ namespace DTO.Database
         //{
         //    this.Post.Add(post);
 
-        }
 
 
     }

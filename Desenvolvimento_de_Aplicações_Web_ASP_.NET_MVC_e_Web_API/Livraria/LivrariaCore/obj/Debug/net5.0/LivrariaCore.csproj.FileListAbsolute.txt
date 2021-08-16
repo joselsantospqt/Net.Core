@@ -1,0 +1,15 @@
+C:\Git\ASP.net\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\Livraria\LivrariaCore\bin\Debug\net5.0\LivrariaCore.deps.json
+C:\Git\ASP.net\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\Livraria\LivrariaCore\bin\Debug\net5.0\LivrariaCore.runtimeconfig.json
+C:\Git\ASP.net\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\Livraria\LivrariaCore\bin\Debug\net5.0\LivrariaCore.runtimeconfig.dev.json
+C:\Git\ASP.net\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\Livraria\LivrariaCore\bin\Debug\net5.0\LivrariaCore.dll
+C:\Git\ASP.net\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\Livraria\LivrariaCore\bin\Debug\net5.0\ref\LivrariaCore.dll
+C:\Git\ASP.net\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\Livraria\LivrariaCore\bin\Debug\net5.0\LivrariaCore.pdb
+C:\Git\ASP.net\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\Livraria\LivrariaCore\obj\Debug\net5.0\LivrariaCore.GeneratedMSBuildEditorConfig.editorconfig
+C:\Git\ASP.net\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\Livraria\LivrariaCore\obj\Debug\net5.0\LivrariaCore.AssemblyInfoInputs.cache
+C:\Git\ASP.net\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\Livraria\LivrariaCore\obj\Debug\net5.0\LivrariaCore.AssemblyInfo.cs
+C:\Git\ASP.net\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\Livraria\LivrariaCore\obj\Debug\net5.0\LivrariaCore.csproj.CoreCompileInputs.cache
+C:\Git\ASP.net\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\Livraria\LivrariaCore\obj\Debug\net5.0\LivrariaCore.dll
+C:\Git\ASP.net\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\Livraria\LivrariaCore\obj\Debug\net5.0\ref\LivrariaCore.dll
+C:\Git\ASP.net\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\Livraria\LivrariaCore\obj\Debug\net5.0\LivrariaCore.pdb
+C:\Git\ASP.net\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\Livraria\LivrariaCore\obj\Debug\net5.0\LivrariaCore.genruntimeconfig.cache
+C:\Git\ASP.net\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\Livraria\LivrariaCore\obj\Debug\net5.0\LivrariaCore.csproj.AssemblyReference.cache
