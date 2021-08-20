@@ -14,6 +14,8 @@ namespace LivrariaAPI.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Sobrenome = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Senha = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Datanascimento = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -28,11 +30,11 @@ namespace LivrariaAPI.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AutorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Autor = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Titulo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Descricao = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreateAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ISBN = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreateDt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {

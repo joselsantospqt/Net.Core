@@ -28,7 +28,13 @@ namespace LivrariaAPI.Migrations
                     b.Property<DateTime>("Datanascimento")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Nome")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Senha")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Sobrenome")
@@ -48,22 +54,22 @@ namespace LivrariaAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Autor")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<Guid>("AutorId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreateAt")
+                    b.Property<DateTime>("CreateDt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Descricao")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Nome")
+                    b.Property<string>("ISBN")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<string>("Titulo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedDt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");

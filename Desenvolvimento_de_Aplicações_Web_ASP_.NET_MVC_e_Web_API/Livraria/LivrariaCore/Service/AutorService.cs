@@ -45,13 +45,13 @@ namespace LivrariaCore.Service
         public Autor CreateAutor(Autor create)
         {
 
-            var Autor = new Autor();
-            Autor = create;
-            Autor.Id = NewGuid();
-            db.Autor.Add(Autor);
+            var autor = new Autor();
+            autor = create;
+            autor.Id = NewGuid();
+            db.Autor.Add(autor);
             db.SaveChanges();
 
-            return Autor;
+            return autor;
         }
 
         public Autor UpdateAutor(Guid id, Autor update)
@@ -59,39 +59,12 @@ namespace LivrariaCore.Service
 
             var Autor = db.Autor.Find(id);
             Autor.Nome = update.Nome;
+            Autor.Sobrenome = update.Sobrenome;
+            Autor.Email = update.Email;
+            Autor.Senha = update.Senha;
             Autor.UpdatedAt = DateTime.UtcNow;
 
             return Autor;
-        }
-
-        public List<Livro> GetLivros(Guid AutorId, Guid LivroId)
-        {
-            var list = new List<Livro>();
-
-            if (LivroId != default)
-            {
-                var Livro = db.Livro.Find(LivroId);
-                list.Add(Livro);
-            }
-            else
-            {
-                var Livros = db.Livro.Where(x => x.AutorId == AutorId).ToList();
-                list.AddRange(Livros);
-            }
-
-
-            return list;
-        }
-
-        public Livro CreateLivro(Guid id, Livro create)
-        {
-            var Livro = new Livro();
-            Livro = create;
-            Livro.Id = NewGuid();
-            Livro.AutorId = id;
-            db.Livro.Add(Livro);
-            db.SaveChanges();
-            return Livro;
         }
 
         public void DeleteAutor(Guid id)

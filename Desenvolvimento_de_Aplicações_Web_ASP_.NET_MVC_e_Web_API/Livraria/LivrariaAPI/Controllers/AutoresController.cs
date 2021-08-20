@@ -64,6 +64,8 @@ namespace LivrariaAPI.Controllers
             criarPost.Nome = create.Nome;
             criarPost.Sobrenome = create.Sobrenome;
             criarPost.Datanascimento = create.Datanascimento;
+            criarPost.Email = create.Email;
+            criarPost.Senha = create.Senha;
 
             var post = conexao.CreateAutor(criarPost);
 
@@ -89,7 +91,8 @@ namespace LivrariaAPI.Controllers
             var atualizarAutor = new Autor();
             atualizarAutor.Nome = update.Nome;
             atualizarAutor.Sobrenome = update.Sobrenome;
-            atualizarAutor.Datanascimento = update.Datanascimento;
+            atualizarAutor.Email = update.Email;
+            atualizarAutor.Senha = update.Senha;
 
             var updateAutor = conexao.UpdateAutor(id, atualizarAutor);
 
@@ -98,22 +101,22 @@ namespace LivrariaAPI.Controllers
         }
 
 
-        [HttpPost("{id}/livros")]
-        public ActionResult PostLivro([FromRoute] Guid id, [FromBody] Livro create)
-        {
-            var conexao = new AutorService(db);
-            var comment = conexao.CreateLivro(id, create);
+        //[HttpPost("{id}/livros")]
+        //public ActionResult PostLivro([FromRoute] Guid id, [FromBody] Livro create)
+        //{
+        //    var conexao = new AutorService(db);
+        //    var comment = conexao.CreateLivro(id, create);
 
-            return Created("", comment);
-        }
+        //    return Created("", comment);
+        //}
 
-        [HttpGet("{id}/livros")]
-        public ActionResult GetLivros([FromRoute] Guid id, [FromQuery] Guid LivroId)
-        {
-            var conexao = new AutorService(db);
-            var comments = conexao.GetLivros(id, LivroId);
+        //[HttpGet("{id}/livros")]
+        //public ActionResult GetLivros([FromRoute] Guid id, [FromQuery] Guid LivroId)
+        //{
+        //    var conexao = new AutorService(db);
+        //    var comments = conexao.GetLivros(id, LivroId);
 
-            return Ok(comments);
-        }
+        //    return Ok(comments);
+        //}
     }
 }
