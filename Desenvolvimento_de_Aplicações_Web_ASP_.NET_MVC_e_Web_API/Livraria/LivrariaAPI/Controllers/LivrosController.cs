@@ -16,89 +16,89 @@ namespace LivrariaAPI.Controllers
     public class LivrosController : ControllerBase
     {
 
-        private BancoDeDados db;
+        //    private BancoDeDados db;
 
-        public LivrosController(BancoDeDados bancoDeDados)
-        {
-            db = bancoDeDados;
-        }
-
-
-        [HttpGet("getAll")]
-        public ActionResult GetAll()
-        {
-            var conexao = new LivroService(db);
-            var todosLivros = conexao.GetAll();
-
-            return Ok(todosLivros);
-        }
+        //    public LivrosController(BancoDeDados bancoDeDados)
+        //    {
+        //        db = bancoDeDados;
+        //    }
 
 
-        [HttpGet]
-        public ActionResult GetByTitulo([FromQuery] string pTitulo)
-        {
-            var conexao = new LivroService(db);
-            var livro = conexao.GetByNome(pTitulo);
+        //    [HttpGet("getAll")]
+        //    public ActionResult GetAll()
+        //    {
+        //        var conexao = new LivroService(db);
+        //        var todosLivros = conexao.GetAll();
 
-            return Ok(livro);
-        }
-
-
-        [HttpGet("{id}")]
-        public ActionResult GetById([FromRoute] Guid id)
-        {
-            var conexao = new LivroService(db);
-            var post = conexao.GetById(id);
-
-            if (post == null)
-                return NoContent();
-
-            return Ok(post);
-        }
-
-        [HttpPost]
-        public ActionResult Livro([FromBody] CriarLivroRequest create)
-        {
-            var conexao = new LivroService(db);
-
-            var criarLivro = new Livro();
-            criarLivro.AutorId = create.AutorId;
-            criarLivro.Titulo = create.Titulo;
-            criarLivro.Descricao = create.Descricao;
-            criarLivro.ISBN = create.ISBN;
-            criarLivro.CreateDt = DateTime.UtcNow;
-
-            var post = conexao.CreateLivro(criarLivro);
-
-            return Created("api/[controller]", post);
-        }
+        //        return Ok(todosLivros);
+        //    }
 
 
-        [HttpDelete("{id}")]
-        public ActionResult Delete(Guid id)
-        {
-            var conexao = new LivroService(db);
-            conexao.DeleteLivro(id);
+        //    [HttpGet]
+        //    public ActionResult GetByTitulo([FromQuery] string pTitulo)
+        //    {
+        //        var conexao = new LivroService(db);
+        //        var livro = conexao.GetByNome(pTitulo);
 
-            return NoContent();
-        }
+        //        return Ok(livro);
+        //    }
 
 
-        [HttpPut("{id}")]
-        public ActionResult Put([FromRoute] Guid id, AtualizarLivroRequest update)
-        {
+        //    [HttpGet("{id}")]
+        //    public ActionResult GetById([FromRoute] Guid id)
+        //    {
+        //        var conexao = new LivroService(db);
+        //        var post = conexao.GetById(id);
 
-            var conexao = new LivroService(db);
-            var atualizarLivro = new Livro();
-            atualizarLivro.Titulo = update.Titulo;
-            atualizarLivro.Descricao = update.Descricao;
-            atualizarLivro.ISBN = update.ISBN;
+        //        if (post == null)
+        //            return NoContent();
 
-            var updateLivro = conexao.UpdateLivro(id, atualizarLivro);
+        //        return Ok(post);
+        //    }
 
-            return Ok(updateLivro);
+        //    [HttpPost]
+        //    public ActionResult Livro([FromBody] CriarLivroRequest create)
+        //    {
+        //        var conexao = new LivroService(db);
 
-        }
+        //        var criarLivro = new Livro();
+        //        criarLivro.AutorId = create.AutorId;
+        //        criarLivro.Titulo = create.Titulo;
+        //        criarLivro.Descricao = create.Descricao;
+        //        criarLivro.ISBN = create.ISBN;
+        //        criarLivro.CreateDt = DateTime.UtcNow;
+
+        //        var post = conexao.CreateLivro(criarLivro);
+
+        //        return Created("api/[controller]", post);
+        //    }
+
+
+        //    [HttpDelete("{id}")]
+        //    public ActionResult Delete(Guid id)
+        //    {
+        //        var conexao = new LivroService(db);
+        //        conexao.DeleteLivro(id);
+
+        //        return NoContent();
+        //    }
+
+
+        //    [HttpPut("{id}")]
+        //    public ActionResult Put([FromRoute] Guid id, AtualizarLivroRequest update)
+        //    {
+
+        //        var conexao = new LivroService(db);
+        //        var atualizarLivro = new Livro();
+        //        atualizarLivro.Titulo = update.Titulo;
+        //        atualizarLivro.Descricao = update.Descricao;
+        //        atualizarLivro.ISBN = update.ISBN;
+
+        //        var updateLivro = conexao.UpdateLivro(id, atualizarLivro);
+
+        //        return Ok(updateLivro);
+
+        //    }
 
     }
 }

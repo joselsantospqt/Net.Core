@@ -1,4 +1,4 @@
-﻿using LivrariaCore.Database;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,72 +6,80 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.String;
 using static System.Guid;
+using LivrariaCore.Repositorio;
 
 namespace LivrariaCore.Service
 {
     public class AutorService
     {
-        private BancoDeDados db;
+        public IRepositorioAutor RepositorioAutor { get; }
 
-        public AutorService(BancoDeDados db)
+        public AutorService(IRepositorioAutor repositorioAutor)
         {
-            this.db = db;
+            RepositorioAutor = repositorioAutor;
         }
 
-        public List<Autor> GetAll()
+        public IEnumerable<Autor> GetAll()
         {
-            var list = new List<Autor>();
-            list.AddRange(db.Autor.ToList());
+            var Autores = RepositorioAutor.GetAll();
 
-            return list;
+            return Autores;
         }
         public Autor GetById(Guid id)
         {
-            var Autor = db.Autor.Find(id);
+            var Autor = RepositorioAutor.GetById(id);
             return Autor;
         }
 
-        public Autor GetByNome(string autor)
+        //public Autor GetByNome(string autor)
+        //{
+        //    if (IsNullOrWhiteSpace(autor))
+        //    {
+        //        return db.Autor.Find(autor);
+        //    }
+
+        //    return db.Autor.Where(x => x.Nome == autor).FirstOrDefault();
+
+        //}
+
+        public Autor CreateAutor(string Nome, string Sobrenome, DateTime Datanascimento, String Email, String Senha)
         {
-            if (IsNullOrWhiteSpace(autor))
-            {
-                return db.Autor.Find(autor);
-            }
 
-            return db.Autor.Where(x => x.Nome == autor).FirstOrDefault();
+            Autor novoAutor = new Autor();
+            novoAutor.Id = NewGuid();
+            novoAutor.Nome = Nome;
+            novoAutor.Sobrenome = Sobrenome;
+            novoAutor.Datanascimento = Datanascimento;
+            novoAutor.Email = Email;
+            novoAutor.Senha = Senha;
+            novoAutor.UpdatedAt = new DateTime();
 
+            RepositorioAutor.Save(novoAutor);
+
+            return novoAutor;
         }
 
-        public Autor CreateAutor(Autor create)
+        public Autor UpdateAutor(Guid id, string Nome, string Sobrenome, String Email, String Senha)
         {
 
-            var autor = new Autor();
-            autor = create;
-            autor.Id = NewGuid();
-            db.Autor.Add(autor);
-            db.SaveChanges();
+            Autor Autor = RepositorioAutor.GetById(id);
+            if (Nome != null)
+                Autor.Nome = Nome;
+            if (Sobrenome != null)
+                Autor.Sobrenome = Sobrenome;
+            if (Email != null)
+                Autor.Email = Email;
+            if (Senha != null)
+                Autor.Senha = Senha;
 
-            return autor;
-        }
-
-        public Autor UpdateAutor(Guid id, Autor update)
-        {
-
-            var Autor = db.Autor.Find(id);
-            Autor.Nome = update.Nome;
-            Autor.Sobrenome = update.Sobrenome;
-            Autor.Email = update.Email;
-            Autor.Senha = update.Senha;
             Autor.UpdatedAt = DateTime.UtcNow;
-
+            RepositorioAutor.Update(Autor);
             return Autor;
         }
 
         public void DeleteAutor(Guid id)
         {
-            var Autor = db.Autor.Find(id);
-            db.Autor.Remove(Autor);
-            db.SaveChanges();
+            RepositorioAutor.Remove(id);
         }
 
     }

@@ -1,4 +1,4 @@
-using LivrariaCore.Database;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -13,6 +13,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LivrariaCore.Service;
+using LivrariaInfrastructure;
 
 namespace LivrariaAPI
 {
@@ -34,8 +36,12 @@ namespace LivrariaAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "LivrariaAPI", Version = "v1" });
             });
-            services.AddDbContext<BancoDeDados>(config => config.UseSqlServer(Configuration.GetConnectionString("dbLocal"),
-                optionsBuilder => optionsBuilder.MigrationsAssembly("LivrariaAPI")));
+            
+
+            //INJEÇÂO DE SERVIÇOS
+            services.AddScoped<AutorService>();
+            services.AddScoped<LivroService>();
+            services.AddInfrastructure(Configuration.GetConnectionString("dbLocal"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

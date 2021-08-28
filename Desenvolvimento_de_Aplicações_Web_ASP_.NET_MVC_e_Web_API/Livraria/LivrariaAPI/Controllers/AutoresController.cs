@@ -15,39 +15,37 @@ namespace LivrariaAPI.Controllers
     [ApiController]
     public class AutoresController : ControllerBase
     {
+        private AutorService _Service;
 
-        private BancoDeDados db;
-
-        public AutoresController(BancoDeDados bancoDeDados)
+        public AutoresController(AutorService service)
         {
-            db = bancoDeDados;
+            _Service = service;
         }
+
 
         [HttpGet("getAll")]
         public ActionResult GetAll()
         {
-            var conexao = new AutorService(db);
-            var todosPosts = conexao.GetAll();
+            var todosPosts = _Service.GetAll();
 
             return Ok(todosPosts);
         }
 
 
-        [HttpGet]
-        public ActionResult GetByAuthor([FromQuery] string nome)
-        {
-            var conexao = new AutorService(db);
-            var post = conexao.GetByNome(nome);
+        //[HttpGet]
+        //public ActionResult GetByAuthor([FromQuery] string nome)
+        //{
+        //    var conexao = new AutorService(db);
+        //    var post = conexao.GetByNome(nome);
 
-            return Ok(post);
-        }
+        //    return Ok(post);
+        //}
 
 
         [HttpGet("{id}")]
         public ActionResult GetById([FromRoute] Guid id)
         {
-            var conexao = new AutorService(db);
-            var post = conexao.GetById(id);
+            var post = _Service.GetById(id);
 
             if (post == null)
                 return NoContent();
@@ -58,27 +56,17 @@ namespace LivrariaAPI.Controllers
         [HttpPost]
         public ActionResult Autor([FromBody] CriarAutorRequest create)
         {
-            var conexao = new AutorService(db);
 
-            var criarPost = new Autor();
-            criarPost.Nome = create.Nome;
-            criarPost.Sobrenome = create.Sobrenome;
-            criarPost.Datanascimento = create.Datanascimento;
-            criarPost.Email = create.Email;
-            criarPost.Senha = create.Senha;
+            _Service.CreateAutor(create.Nome, create.Sobrenome, create.Datanascimento, create.Email, create.Senha);
 
-            var post = conexao.CreateAutor(criarPost);
-
-            return Created("api/[controller]", post);
+            return Created("api/[controller]", create);
         }
 
 
         [HttpDelete("{id}")]
         public ActionResult Delete(Guid id)
         {
-            var conexao = new AutorService(db);
-            conexao.DeleteAutor(id);
-
+            _Service.DeleteAutor(id);
             return NoContent();
         }
 
@@ -86,37 +74,10 @@ namespace LivrariaAPI.Controllers
         [HttpPut("{id}")]
         public ActionResult Put([FromRoute] Guid id, AtualizarAutorRequest update)
         {
-
-            var conexao = new AutorService(db);
-            var atualizarAutor = new Autor();
-            atualizarAutor.Nome = update.Nome;
-            atualizarAutor.Sobrenome = update.Sobrenome;
-            atualizarAutor.Email = update.Email;
-            atualizarAutor.Senha = update.Senha;
-
-            var updateAutor = conexao.UpdateAutor(id, atualizarAutor);
-
-            return Ok(updateAutor);
+            _Service.UpdateAutor(id, update.Nome, update.Sobrenome, update.Email, update.Senha);
+            return Ok(update);
 
         }
 
-
-        //[HttpPost("{id}/livros")]
-        //public ActionResult PostLivro([FromRoute] Guid id, [FromBody] Livro create)
-        //{
-        //    var conexao = new AutorService(db);
-        //    var comment = conexao.CreateLivro(id, create);
-
-        //    return Created("", comment);
-        //}
-
-        //[HttpGet("{id}/livros")]
-        //public ActionResult GetLivros([FromRoute] Guid id, [FromQuery] Guid LivroId)
-        //{
-        //    var conexao = new AutorService(db);
-        //    var comments = conexao.GetLivros(id, LivroId);
-
-        //    return Ok(comments);
-        //}
     }
 }
