@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "gImVbJs3erzKBFdP1X58qNkcPqqNPVrgogsQmbdsMGqsBlKFn4JF99h4ELpjh4haDz9icpUHf6uhz+hY8fdulg==",
+  "success": true,
+  "projectFilePath": "C:\\Git\\ASP.net\\Desenvolvimento_com_Serviços_WCF_e_Microsoft_Azure\\MyGroupFriends\\MyGroupFriends.API\\MyGroupFriends.API.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\ricar\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "C:\\Users\\ricar\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\ricar\\.nuget\\packages\\swashbuckle.aspnetcore\\5.6.3\\swashbuckle.aspnetcore.5.6.3.nupkg.sha512",
+    "C:\\Users\\ricar\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\5.6.3\\swashbuckle.aspnetcore.swagger.5.6.3.nupkg.sha512",
+    "C:\\Users\\ricar\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\5.6.3\\swashbuckle.aspnetcore.swaggergen.5.6.3.nupkg.sha512",
+    "C:\\Users\\ricar\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\5.6.3\\swashbuckle.aspnetcore.swaggerui.5.6.3.nupkg.sha512"
+  ],
+  "logs": []
+}

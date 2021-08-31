@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="MyApplicationAzureTp1" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Git\\ASP\.net\\Desenvolvimento_com_Serviços_WCF_e_Microsoft_Azure\\MyApplicationAzure\\MyApplicationAzure\\obj\\Release\\net5\.0\\PubTmp\\Out\\$" />
+  </parameter>
+</parameters>
