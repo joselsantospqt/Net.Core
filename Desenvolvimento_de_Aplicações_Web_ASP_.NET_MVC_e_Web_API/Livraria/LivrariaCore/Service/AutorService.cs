@@ -12,23 +12,29 @@ namespace LivrariaCore.Service
 {
     public class AutorService
     {
-        public IRepositorioAutor RepositorioAutor { get; }
+        public IRepositorioAutor _RepositorioAutor { get; }
 
-        public AutorService(IRepositorioAutor repositorioAutor)
+        private IRepositorioLivro _RepositorioLivro { get; }
+
+        public AutorService(IRepositorioAutor repositorioAutor, IRepositorioLivro repositorioLivro)
         {
-            RepositorioAutor = repositorioAutor;
+            _RepositorioAutor = repositorioAutor;
+            _RepositorioLivro = repositorioLivro;
+
         }
 
         public IEnumerable<Autor> GetAll()
         {
-            var Autores = RepositorioAutor.GetAll();
+            var Autores = _RepositorioAutor.GetAll();
 
             return Autores;
         }
         public Autor GetById(Guid pId)
         {
-            var Autor = RepositorioAutor.GetById(pId);
-            return Autor;
+            Autor autor = new Autor();
+            autor = _RepositorioAutor.GetById(pId);
+            autor.ListaLivros = _RepositorioLivro.GetLivrosById(pId);
+             return autor;
         }
 
         //public Autor GetByNome(string autor)
@@ -54,7 +60,7 @@ namespace LivrariaCore.Service
             novoAutor.Senha = pSenha;
             novoAutor.UpdatedAt = new DateTime();
 
-            RepositorioAutor.Save(novoAutor);
+            _RepositorioAutor.Save(novoAutor);
 
             return novoAutor;
         }
@@ -62,7 +68,7 @@ namespace LivrariaCore.Service
         public Autor Update(Guid pId, string pNome, string pSobrenome, String pEmail, String pSenha)
         {
 
-            Autor Autor = RepositorioAutor.GetById(pId);
+            Autor Autor = _RepositorioAutor.GetById(pId);
             if (pNome != null)
                 Autor.Nome = pNome;
             if (pSobrenome != null)
@@ -73,13 +79,13 @@ namespace LivrariaCore.Service
                 Autor.Senha = pSenha;
 
             Autor.UpdatedAt = DateTime.UtcNow;
-            RepositorioAutor.Update(Autor);
+            _RepositorioAutor.Update(Autor);
             return Autor;
         }
 
         public void Delete(Guid pId)
         {
-            RepositorioAutor.Remove(pId);
+            _RepositorioAutor.Remove(pId);
         }
 
     }

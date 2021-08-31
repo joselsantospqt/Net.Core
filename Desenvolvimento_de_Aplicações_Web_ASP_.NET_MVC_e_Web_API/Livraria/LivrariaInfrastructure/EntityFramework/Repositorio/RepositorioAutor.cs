@@ -11,46 +11,46 @@ namespace LivrariaInfrastructure.EntityFramework.Repositorio
 {
     public class RepositorioAutor : IRepositorioAutor
     {
-        private BancoDeDados db;
+        private BancoDeDados _db;
 
         public RepositorioAutor(BancoDeDados bancoDeDados)
         {
-            db = bancoDeDados;
+            _db = bancoDeDados;
         }
 
         public IEnumerable<Autor> GetAll()
         {
-            var pessoas = db.Autor.AsNoTracking().ToList();
+            var pessoas = _db.Autor.AsNoTracking().ToList();
             return pessoas;
         }
 
         public Autor GetById(Guid id)
         {
-            var Autor = db.Autor.Find(id);
-            return Autor;
+            var autor = _db.Autor.Find(id);
+            return autor;
         }
 
         public void Remove(Guid id)
         {
-            var Autor = db.Autor.Find(id);
+            var Autor = _db.Autor.Find(id);
             if (Autor != null)
             {
-                db.Autor.Remove(Autor);
-                db.SaveChanges();
+                _db.Autor.Remove(Autor);
+                _db.SaveChanges();
             }
 
         }
 
         public void Save(Autor autor)
         {
-            db.Autor.Add(autor);
-            db.SaveChanges();
+            _db.Autor.Add(autor);
+            _db.SaveChanges();
         }
 
         public void Update(Autor autor)
         {
-            db.Autor.Update(autor);
-            db.SaveChanges();
+            _db.Autor.Update(autor);
+            _db.SaveChanges();
         }
     }
 }

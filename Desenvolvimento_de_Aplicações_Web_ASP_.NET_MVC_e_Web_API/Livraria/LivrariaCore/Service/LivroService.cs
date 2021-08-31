@@ -11,23 +11,23 @@ namespace LivrariaCore.Service
 {
     public class LivroService
     {
-        public IRepositorioLivro RepositorioLivro { get; }
+        public IRepositorioLivro _RepositorioLivro { get; }
 
         public LivroService(IRepositorioLivro repositorioLivro)
         {
-            RepositorioLivro = repositorioLivro;
+            _RepositorioLivro = repositorioLivro;
         }
 
 
         public IEnumerable<Livro> GetAll()
         {
-            var livros = RepositorioLivro.GetAll();
+            var livros = _RepositorioLivro.GetAll();
             return livros;
         }
 
         public Livro GetById(Guid pId)
         {
-            var Livro = RepositorioLivro.GetById(pId);
+            var Livro = _RepositorioLivro.GetById(pId);
             return Livro;
         }
 
@@ -45,7 +45,7 @@ namespace LivrariaCore.Service
         public Livro Update(Guid pId, string pTitulo, string pDescricao, string pISBN)
         {
 
-            Livro livro = RepositorioLivro.GetById(pId);
+            Livro livro = _RepositorioLivro.GetById(pId);
             if (pTitulo != null)
                 livro.Titulo = pTitulo;
             if (pDescricao != null)
@@ -53,13 +53,13 @@ namespace LivrariaCore.Service
             if (pISBN != null)
                 livro.ISBN = pISBN;
             livro.UpdatedDt = DateTime.UtcNow;
-            RepositorioLivro.Update(livro);
+            _RepositorioLivro.Update(livro);
             return livro;
         }
 
         public void Delete(Guid id)
         {
-            RepositorioLivro.Remove(id);
+            _RepositorioLivro.Remove(id);
         }
 
         public Livro Create(Guid pAutorId, string pTitulo, string pDescricao, string pISBN)
@@ -72,7 +72,7 @@ namespace LivrariaCore.Service
             livro.ISBN = pISBN;
             livro.CreateDt = DateTime.UtcNow;
             livro.UpdatedDt = new DateTime();
-            RepositorioLivro.Save(livro);
+            _RepositorioLivro.Save(livro);
             return livro;
         }
     }

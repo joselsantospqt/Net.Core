@@ -11,46 +11,52 @@ namespace LivrariaInfrastructure.EntityFramework.Repositorio
 {
     public class RepositorioLivro : IRepositorioLivro
     {
-        private BancoDeDados db;
+        private BancoDeDados _db;
 
         public RepositorioLivro(BancoDeDados bancoDeDados)
         {
-            db = bancoDeDados;
+            _db = bancoDeDados;
         }
 
         public IEnumerable<Livro> GetAll()
         {
-            var livros = db.Livro.AsNoTracking().ToList();
+            var livros = _db.Livro.AsNoTracking().ToList();
             return livros;
         }
 
         public Livro GetById(Guid id)
         {
 
-            var livro = db.Livro.Find(id);
+            var livro = _db.Livro.Find(id);
             return livro;
+        }
+
+        public IEnumerable<Livro> GetLivrosById(Guid id)
+        {
+            IEnumerable<Livro> Livros = _db.Livro.Where(x => x.AutorId == id).ToList();
+            return Livros;
         }
 
         public void Remove(Guid id)
         {
-            var livro = db.Livro.Find(id);
+            var livro = _db.Livro.Find(id);
             if (livro != null)
             {
-                db.Livro.Remove(livro);
-                db.SaveChanges();
+                _db.Livro.Remove(livro);
+                _db.SaveChanges();
             }
         }
 
         public void Save(Livro livro)
         {
-            db.Livro.Add(livro);
-            db.SaveChanges();
+            _db.Livro.Add(livro);
+            _db.SaveChanges();
         }
 
         public void Update(Livro livro)
         {
-            db.Livro.Update(livro);
-            db.SaveChanges();
+            _db.Livro.Update(livro);
+            _db.SaveChanges();
         }
     }
 }

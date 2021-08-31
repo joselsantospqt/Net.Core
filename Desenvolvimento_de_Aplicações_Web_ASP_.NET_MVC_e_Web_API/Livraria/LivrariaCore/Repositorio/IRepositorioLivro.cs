@@ -10,6 +10,8 @@ namespace LivrariaCore.Repositorio
     {
         void Save(Livro livro);
         Livro GetById(Guid id);
+        IEnumerable<Livro> GetLivrosById(Guid id);
+
         void Remove(Guid id);
         IEnumerable<Livro> GetAll();
         void Update(Livro livro);
