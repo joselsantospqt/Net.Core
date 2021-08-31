@@ -25,9 +25,9 @@ namespace LivrariaCore.Service
             return livros;
         }
 
-        public Livro GetById(Guid id)
+        public Livro GetById(Guid pId)
         {
-            var Livro = RepositorioLivro.GetById(id);
+            var Livro = RepositorioLivro.GetById(pId);
             return Livro;
         }
 
@@ -42,36 +42,37 @@ namespace LivrariaCore.Service
 
         //}
 
-        public Livro UpdateLivro(Guid id, string Titulo, string Descricao, string ISBN)
+        public Livro Update(Guid pId, string pTitulo, string pDescricao, string pISBN)
         {
 
-            Livro livro = RepositorioLivro.GetById(id);
-            if (Titulo != null)
-                livro.Titulo = Titulo;
-            if (Descricao != null)
-                livro.Descricao = Descricao;
-            if (ISBN != null)
-                livro.ISBN = ISBN;
+            Livro livro = RepositorioLivro.GetById(pId);
+            if (pTitulo != null)
+                livro.Titulo = pTitulo;
+            if (pDescricao != null)
+                livro.Descricao = pDescricao;
+            if (pISBN != null)
+                livro.ISBN = pISBN;
             livro.UpdatedDt = DateTime.UtcNow;
             RepositorioLivro.Update(livro);
             return livro;
         }
 
-        public void DeleteLivro(Guid id)
+        public void Delete(Guid id)
         {
             RepositorioLivro.Remove(id);
         }
 
-        public Livro CreateLivro(Guid AutorId, string Titulo, string Descricao, string ISBN)
+        public Livro Create(Guid pAutorId, string pTitulo, string pDescricao, string pISBN)
         {
             Livro livro = new Livro();
             livro.Id = NewGuid();
-            livro.AutorId = AutorId;
-            livro.Titulo = Titulo;
-            livro.Descricao = Descricao;
-            livro.ISBN = ISBN;
+            livro.AutorId = pAutorId;
+            livro.Titulo = pTitulo;
+            livro.Descricao = pDescricao;
+            livro.ISBN = pISBN;
             livro.CreateDt = DateTime.UtcNow;
             livro.UpdatedDt = new DateTime();
+            RepositorioLivro.Save(livro);
             return livro;
         }
     }

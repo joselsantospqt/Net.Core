@@ -9,3 +9,4 @@ C:\Git\ASP.net\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\Livrar
 C:\Git\ASP.net\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\Livraria\LivrariaCore\obj\Debug\net5.0\LivrariaCore.dll
 C:\Git\ASP.net\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\Livraria\LivrariaCore\obj\Debug\net5.0\ref\LivrariaCore.dll
 C:\Git\ASP.net\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\Livraria\LivrariaCore\obj\Debug\net5.0\LivrariaCore.pdb
+C:\Git\ASP.net\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\Livraria\LivrariaCore\obj\Debug\net5.0\LivrariaCore.csproj.AssemblyReference.cache

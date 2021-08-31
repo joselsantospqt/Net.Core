@@ -1,5 +1,4 @@
 ﻿using LivrariaCore;
-using LivrariaCore.Database;
 using LivrariaCore.Repositorio;
 using Microsoft.EntityFrameworkCore;
 using System;

@@ -25,9 +25,9 @@ namespace LivrariaCore.Service
 
             return Autores;
         }
-        public Autor GetById(Guid id)
+        public Autor GetById(Guid pId)
         {
-            var Autor = RepositorioAutor.GetById(id);
+            var Autor = RepositorioAutor.GetById(pId);
             return Autor;
         }
 
@@ -42,16 +42,16 @@ namespace LivrariaCore.Service
 
         //}
 
-        public Autor CreateAutor(string Nome, string Sobrenome, DateTime Datanascimento, String Email, String Senha)
+        public Autor Create(string pNome, string pSobrenome, DateTime pDatanascimento, String pEmail, String pSenha)
         {
 
             Autor novoAutor = new Autor();
             novoAutor.Id = NewGuid();
-            novoAutor.Nome = Nome;
-            novoAutor.Sobrenome = Sobrenome;
-            novoAutor.Datanascimento = Datanascimento;
-            novoAutor.Email = Email;
-            novoAutor.Senha = Senha;
+            novoAutor.Nome = pNome;
+            novoAutor.Sobrenome = pSobrenome;
+            novoAutor.Datanascimento = pDatanascimento;
+            novoAutor.Email = pEmail;
+            novoAutor.Senha = pSenha;
             novoAutor.UpdatedAt = new DateTime();
 
             RepositorioAutor.Save(novoAutor);
@@ -59,27 +59,27 @@ namespace LivrariaCore.Service
             return novoAutor;
         }
 
-        public Autor UpdateAutor(Guid id, string Nome, string Sobrenome, String Email, String Senha)
+        public Autor Update(Guid pId, string pNome, string pSobrenome, String pEmail, String pSenha)
         {
 
-            Autor Autor = RepositorioAutor.GetById(id);
-            if (Nome != null)
-                Autor.Nome = Nome;
-            if (Sobrenome != null)
-                Autor.Sobrenome = Sobrenome;
-            if (Email != null)
-                Autor.Email = Email;
-            if (Senha != null)
-                Autor.Senha = Senha;
+            Autor Autor = RepositorioAutor.GetById(pId);
+            if (pNome != null)
+                Autor.Nome = pNome;
+            if (pSobrenome != null)
+                Autor.Sobrenome = pSobrenome;
+            if (pEmail != null)
+                Autor.Email = pEmail;
+            if (pSenha != null)
+                Autor.Senha = pSenha;
 
             Autor.UpdatedAt = DateTime.UtcNow;
             RepositorioAutor.Update(Autor);
             return Autor;
         }
 
-        public void DeleteAutor(Guid id)
+        public void Delete(Guid pId)
         {
-            RepositorioAutor.Remove(id);
+            RepositorioAutor.Remove(pId);
         }
 
     }

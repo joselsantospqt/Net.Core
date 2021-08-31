@@ -1,6 +1,5 @@
 ﻿using LivrariaAPI.Request;
 using LivrariaCore;
-using LivrariaCore.Database;
 using LivrariaCore.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,7 +26,6 @@ namespace LivrariaAPI.Controllers
         public ActionResult GetAll()
         {
             var todosPosts = _Service.GetAll();
-
             return Ok(todosPosts);
         }
 
@@ -46,7 +44,6 @@ namespace LivrariaAPI.Controllers
         public ActionResult GetById([FromRoute] Guid id)
         {
             var post = _Service.GetById(id);
-
             if (post == null)
                 return NoContent();
 
@@ -56,9 +53,7 @@ namespace LivrariaAPI.Controllers
         [HttpPost]
         public ActionResult Autor([FromBody] CriarAutorRequest create)
         {
-
-            _Service.CreateAutor(create.Nome, create.Sobrenome, create.Datanascimento, create.Email, create.Senha);
-
+            _Service.Create(create.Nome, create.Sobrenome, create.Datanascimento, create.Email, create.Senha);
             return Created("api/[controller]", create);
         }
 
@@ -66,7 +61,7 @@ namespace LivrariaAPI.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete(Guid id)
         {
-            _Service.DeleteAutor(id);
+            _Service.Delete(id);
             return NoContent();
         }
 
@@ -74,7 +69,7 @@ namespace LivrariaAPI.Controllers
         [HttpPut("{id}")]
         public ActionResult Put([FromRoute] Guid id, AtualizarAutorRequest update)
         {
-            _Service.UpdateAutor(id, update.Nome, update.Sobrenome, update.Email, update.Senha);
+            _Service.Update(id, update.Nome, update.Sobrenome, update.Email, update.Senha);
             return Ok(update);
 
         }
