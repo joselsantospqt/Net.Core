@@ -23,6 +23,12 @@ https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Tools/5.0.6?_src=te
 https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Design/5.0.6?_src=template
 ```
 
+## Microsoft.EntityFrameworkCore.InMemory:
+```
+https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.InMemory/5.0.9
+```
+
+
 
 
 
