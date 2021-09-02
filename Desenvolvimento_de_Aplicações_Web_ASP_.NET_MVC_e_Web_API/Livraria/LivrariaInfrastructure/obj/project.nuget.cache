@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ZiOx+Q2p37GzbIa2C3ngzjFFnHlhwagxMxg9et/+iqXFul7+h+Zv8DsJHHYc4qEHi3iCAb8eWqzX1W0DxpmYlQ==",
+  "dgSpecHash": "WQfYoG5CkV8bg1Hoyq2wkvSn9SjULfVBhdBzcw+OXrBtztLpjS4BMHpBQFFuO/yQ/iQW87LHusKhA/KSly2ubQ==",
   "success": true,
   "projectFilePath": "C:\\Git\\ASP.net\\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\\Livraria\\LivrariaInfrastructure\\LivrariaInfrastructure.csproj",
   "expectedPackageFiles": [
@@ -14,6 +14,7 @@
     "C:\\Users\\ricar\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\5.0.9\\microsoft.entityframeworkcore.abstractions.5.0.9.nupkg.sha512",
     "C:\\Users\\ricar\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\5.0.9\\microsoft.entityframeworkcore.analyzers.5.0.9.nupkg.sha512",
     "C:\\Users\\ricar\\.nuget\\packages\\microsoft.entityframeworkcore.design\\5.0.9\\microsoft.entityframeworkcore.design.5.0.9.nupkg.sha512",
+    "C:\\Users\\ricar\\.nuget\\packages\\microsoft.entityframeworkcore.inmemory\\5.0.9\\microsoft.entityframeworkcore.inmemory.5.0.9.nupkg.sha512",
     "C:\\Users\\ricar\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\5.0.9\\microsoft.entityframeworkcore.relational.5.0.9.nupkg.sha512",
     "C:\\Users\\ricar\\.nuget\\packages\\microsoft.entityframeworkcore.sqlserver\\5.0.9\\microsoft.entityframeworkcore.sqlserver.5.0.9.nupkg.sha512",
     "C:\\Users\\ricar\\.nuget\\packages\\microsoft.entityframeworkcore.tools\\5.0.9\\microsoft.entityframeworkcore.tools.5.0.9.nupkg.sha512",

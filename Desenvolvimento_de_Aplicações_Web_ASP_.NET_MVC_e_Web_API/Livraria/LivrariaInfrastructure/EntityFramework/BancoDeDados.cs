@@ -14,5 +14,17 @@ namespace LivrariaInfrastructure.EntityFramework
 
         public DbSet<Autor> Autor { get; set; }
         public DbSet<Livro> Livro { get; set; }
+
+        //TODO: Ajustar os relacionamentos via modelo - https://docs.microsoft.com/pt-br/ef/core/modeling/relationships?tabs=fluent-api%2Cfluent-api-simple-key%2Csimple-key
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Autor>()
+                .HasMany(a => a.Livros)
+                .WithMany(l => l.Autores);
+
+            modelBuilder.Entity<Livro>()
+                .HasMany(l => l.Autores)
+                .WithMany(a => a.Livros);
+        }
     }
 }

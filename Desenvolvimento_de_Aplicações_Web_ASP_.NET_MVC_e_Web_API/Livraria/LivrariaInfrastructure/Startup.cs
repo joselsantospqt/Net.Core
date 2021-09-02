@@ -15,7 +15,8 @@ namespace LivrariaInfrastructure
     {
         public static void AddInfrastructure(this IServiceCollection services, string connectionString)
         {
-            services.AddDbContext<BancoDeDados>(options => options.UseSqlServer(connectionString));
+            services.AddDbContext<BancoDeDados>(options => options.UseSqlServer(connectionString, b => b.MigrationsAssembly("LivrariaAPI")));
+            //services.AddDbContext<BancoDeDados>(options => options.UseInMemoryDatabase(connectionString));
 
             services.AddScoped<IRepositorioAutor, RepositorioAutor>();
             services.AddScoped<IRepositorioLivro, RepositorioLivro>();

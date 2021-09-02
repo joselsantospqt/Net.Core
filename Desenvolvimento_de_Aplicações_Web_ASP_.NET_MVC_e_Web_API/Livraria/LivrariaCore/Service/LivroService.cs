@@ -42,7 +42,7 @@ namespace LivrariaCore.Service
 
         //}
 
-        public Livro Update(Guid pId, string pTitulo, string pDescricao, string pISBN)
+        public Livro Update(Guid pId, string pTitulo, string pDescricao, string pISBN, int pAno)
         {
 
             Livro livro = _RepositorioLivro.GetById(pId);
@@ -52,8 +52,10 @@ namespace LivrariaCore.Service
                 livro.Descricao = pDescricao;
             if (pISBN != null)
                 livro.ISBN = pISBN;
+            if (pAno != 0)
+                livro.Ano = pAno;
             livro.UpdatedDt = DateTime.UtcNow;
-            _RepositorioLivro.Update(livro);
+            _RepositorioLivro.SaveUpdate(livro);
             return livro;
         }
 
@@ -62,17 +64,17 @@ namespace LivrariaCore.Service
             _RepositorioLivro.Remove(id);
         }
 
-        public Livro Create(Guid pAutorId, string pTitulo, string pDescricao, string pISBN)
+        public Livro Create(Guid pAutorId, string pTitulo, string pDescricao, string pISBN, int pAno)
         {
             Livro livro = new Livro();
-            livro.Id = NewGuid();
-            livro.AutorId = pAutorId;
+            //TODO: não se gera GUID ou qualquer chave primária.
+            livro.Id = pAutorId;
             livro.Titulo = pTitulo;
             livro.Descricao = pDescricao;
             livro.ISBN = pISBN;
-            livro.CreateDt = DateTime.UtcNow;
+            livro.Ano = pAno;
             livro.UpdatedDt = new DateTime();
-            _RepositorioLivro.Save(livro);
+            _RepositorioLivro.SaveUpdate(livro);
             return livro;
         }
     }

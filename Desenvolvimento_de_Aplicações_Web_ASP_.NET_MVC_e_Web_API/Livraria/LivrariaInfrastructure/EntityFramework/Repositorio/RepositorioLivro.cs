@@ -31,9 +31,9 @@ namespace LivrariaInfrastructure.EntityFramework.Repositorio
             return livro;
         }
 
-        public IEnumerable<Livro> GetLivrosById(Guid id)
+        public IEnumerable<Livro> GetLivrosByAutorId(Guid id)
         {
-            IEnumerable<Livro> Livros = _db.Livro.Where(x => x.AutorId == id).ToList();
+            IEnumerable<Livro> Livros = _db.Livro.Where(x => x.Id == id).ToList();
             return Livros;
         }
 
@@ -47,16 +47,18 @@ namespace LivrariaInfrastructure.EntityFramework.Repositorio
             }
         }
 
-        public void Save(Livro livro)
+        public void SaveUpdate(Livro livro)
         {
-            _db.Livro.Add(livro);
-            _db.SaveChanges();
-        }
-
-        public void Update(Livro livro)
-        {
-            _db.Livro.Update(livro);
-            _db.SaveChanges();
+            if (livro.Id.Equals(new Guid("{00000000-0000-0000-0000-000000000000}")) || _db.Livro.Find(livro.Id) == null)
+            {
+                _db.Livro.Add(livro);
+                _db.SaveChanges();
+            }
+            else
+            {
+                _db.Livro.Update(livro);
+                _db.SaveChanges();
+            }
         }
     }
 }

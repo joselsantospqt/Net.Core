@@ -8,11 +8,12 @@ namespace LivrariaCore.Repositorio
 {
     public interface IRepositorioAutor
     {
-        void Save(Autor autor);
+        //TODO: colocr junto com os Repositorys
+
+        void SaveUpdate(Autor autor);
         Autor GetById(Guid id);
         void Remove(Guid id);
         IEnumerable<Autor> GetAll();
-        void Update(Autor autor);
 
     }
 }

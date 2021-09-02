@@ -20,7 +20,7 @@ namespace LivrariaInfrastructure.EntityFramework.Repositorio
 
         public IEnumerable<Autor> GetAll()
         {
-            var pessoas = _db.Autor.AsNoTracking().ToList();
+            var pessoas = _db.Autor.ToList();
             return pessoas;
         }
 
@@ -41,16 +41,21 @@ namespace LivrariaInfrastructure.EntityFramework.Repositorio
 
         }
 
-        public void Save(Autor autor)
+        public void SaveUpdate(Autor autor)
         {
-            _db.Autor.Add(autor);
-            _db.SaveChanges();
-        }
-
-        public void Update(Autor autor)
-        {
-            _db.Autor.Update(autor);
-            _db.SaveChanges();
+            //TODO: Ajustar o método SaveUpdate junto
+            //TODO: IF autor.ID tem algo é update, senão é Add
+            //TODO: Comparar ID -> autor.Id.Equals(new Guid("{00000000-0000-0000-0000-000000000000}"))
+            if (autor.Id.Equals(new Guid("{00000000-0000-0000-0000-000000000000}")))
+            {
+                _db.Autor.Add(autor);
+                _db.SaveChanges();
+            }
+            else
+            {
+                _db.Autor.Update(autor);
+                _db.SaveChanges();
+            }
         }
     }
 }

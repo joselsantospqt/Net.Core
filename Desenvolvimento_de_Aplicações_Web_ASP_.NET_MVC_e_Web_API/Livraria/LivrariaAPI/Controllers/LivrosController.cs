@@ -54,7 +54,7 @@ namespace LivrariaAPI.Controllers
         [HttpPost]
         public ActionResult Livro([FromBody] CriarLivroRequest create)
         {
-            var post = _Service.Create(create.AutorId, create.Titulo, create.Descricao, create.ISBN);
+            var post = _Service.Create(create.AutorId, create.Titulo, create.Descricao, create.ISBN, create.Ano);
             return Created("api/[controller]", post);
         }
 
@@ -70,7 +70,7 @@ namespace LivrariaAPI.Controllers
         [HttpPut("{id}")]
         public ActionResult Put([FromRoute] Guid id, AtualizarLivroRequest update)
         {
-            var updateLivro = _Service.Update(id, update.Titulo, update.Descricao, update.ISBN);
+            var updateLivro = _Service.Update(id, update.Titulo, update.Descricao, update.ISBN, update.Ano);
             return Ok(updateLivro);
         }
 

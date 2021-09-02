@@ -8,12 +8,10 @@ namespace LivrariaCore.Repositorio
 {
     public interface IRepositorioLivro
     {
-        void Save(Livro livro);
+        void SaveUpdate(Livro livro);
         Livro GetById(Guid id);
-        IEnumerable<Livro> GetLivrosById(Guid id);
-
+        IEnumerable<Livro> GetLivrosByAutorId(Guid id);
         void Remove(Guid id);
         IEnumerable<Livro> GetAll();
-        void Update(Livro livro);
     }
 }

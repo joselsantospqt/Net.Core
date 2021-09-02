@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,7 +19,6 @@ namespace LivrariaCore.Service
         {
             _RepositorioAutor = repositorioAutor;
             _RepositorioLivro = repositorioLivro;
-
         }
 
         public IEnumerable<Autor> GetAll()
@@ -31,10 +29,7 @@ namespace LivrariaCore.Service
         }
         public Autor GetById(Guid pId)
         {
-            Autor autor = new Autor();
-            autor = _RepositorioAutor.GetById(pId);
-            autor.ListaLivros = _RepositorioLivro.GetLivrosById(pId);
-             return autor;
+            return _RepositorioAutor.GetById(pId);
         }
 
         //public Autor GetByNome(string autor)
@@ -52,7 +47,6 @@ namespace LivrariaCore.Service
         {
 
             Autor novoAutor = new Autor();
-            novoAutor.Id = NewGuid();
             novoAutor.Nome = pNome;
             novoAutor.Sobrenome = pSobrenome;
             novoAutor.Datanascimento = pDatanascimento;
@@ -60,7 +54,7 @@ namespace LivrariaCore.Service
             novoAutor.Senha = pSenha;
             novoAutor.UpdatedAt = new DateTime();
 
-            _RepositorioAutor.Save(novoAutor);
+            _RepositorioAutor.SaveUpdate(novoAutor);
 
             return novoAutor;
         }
@@ -79,7 +73,7 @@ namespace LivrariaCore.Service
                 Autor.Senha = pSenha;
 
             Autor.UpdatedAt = DateTime.UtcNow;
-            _RepositorioAutor.Update(Autor);
+            _RepositorioAutor.SaveUpdate(Autor);
             return Autor;
         }
 

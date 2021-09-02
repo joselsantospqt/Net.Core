@@ -18,8 +18,8 @@ namespace LivrariaCore
         public string Senha { get; set; }
         public DateTime Datanascimento { get; set; }
         public DateTime UpdatedAt { get; set; }
-        [NotMapped]
-        public IEnumerable<Livro> ListaLivros{get; set;}
+
+        public IEnumerable<Livro> Livros{get; set;}
 
 }
 }

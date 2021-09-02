@@ -10,5 +10,7 @@ namespace LivrariaAPI.Request
         public string Titulo { get; set; }
         public string Descricao { get; set; }
         public string ISBN { get; set; }
+        public int Ano { get; set; }
+
     }
 }
