@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using MyGroupFriends.Domain.Entidades;
+using MyGroupFriends.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +34,10 @@ namespace MyGroupFriends.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MyGroupFriends.API", Version = "v1" });
             });
+
+            services.AddScoped<Amigo>();
+            services.AddInfrastructure(Configuration.GetConnectionString("dbAzure"));
+            //services.AddInfrastructure("Banco");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

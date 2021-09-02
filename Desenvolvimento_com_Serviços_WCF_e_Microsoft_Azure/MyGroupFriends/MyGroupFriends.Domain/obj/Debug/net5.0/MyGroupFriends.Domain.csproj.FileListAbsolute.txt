@@ -1,0 +1,12 @@
+C:\Git\ASP.net\Desenvolvimento_com_Serviços_WCF_e_Microsoft_Azure\MyGroupFriends\MyGroupFriends.Domain\bin\Debug\net5.0\MyGroupFriends.Domain.deps.json
+C:\Git\ASP.net\Desenvolvimento_com_Serviços_WCF_e_Microsoft_Azure\MyGroupFriends\MyGroupFriends.Domain\bin\Debug\net5.0\MyGroupFriends.Domain.dll
+C:\Git\ASP.net\Desenvolvimento_com_Serviços_WCF_e_Microsoft_Azure\MyGroupFriends\MyGroupFriends.Domain\bin\Debug\net5.0\ref\MyGroupFriends.Domain.dll
+C:\Git\ASP.net\Desenvolvimento_com_Serviços_WCF_e_Microsoft_Azure\MyGroupFriends\MyGroupFriends.Domain\bin\Debug\net5.0\MyGroupFriends.Domain.pdb
+C:\Git\ASP.net\Desenvolvimento_com_Serviços_WCF_e_Microsoft_Azure\MyGroupFriends\MyGroupFriends.Domain\obj\Debug\net5.0\MyGroupFriends.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Git\ASP.net\Desenvolvimento_com_Serviços_WCF_e_Microsoft_Azure\MyGroupFriends\MyGroupFriends.Domain\obj\Debug\net5.0\MyGroupFriends.Domain.AssemblyInfoInputs.cache
+C:\Git\ASP.net\Desenvolvimento_com_Serviços_WCF_e_Microsoft_Azure\MyGroupFriends\MyGroupFriends.Domain\obj\Debug\net5.0\MyGroupFriends.Domain.AssemblyInfo.cs
+C:\Git\ASP.net\Desenvolvimento_com_Serviços_WCF_e_Microsoft_Azure\MyGroupFriends\MyGroupFriends.Domain\obj\Debug\net5.0\MyGroupFriends.Domain.csproj.CoreCompileInputs.cache
+C:\Git\ASP.net\Desenvolvimento_com_Serviços_WCF_e_Microsoft_Azure\MyGroupFriends\MyGroupFriends.Domain\obj\Debug\net5.0\MyGroupFriends.Domain.dll
+C:\Git\ASP.net\Desenvolvimento_com_Serviços_WCF_e_Microsoft_Azure\MyGroupFriends\MyGroupFriends.Domain\obj\Debug\net5.0\ref\MyGroupFriends.Domain.dll
+C:\Git\ASP.net\Desenvolvimento_com_Serviços_WCF_e_Microsoft_Azure\MyGroupFriends\MyGroupFriends.Domain\obj\Debug\net5.0\MyGroupFriends.Domain.pdb
+C:\Git\ASP.net\Desenvolvimento_com_Serviços_WCF_e_Microsoft_Azure\MyGroupFriends\MyGroupFriends.Domain\obj\Debug\net5.0\MyGroupFriends.Domain.csproj.AssemblyReference.cache

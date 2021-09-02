@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "zu7CPycMO1srlfuOxtzQddMagLR+HreeDmgkge4egGvaQ8MI1/tCau9f9IPE/dGdEB2Nkso6PtqQ8Dxao3jEUg==",
+  "success": true,
+  "projectFilePath": "C:\\Git\\ASP.net\\Desenvolvimento_com_Serviços_WCF_e_Microsoft_Azure\\MyGroupFriends\\MyGroupFriends.Domain\\MyGroupFriends.Domain.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\ricar\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\5.0.2\\microsoft.extensions.dependencyinjection.5.0.2.nupkg.sha512",
+    "C:\\Users\\ricar\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\5.0.0\\microsoft.extensions.dependencyinjection.abstractions.5.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
