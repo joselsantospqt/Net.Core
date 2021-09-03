@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MyGroupFriends.Domain.Entidades;
+using MyGroupFriends.Domain.Services;
 using MyGroupFriends.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -35,8 +36,9 @@ namespace MyGroupFriends.API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MyGroupFriends.API", Version = "v1" });
             });
 
-            services.AddScoped<Amigo>();
+            services.AddScoped<AmigoService>();
             services.AddInfrastructure(Configuration.GetConnectionString("dbAzure"));
+            services.AddApplicationInsightsTelemetry();
             //services.AddInfrastructure("Banco");
         }
 
