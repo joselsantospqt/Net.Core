@@ -49,16 +49,12 @@ namespace LivrariaInfrastructure.EntityFramework.Repositorio
 
         public void SaveUpdate(Livro livro)
         {
-            if (livro.Id.Equals(new Guid("{00000000-0000-0000-0000-000000000000}")) || _db.Livro.Find(livro.Id) == null)
-            {
+            if (livro.Id.Equals(new Guid("{00000000-0000-0000-0000-000000000000}")))
                 _db.Livro.Add(livro);
-                _db.SaveChanges();
-            }
             else
-            {
                 _db.Livro.Update(livro);
+
                 _db.SaveChanges();
-            }
         }
     }
 }

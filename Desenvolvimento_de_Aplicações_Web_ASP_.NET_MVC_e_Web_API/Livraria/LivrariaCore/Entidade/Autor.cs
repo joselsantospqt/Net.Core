@@ -10,6 +10,11 @@ namespace LivrariaCore
 {
     public class Autor
     {
+        public Autor()
+        {
+            Livros = new List<Livro>();
+        }
+
         [Key]
         public Guid Id { get; set; }
         public string Nome { get; set; }
@@ -18,8 +23,7 @@ namespace LivrariaCore
         public string Senha { get; set; }
         public DateTime Datanascimento { get; set; }
         public DateTime UpdatedAt { get; set; }
+        public IList<Livro> Livros { get; set; }
 
-        public IEnumerable<Livro> Livros{get; set;}
-
-}
+    }
 }

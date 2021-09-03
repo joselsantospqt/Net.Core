@@ -7,7 +7,7 @@ namespace LivrariaAPI.Request
 {
     public class CriarLivroRequest
     {
-        public Guid AutorId { get; set; }
+        public List<Guid> AutorId { get; set; }
         public string Titulo { get; set; }
         public string Descricao { get; set; }
         public string ISBN { get; set; }

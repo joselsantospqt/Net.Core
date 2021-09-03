@@ -13,9 +13,12 @@ namespace LivrariaCore.Service
     {
         public IRepositorioLivro _RepositorioLivro { get; }
 
-        public LivroService(IRepositorioLivro repositorioLivro)
+        private IRepositorioAutor _RepositorioAutor { get; }
+
+        public LivroService(IRepositorioLivro repositorioLivro, IRepositorioAutor repositorioAutor)
         {
             _RepositorioLivro = repositorioLivro;
+            _RepositorioAutor = repositorioAutor;
         }
 
 
@@ -64,16 +67,15 @@ namespace LivrariaCore.Service
             _RepositorioLivro.Remove(id);
         }
 
-        public Livro Create(Guid pAutorId, string pTitulo, string pDescricao, string pISBN, int pAno)
+        public Livro Create(List<Guid> pAutorId, string pTitulo, string pDescricao, string pISBN, int pAno)
         {
             Livro livro = new Livro();
-            //TODO: não se gera GUID ou qualquer chave primária.
-            livro.Id = pAutorId;
             livro.Titulo = pTitulo;
             livro.Descricao = pDescricao;
             livro.ISBN = pISBN;
             livro.Ano = pAno;
             livro.UpdatedDt = new DateTime();
+            livro.Autores = _RepositorioAutor.GetAll().Where(x => pAutorId.Contains(x.Id)).ToList();
             _RepositorioLivro.SaveUpdate(livro);
             return livro;
         }

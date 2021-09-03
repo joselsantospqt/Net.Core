@@ -24,6 +24,7 @@ namespace LivrariaCore.Service
         public IEnumerable<Autor> GetAll()
         {
             var Autores = _RepositorioAutor.GetAll();
+            
 
             return Autores;
         }
