@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace LivrariaCore.Repositorio
 {
-    public interface IRepositorioLivro
+    public interface ILivroRepositorio
     {
         void SaveUpdate(Livro livro);
         Livro GetById(Guid id);
-        IEnumerable<Livro> GetLivrosByAutorId(Guid id);
         void Remove(Guid id);
         IEnumerable<Livro> GetAll();
     }

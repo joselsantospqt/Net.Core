@@ -11,22 +11,17 @@ namespace LivrariaCore.Service
 {
     public class AutorService
     {
-        public IRepositorioAutor _RepositorioAutor { get; }
+        private IAutorRepositorio _RepositorioAutor { get; }
 
-        private IRepositorioLivro _RepositorioLivro { get; }
-
-        public AutorService(IRepositorioAutor repositorioAutor, IRepositorioLivro repositorioLivro)
+        public AutorService(IAutorRepositorio repositorioAutor)
         {
             _RepositorioAutor = repositorioAutor;
-            _RepositorioLivro = repositorioLivro;
         }
 
         public IEnumerable<Autor> GetAll()
         {
-            var Autores = _RepositorioAutor.GetAll();
-            
+            return _RepositorioAutor.GetAll();
 
-            return Autores;
         }
         public Autor GetById(Guid pId)
         {
@@ -72,7 +67,6 @@ namespace LivrariaCore.Service
                 Autor.Email = pEmail;
             if (pSenha != null)
                 Autor.Senha = pSenha;
-
             Autor.UpdatedAt = DateTime.UtcNow;
             _RepositorioAutor.SaveUpdate(Autor);
             return Autor;

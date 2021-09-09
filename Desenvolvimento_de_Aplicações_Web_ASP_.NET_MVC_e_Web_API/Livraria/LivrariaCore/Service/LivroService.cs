@@ -11,27 +11,23 @@ namespace LivrariaCore.Service
 {
     public class LivroService
     {
-        public IRepositorioLivro _RepositorioLivro { get; }
+        private ILivroRepositorio _RepositorioLivro { get; }
 
-        private IRepositorioAutor _RepositorioAutor { get; }
-
-        public LivroService(IRepositorioLivro repositorioLivro, IRepositorioAutor repositorioAutor)
+        public LivroService(ILivroRepositorio repositorioLivro)
         {
             _RepositorioLivro = repositorioLivro;
-            _RepositorioAutor = repositorioAutor;
         }
 
 
         public IEnumerable<Livro> GetAll()
         {
-            var livros = _RepositorioLivro.GetAll();
-            return livros;
+            return _RepositorioLivro.GetAll();
         }
 
         public Livro GetById(Guid pId)
         {
-            var Livro = _RepositorioLivro.GetById(pId);
-            return Livro;
+            return _RepositorioLivro.GetById(pId);
+
         }
 
         //public Livro GetByNome(string pTitulo)
@@ -74,8 +70,8 @@ namespace LivrariaCore.Service
             livro.Descricao = pDescricao;
             livro.ISBN = pISBN;
             livro.Ano = pAno;
+            livro.AdicionarAutor(pAutorId);
             livro.UpdatedDt = new DateTime();
-            livro.Autores = _RepositorioAutor.GetAll().Where(x => pAutorId.Contains(x.Id)).ToList();
             _RepositorioLivro.SaveUpdate(livro);
             return livro;
         }

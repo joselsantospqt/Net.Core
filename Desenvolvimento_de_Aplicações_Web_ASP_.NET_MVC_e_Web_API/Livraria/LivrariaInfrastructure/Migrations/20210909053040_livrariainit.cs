@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace LivrariaAPI.Migrations
+namespace LivrariaInfrastructure.Migrations
 {
-    public partial class init : Migration
+    public partial class livrariainit : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -44,30 +44,37 @@ namespace LivrariaAPI.Migrations
                 name: "AutorLivro",
                 columns: table => new
                 {
-                    AutoresId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    LivrosId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AutorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    LivroId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AutorLivro", x => new { x.AutoresId, x.LivrosId });
+                    table.PrimaryKey("PK_AutorLivro", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AutorLivro_Autor_AutoresId",
-                        column: x => x.AutoresId,
+                        name: "FK_AutorLivro_Autor_AutorId",
+                        column: x => x.AutorId,
                         principalTable: "Autor",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AutorLivro_Livro_LivrosId",
-                        column: x => x.LivrosId,
+                        name: "FK_AutorLivro_Livro_LivroId",
+                        column: x => x.LivroId,
                         principalTable: "Livro",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AutorLivro_LivrosId",
+                name: "IX_AutorLivro_AutorId",
                 table: "AutorLivro",
-                column: "LivrosId");
+                column: "AutorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AutorLivro_LivroId",
+                table: "AutorLivro",
+                column: "LivroId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

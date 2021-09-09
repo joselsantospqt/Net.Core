@@ -12,7 +12,7 @@ namespace LivrariaCore
     {
         public Livro()
         {
-            Autores = new List<Autor>();
+            Autores = new List<AutorLivro>();
         }
 
         [Key]
@@ -22,8 +22,14 @@ namespace LivrariaCore
         public string ISBN { get; set; }
         public int Ano { get; set; }
         public DateTime UpdatedDt { get; set; }
-        public IList<Autor> Autores { get; set; }
+        public IList<AutorLivro> Autores { get; set; }
 
-
+        internal void AdicionarAutor(List<Guid> pAutorId)
+        {
+            foreach (var item in pAutorId)
+            {
+                Autores.Add(new AutorLivro(){AutorId = item,LivroId = this.Id});
+            }
+        }
     }
 }

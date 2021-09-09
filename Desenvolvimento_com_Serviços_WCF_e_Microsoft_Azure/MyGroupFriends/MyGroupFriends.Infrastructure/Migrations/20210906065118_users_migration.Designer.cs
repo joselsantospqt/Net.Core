@@ -10,8 +10,8 @@ using MyGroupFriends.Infrastructure.EntityFramework;
 namespace MyGroupFriends.Infrastructure.Migrations
 {
     [DbContext(typeof(BancoDeDados))]
-    [Migration("20210902081551_init")]
-    partial class init
+    [Migration("20210906065118_users_migration")]
+    partial class users_migration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

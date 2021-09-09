@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace LivrariaCore.Repositorio
 {
-    public interface IRepositorioAutor
+    public interface IAutorRepositorio
     {
-        //TODO: colocr junto com os Repositorys
-
         void SaveUpdate(Autor autor);
         Autor GetById(Guid id);
         void Remove(Guid id);

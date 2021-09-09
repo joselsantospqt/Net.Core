@@ -19,12 +19,10 @@ namespace LivrariaInfrastructure.EntityFramework
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Autor>()
-                .HasMany(a => a.Livros)
-                .WithMany(l => l.Autores);
+                .HasMany(a => a.Livros).WithOne();
 
             modelBuilder.Entity<Livro>()
-                .HasMany(l => l.Autores)
-                .WithMany(a => a.Livros);
+                .HasMany(l => l.Autores).WithOne();
         }
     }
 }

@@ -4,37 +4,20 @@ using LivrariaInfrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace LivrariaAPI.Migrations
+namespace LivrariaInfrastructure.Migrations
 {
     [DbContext(typeof(BancoDeDados))]
-    [Migration("20210901231722_init")]
-    partial class init
+    partial class BancoDeDadosModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.9")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("AutorLivro", b =>
-                {
-                    b.Property<Guid>("AutoresId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("LivrosId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("AutoresId", "LivrosId");
-
-                    b.HasIndex("LivrosId");
-
-                    b.ToTable("AutorLivro");
-                });
 
             modelBuilder.Entity("LivrariaCore.Autor", b =>
                 {
@@ -65,6 +48,28 @@ namespace LivrariaAPI.Migrations
                     b.ToTable("Autor");
                 });
 
+            modelBuilder.Entity("LivrariaCore.AutorLivro", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<Guid>("AutorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("LivroId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AutorId");
+
+                    b.HasIndex("LivroId");
+
+                    b.ToTable("AutorLivro");
+                });
+
             modelBuilder.Entity("LivrariaCore.Livro", b =>
                 {
                     b.Property<Guid>("Id")
@@ -91,19 +96,29 @@ namespace LivrariaAPI.Migrations
                     b.ToTable("Livro");
                 });
 
-            modelBuilder.Entity("AutorLivro", b =>
+            modelBuilder.Entity("LivrariaCore.AutorLivro", b =>
                 {
                     b.HasOne("LivrariaCore.Autor", null)
-                        .WithMany()
-                        .HasForeignKey("AutoresId")
+                        .WithMany("Livros")
+                        .HasForeignKey("AutorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("LivrariaCore.Livro", null)
-                        .WithMany()
-                        .HasForeignKey("LivrosId")
+                        .WithMany("Autores")
+                        .HasForeignKey("LivroId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("LivrariaCore.Autor", b =>
+                {
+                    b.Navigation("Livros");
+                });
+
+            modelBuilder.Entity("LivrariaCore.Livro", b =>
+                {
+                    b.Navigation("Autores");
                 });
 #pragma warning restore 612, 618
         }

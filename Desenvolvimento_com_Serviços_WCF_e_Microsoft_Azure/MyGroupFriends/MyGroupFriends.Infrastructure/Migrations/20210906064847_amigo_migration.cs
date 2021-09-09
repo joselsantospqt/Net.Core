@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MyGroupFriends.Infrastructure.Migrations
 {
-    public partial class init : Migration
+    public partial class amigo_migration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
