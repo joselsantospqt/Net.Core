@@ -1,0 +1,299 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "LivrariaAPI",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/Autores/getAll": {
+      "get": {
+        "tags": [
+          "Autores"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Autores/{id}": {
+      "get": {
+        "tags": [
+          "Autores"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Autores"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Autores"
+        ],
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/AtualizarAutorRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Autores": {
+      "post": {
+        "tags": [
+          "Autores"
+        ],
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/CriarAutorRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Livros/getAll": {
+      "get": {
+        "tags": [
+          "Livros"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Livros/{id}": {
+      "get": {
+        "tags": [
+          "Livros"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Livros"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Livros"
+        ],
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/AtualizarLivroRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Livros": {
+      "post": {
+        "tags": [
+          "Livros"
+        ],
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/CriarLivroRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "AtualizarAutorRequest": {
+      "type": "object",
+      "properties": {
+        "nome": {
+          "type": "string"
+        },
+        "sobrenome": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "senha": {
+          "type": "string"
+        }
+      }
+    },
+    "CriarAutorRequest": {
+      "type": "object",
+      "properties": {
+        "nome": {
+          "type": "string"
+        },
+        "sobrenome": {
+          "type": "string"
+        },
+        "datanascimento": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "senha": {
+          "type": "string"
+        }
+      }
+    },
+    "AtualizarLivroRequest": {
+      "type": "object",
+      "properties": {
+        "titulo": {
+          "type": "string"
+        },
+        "descricao": {
+          "type": "string"
+        },
+        "isbn": {
+          "type": "string"
+        }
+      }
+    },
+    "CriarLivroRequest": {
+      "type": "object",
+      "properties": {
+        "autorId": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "titulo": {
+          "type": "string"
+        },
+        "descricao": {
+          "type": "string"
+        },
+        "isbn": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
