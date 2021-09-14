@@ -1,0 +1,75 @@
+﻿@model Domain.Entidades.Tarefa
+
+@{
+    ViewData["Title"] = "Detalhes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Detalhes</h1>
+
+<div>
+    <h4>Tarefa</h4>
+    <hr />
+    @{if (!@Model.Id.Equals(new Guid("{00000000-0000-0000-0000-000000000000}")))
+        {
+            <div>
+                <div class="row">
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Id)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Id)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Titulo)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Titulo)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Descricao)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Descricao)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.DtCreate)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.DtCreate)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.DtUpdate)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.DtUpdate)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.PartitionKey)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.PartitionKey)
+                    </dd>
+                </div>
+            </div>
+            <div>
+                @Html.ActionLink("Editar", "Editar", new { id = @Model.Id }) |
+                @Html.ActionLink("Back to List", "Home/Index") |
+
+            </div>
+        }
+        else
+        {
+            <form asp-action="Detalhes" method="get">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Id" class="control-label"></label>
+                    <input asp-for="Id" class="form-control" name="Id" />
+                    <span asp-validation-for="Id" class="text-danger"></span>
+                </div>
+                <input type="submit" value="Buscar" class="btn btn-info" />
+                @Html.ActionLink("Back to List", "Home/Index") |
+            </form>
+        }
+    }
+

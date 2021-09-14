@@ -19,18 +19,25 @@ namespace FunctionAzGlobal
         public static async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequestData req,
             FunctionContext executionContext)
         {
-            var logger = executionContext.GetLogger("GetById");
-            logger.LogInformation("C# HTTP trigger function processed a request.");
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            Tarefa obj = JsonConvert.DeserializeObject<Tarefa>(requestBody);
             var repositorio = new TarefaRepositorio();
-            var tarefa = repositorio.GetById(obj.Id);
             var okRetorno = req.CreateResponse();
-            if (tarefa == null)
-                okRetorno = req.CreateResponse(System.Net.HttpStatusCode.NotFound);
-            else
+            var logger = executionContext.GetLogger("GetById");
+            Tarefa tarefa = new();
+            logger.LogInformation("C# HTTP trigger function processed a request.");
+            var query = System.Web.HttpUtility.ParseQueryString(req.Url.Query);
+            var value = query["id"];
 
-                await okRetorno.WriteAsJsonAsync(new OkObjectResult(tarefa));
+            if (value != null)
+            {
+                tarefa = repositorio.GetById(new Guid(value));
+                if (tarefa == null)
+                    okRetorno = req.CreateResponse(System.Net.HttpStatusCode.BadRequest);
+                else
+                    await okRetorno.WriteAsJsonAsync(new OkObjectResult(tarefa));
+            }
+            else
+                okRetorno = req.CreateResponse(System.Net.HttpStatusCode.BadRequest);
+
 
             return okRetorno;
         }

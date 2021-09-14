@@ -1,0 +1,74 @@
+﻿@model Domain.Entidades.ReponseAll
+
+@{
+    ViewData["Title"] = "Listar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var model = Model.Value;
+    var viewBagVariavel = ViewBag.status;
+}
+
+<h1>Listar</h1>
+
+<p>
+    <a asp-action="Criar">Criar Nova Tarefa</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                #
+            </th>
+            <th>
+                Titulo
+            </th>
+            <th>
+                Descricao
+            </th>
+            <th>
+                Data Criação
+            </th>
+            <th>
+                Data Update
+            </th>
+            <th>
+                PartitionKey
+            </th>
+            <th>
+                Opções
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in model)
+        {
+            <tr>
+                <th>
+                    @Html.Label(model.IndexOf(item).ToString())
+                </th>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Titulo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descricao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DtCreate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DtUpdate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PartitionKey)
+                </td>
+                <td>
+                    @Html.ActionLink("Editar", "Editar", new { id = item.Id }) |
+                    @Html.ActionLink("Deletar", "Deletar", new { id = item.Id }) |
+                    @Html.ActionLink("Ver", "Detalhes", new { id = item.Id })
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -19,26 +19,33 @@ namespace FunctionAzGlobal
         public static async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Anonymous, "put")] HttpRequestData req,
             FunctionContext executionContext)
         {
-            var logger = executionContext.GetLogger("Put");
-            logger.LogInformation("C# HTTP trigger function processed a request.");
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            Tarefa obj = JsonConvert.DeserializeObject<Tarefa>(requestBody);
             var repositorio = new TarefaRepositorio();
             var okRetorno = req.CreateResponse();
-            var tarefa = repositorio.GetById(obj.Id);
-            if (tarefa != null)
+            var logger = executionContext.GetLogger("Put");
+            logger.LogInformation("C# HTTP trigger function processed a request.");
+            Tarefa tarefa = new();
+            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            Tarefa update = JsonConvert.DeserializeObject<Tarefa>(requestBody);
+            var query = System.Web.HttpUtility.ParseQueryString(req.Url.Query);
+            var value = query["id"];
+            if (value != null)
             {
-                if (obj.Titulo != null)
-                    tarefa.Titulo = obj.Titulo;
-                if (obj.Descricao != null)
-                    tarefa.Descricao = obj.Descricao;
-                tarefa.DtUpdate = DateTime.UtcNow;
-                await repositorio.Update(tarefa);
-                await okRetorno.WriteAsJsonAsync(new OkObjectResult(tarefa));
+                tarefa = repositorio.GetById(new Guid(value));
+                if (tarefa != null)
+                {
+                    if (update.Titulo != null)
+                        tarefa.Titulo = update.Titulo;
+                    if (update.Descricao != null)
+                        tarefa.Descricao = update.Descricao;
+                    tarefa.DtUpdate = DateTime.UtcNow;
+                    await repositorio.Update(tarefa);
+                    await okRetorno.WriteAsJsonAsync(new OkObjectResult(tarefa));
+                }
+                else
+                    okRetorno = req.CreateResponse(System.Net.HttpStatusCode.NotFound);
             }
             else
-                okRetorno = req.CreateResponse(System.Net.HttpStatusCode.NotFound);
-
+                okRetorno = req.CreateResponse(System.Net.HttpStatusCode.BadRequest);
 
             return okRetorno;
         }

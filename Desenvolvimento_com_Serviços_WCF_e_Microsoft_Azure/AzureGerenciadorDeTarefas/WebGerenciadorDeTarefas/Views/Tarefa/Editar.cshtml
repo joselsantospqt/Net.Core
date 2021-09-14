@@ -1,0 +1,67 @@
+﻿@model Domain.Entidades.Tarefa
+@{
+    ViewData["Title"] = "Editar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var viewBagVariavel = ViewBag.status;
+}
+
+<h1>Editar</h1>
+
+<h4>Tarefa</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Editar" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" class="form-control" name="Id" value="@Model.Id" readonly />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Titulo" class="control-label"></label>
+                <input asp-for="Titulo" class="form-control" name="Titulo" value="@Model.Titulo" />
+                <span asp-validation-for="Titulo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Descricao" class="control-label"></label>
+                <input asp-for="Descricao" class="form-control" name="Descricao" value="@Model.Descricao" />
+                <span asp-validation-for="Descricao" class="text-danger"></span>
+            </div>
+            <div class="form-group d-none">
+                <label asp-for="DtCreate" class="control-label"></label>
+                <input asp-for="DtCreate" class="form-control" name="dtCreate" value="@Model.DtCreate" />
+                <span asp-validation-for="DtCreate" class="text-danger"></span>
+            </div>
+            <div class="form-group d-none">
+                <label asp-for="DtUpdate" class="control-label"></label>
+                <input asp-for="DtUpdate" cass="form-control" name="DtUpdate" value="@Model.DtUpdate" />
+                <span asp-validation-for="DtUpdate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PartitionKey" class="control-label"></label>
+                <input asp-for="PartitionKey" class="form-control" name="PartitionKey" value="@Model.PartitionKey" readonly />
+                <span asp-validation-for="PartitionKey" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Salvar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@{
+    if (viewBagVariavel != null)
+    {
+        <div class="row"><p>Resultado :</p> @viewBagVariavel</div>
+    }
+}
+
+
+<div>
+    @Html.ActionLink("Back to List", "Home/Index") |
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

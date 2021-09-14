@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -18,20 +19,29 @@ namespace FunctionAzGlobal
         public static async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Anonymous, "delete")] HttpRequestData req,
             FunctionContext executionContext)
         {
-            var logger = executionContext.GetLogger("Delete");
-            logger.LogInformation("C# HTTP trigger function processed a request.");
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            Tarefa obj = JsonConvert.DeserializeObject<Tarefa>(requestBody);
             var repositorio = new TarefaRepositorio();
             var okRetorno = req.CreateResponse();
-            var tarefa = repositorio.GetById(obj.Id);
-            if (tarefa != null)
+            var logger = executionContext.GetLogger("Delete");
+            logger.LogInformation("C# HTTP trigger function processed a request.");
+            Tarefa tarefa = new();
+            var query = System.Web.HttpUtility.ParseQueryString(req.Url.Query);
+            var value = query["id"];
+
+            if (value != null)
             {
-                await repositorio.Remove(tarefa);
-                await okRetorno.WriteAsJsonAsync(new OkResult());
+                tarefa = repositorio.GetById(new Guid(value));
+                if (tarefa != null)
+                {
+                    await repositorio.Remove(tarefa);
+                    await okRetorno.WriteAsJsonAsync(new OkResult());
+                }
+                else
+                okRetorno = req.CreateResponse(System.Net.HttpStatusCode.NotFound);
+
             }
             else
-                okRetorno = req.CreateResponse(System.Net.HttpStatusCode.NotFound);
+                okRetorno = req.CreateResponse(System.Net.HttpStatusCode.BadRequest);
+
 
 
             return okRetorno;
