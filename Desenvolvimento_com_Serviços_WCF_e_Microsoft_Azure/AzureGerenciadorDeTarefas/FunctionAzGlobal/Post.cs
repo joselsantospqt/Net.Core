@@ -31,7 +31,7 @@ namespace FunctionAzGlobal
             else
             {
                 obj.Id = Guid.NewGuid();
-                obj.DtCreate = DateTime.Now;
+                obj.DtCreate = DateTime.UtcNow;
                 await repositorio.Save(obj);
                 await okRetorno.WriteAsJsonAsync(new CreatedResult("", obj));
             }

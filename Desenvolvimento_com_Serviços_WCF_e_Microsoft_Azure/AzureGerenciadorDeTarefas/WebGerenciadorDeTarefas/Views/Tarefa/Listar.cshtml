@@ -26,6 +26,12 @@
                 Descricao
             </th>
             <th>
+                Status
+            </th>
+            <th>
+                Responsavel
+            </th>
+            <th>
                 Data Criação
             </th>
             <th>
@@ -43,32 +49,38 @@
     <tbody>
         @foreach (var item in model)
         {
-            <tr>
-                <th>
-                    @Html.Label(model.IndexOf(item).ToString())
-                </th>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Titulo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Descricao)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DtCreate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DtUpdate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PartitionKey)
-                </td>
-                <td>
-                    @Html.ActionLink("Editar", "Editar", new { id = item.Id }) |
-                    @Html.ActionLink("Deletar", "Deletar", new { id = item.Id }) |
-                    @Html.ActionLink("Ver", "Detalhes", new { id = item.Id })
+        <tr>
+            <th>
+                @Html.Label(model.IndexOf(item).ToString())
+            </th>
+            <td>
+                @Html.DisplayFor(modelItem => item.Titulo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descricao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Responsavel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DtCreate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DtUpdate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PartitionKey)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Editar", new { id = item.Id }) |
+                @Html.ActionLink("Deletar", "Deletar", new { id = item.Id }) |
+                @Html.ActionLink("Ver", "Detalhes", new { id = item.Id })
 
-                </td>
-            </tr>
+            </td>
+        </tr>
         }
     </tbody>
 </table>

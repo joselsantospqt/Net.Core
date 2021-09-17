@@ -53,7 +53,7 @@
     </dl>
 
     @{
-        if (viewBagVariavel == 200)
+        if (viewBagVariavel != null)
         {<div class="row"><p class="text-black-50">Resultado : </p> @viewBagVariavel</div>}
     }
 
@@ -69,6 +69,6 @@
         }
     }
     <input type="submit" value="Delete" class="btn btn-danger" />
-    @Html.ActionLink("Back to List", "Home/Index") |
+    @Html.ActionLink("Back to List", "Index", "Home") |
 </form>
 </div>

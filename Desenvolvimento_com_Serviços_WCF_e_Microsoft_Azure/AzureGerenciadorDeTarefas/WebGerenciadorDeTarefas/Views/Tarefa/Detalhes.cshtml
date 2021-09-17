@@ -33,6 +33,18 @@
                         @Html.DisplayFor(model => model.Descricao)
                     </dd>
                     <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Status)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Status)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Responsavel)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Responsavel)
+                    </dd>
+                    <dt class="col-sm-2">
                         @Html.DisplayNameFor(model => model.DtCreate)
                     </dt>
                     <dd class="col-sm-10">
@@ -54,7 +66,7 @@
             </div>
             <div>
                 @Html.ActionLink("Editar", "Editar", new { id = @Model.Id }) |
-                @Html.ActionLink("Back to List", "Home/Index") |
+                @Html.ActionLink("Back to List", "Home") |
 
             </div>
         }
@@ -68,7 +80,8 @@
                     <span asp-validation-for="Id" class="text-danger"></span>
                 </div>
                 <input type="submit" value="Buscar" class="btn btn-info" />
-                @Html.ActionLink("Back to List", "Home/Index") |
+                |    @Html.ActionLink("Back to List", "Index", "Home")
+
             </form>
         }
     }

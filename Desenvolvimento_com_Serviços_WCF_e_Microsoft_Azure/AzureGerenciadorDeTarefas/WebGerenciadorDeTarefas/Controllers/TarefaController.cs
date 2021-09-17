@@ -19,6 +19,10 @@ namespace WebGerenciadorDeTarefas.Controllers
         {
             client = httpClientFactory.CreateClient();
         }
+        public ActionResult Buscar()
+        {
+            return View();
+        }
 
         public ActionResult Detalhes(Tarefa tarefa)
         {
@@ -37,8 +41,6 @@ namespace WebGerenciadorDeTarefas.Controllers
             return View(reponseJson.Value);
         }
 
-
-
         public ActionResult Criar()
         {
             return View();
@@ -49,7 +51,7 @@ namespace WebGerenciadorDeTarefas.Controllers
         public async Task<IActionResult> Criar(IFormCollection collection)
         {
 
-            var createPost = new Tarefa { Titulo = collection["Titulo"], Descricao = collection["Descricao"], PartitionKey = collection["PartitionKey"] };
+            var createPost = new Tarefa { Titulo = collection["Titulo"], Descricao = collection["Descricao"], Status = collection["Status"], Responsavel = collection["Responsavel"], PartitionKey = collection["PartitionKey"] };
             string urlApi = $"http://localhost:7071/api/Post";
             var putAsJson = JsonConvert.SerializeObject(createPost);
             var conteudo = new StringContent(putAsJson, System.Text.Encoding.UTF8, "application/json");
@@ -96,11 +98,17 @@ namespace WebGerenciadorDeTarefas.Controllers
 
         // POST: TarefaController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Editar(IFormCollection collection)
         {
 
-            var createPost = new Tarefa { Id = new Guid(collection["Id"]), Titulo = collection["Titulo"], Descricao = collection["Descricao"], PartitionKey = collection["PartitionKey"] };
+            var createPost = new Tarefa { 
+                Id = new Guid(collection["Id"]),
+                Titulo = collection["Titulo"],
+                Descricao = collection["Descricao"],
+                Status = collection["Status"],
+                Responsavel = collection["Responsavel"],
+                PartitionKey = collection["PartitionKey"] 
+            };
             string urlApi = $"http://localhost:7071/api/Put?id={createPost.Id}";
             var putAsJson = JsonConvert.SerializeObject(createPost);
             var conteudo = new StringContent(putAsJson, System.Text.Encoding.UTF8, "application/json");
@@ -110,7 +118,7 @@ namespace WebGerenciadorDeTarefas.Controllers
             if (resultado.IsSuccessStatusCode)
             {
                 ViewData["status"] = "Atualizado com Sucesso !";
-                return View();
+                return View(reponseJson.Value);
             }
             ViewData["status"] = reponseJson.StatusCode;
             return View();

@@ -15,11 +15,17 @@ namespace Domain.Entidades
         public string Titulo{ get; set; }
         [JsonProperty(PropertyName = "descricao")]
         public string Descricao{ get; set; }
+        [JsonProperty(PropertyName = "status")]
+        public string Status { get; set; }
+        [JsonProperty(PropertyName = "responsavel")]
+        public string Responsavel { get; set; }
         [JsonProperty(PropertyName = "dtCreate")]
         public DateTime DtCreate{ get; set; }
         [JsonProperty(PropertyName = "dtUpdate")]
         public DateTime DtUpdate { get; set; }
         [JsonProperty(PropertyName = "pk")]
         public string PartitionKey { get; set; } = "tarefa";
+
+        //COLOCAR STATUS + DONO DA TAREFA
     }
 }

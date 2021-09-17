@@ -31,7 +31,7 @@ namespace FunctionAzGlobal
             {
                 tarefa = repositorio.GetById(new Guid(value));
                 if (tarefa == null)
-                    okRetorno = req.CreateResponse(System.Net.HttpStatusCode.BadRequest);
+                    okRetorno = req.CreateResponse(System.Net.HttpStatusCode.NotFound);
                 else
                     await okRetorno.WriteAsJsonAsync(new OkObjectResult(tarefa));
             }

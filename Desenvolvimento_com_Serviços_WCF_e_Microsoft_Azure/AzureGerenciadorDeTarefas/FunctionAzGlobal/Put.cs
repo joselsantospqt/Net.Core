@@ -37,6 +37,10 @@ namespace FunctionAzGlobal
                         tarefa.Titulo = update.Titulo;
                     if (update.Descricao != null)
                         tarefa.Descricao = update.Descricao;
+                    if (update.Status != null)
+                        tarefa.Status = update.Status;
+                    if (update.Responsavel != null)
+                        tarefa.Responsavel = update.Responsavel;
                     tarefa.DtUpdate = DateTime.UtcNow;
                     await repositorio.Update(tarefa);
                     await okRetorno.WriteAsJsonAsync(new OkObjectResult(tarefa));
