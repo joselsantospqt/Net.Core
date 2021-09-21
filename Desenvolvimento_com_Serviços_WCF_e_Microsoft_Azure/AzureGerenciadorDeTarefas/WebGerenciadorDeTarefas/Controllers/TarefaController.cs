@@ -1,6 +1,7 @@
 ﻿using Domain.Entidades;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -14,10 +15,12 @@ namespace WebGerenciadorDeTarefas.Controllers
     public class TarefaController : Controller
     {
         private HttpClient client { get; set; }
+        public IConfiguration _configuration { get; }
 
-        public TarefaController(IHttpClientFactory httpClientFactory)
+        public TarefaController(IHttpClientFactory httpClientFactory,IConfiguration configuration)
         {
             client = httpClientFactory.CreateClient();
+            _configuration = configuration;
         }
         public ActionResult Buscar()
         {
@@ -34,7 +37,7 @@ namespace WebGerenciadorDeTarefas.Controllers
         // GET: TarefaController/Edit/5
         public async Task<IActionResult> Detalhes(Guid id)
         {
-            string urlApi = $"http://localhost:7071/api/GetById?id={id}";
+            string urlApi = $"{_configuration.GetSection("ConnectionStrings")["ConnectionStringsApi"]}/api/GetById?id={id}";
             var resultado = await client.GetAsync(urlApi);
             var Json = await resultado.Content.ReadAsStringAsync();
             ReponseOne reponseJson = JsonConvert.DeserializeObject<ReponseOne>(Json);
@@ -52,7 +55,7 @@ namespace WebGerenciadorDeTarefas.Controllers
         {
 
             var createPost = new Tarefa { Titulo = collection["Titulo"], Descricao = collection["Descricao"], Status = collection["Status"], Responsavel = collection["Responsavel"], PartitionKey = collection["PartitionKey"] };
-            string urlApi = $"http://localhost:7071/api/Post";
+            string urlApi = $"{_configuration.GetSection("ConnectionStrings")["ConnectionStringsApi"]}/api/Post";
             var putAsJson = JsonConvert.SerializeObject(createPost);
             var conteudo = new StringContent(putAsJson, System.Text.Encoding.UTF8, "application/json");
             var resultado = await client.PostAsync(urlApi, conteudo);
@@ -70,7 +73,7 @@ namespace WebGerenciadorDeTarefas.Controllers
 
         public async Task<IActionResult> Listar()
         {
-            string urlApi = "http://localhost:7071/api/GetAll";
+            string urlApi = $"{_configuration.GetSection("ConnectionStrings")["ConnectionStringsApi"]}/api/GetAll";
             var resultado = await client.GetAsync(urlApi);
             var Json = await resultado.Content.ReadAsStringAsync();
             ReponseAll tarefas = JsonConvert.DeserializeObject<ReponseAll>(Json);
@@ -88,7 +91,7 @@ namespace WebGerenciadorDeTarefas.Controllers
         // GET: TarefaController/Edit/5
         public async Task<IActionResult> Editar(Guid id)
         {
-            string urlApi = $"http://localhost:7071/api/GetById?id={id}";
+            string urlApi = $"{_configuration.GetSection("ConnectionStrings")["ConnectionStringsApi"]}/api/GetById?id={id}";
             var resultado = await client.GetAsync(urlApi);
             var Json = await resultado.Content.ReadAsStringAsync();
             ReponseOne reponseJson = JsonConvert.DeserializeObject<ReponseOne>(Json);
@@ -109,7 +112,7 @@ namespace WebGerenciadorDeTarefas.Controllers
                 Responsavel = collection["Responsavel"],
                 PartitionKey = collection["PartitionKey"] 
             };
-            string urlApi = $"http://localhost:7071/api/Put?id={createPost.Id}";
+            string urlApi = $"{_configuration.GetSection("ConnectionStrings")["ConnectionStringsApi"]}/api/Put?id={createPost.Id}";
             var putAsJson = JsonConvert.SerializeObject(createPost);
             var conteudo = new StringContent(putAsJson, System.Text.Encoding.UTF8, "application/json");
             var resultado = await client.PutAsync(urlApi, conteudo);
@@ -134,7 +137,7 @@ namespace WebGerenciadorDeTarefas.Controllers
         [Route("Tarefa/Deletar/{Id:guid}")]
         public async Task<IActionResult> Deletar(Guid id)
         {
-            string urlApi = $"http://localhost:7071/api/GetById?id={id}";
+            string urlApi = $"{_configuration.GetSection("ConnectionStrings")["ConnectionStringsApi"]}/api/GetById?id={id}";
             var resultado = await client.GetAsync(urlApi);
             var Json = await resultado.Content.ReadAsStringAsync();
             ReponseOne reponseJson = JsonConvert.DeserializeObject<ReponseOne>(Json);
@@ -147,7 +150,7 @@ namespace WebGerenciadorDeTarefas.Controllers
         public async Task<IActionResult> Deletar(IFormCollection collection)
         {
             var id = new Guid(collection["Id"]);
-            string urlApi = $"http://localhost:7071/api/Delete?id={id}";
+            string urlApi = $"{_configuration.GetSection("ConnectionStrings")["ConnectionStringsApi"]}/api/Delete?id={id}";
             var resultado = await client.DeleteAsync(urlApi);
             var Json = await resultado.Content.ReadAsStringAsync();
             ReponseOne reponseJson = JsonConvert.DeserializeObject<ReponseOne>(Json);
