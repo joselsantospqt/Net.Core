@@ -162,5 +162,20 @@ namespace WebGerenciadorDeTarefas.Controllers
             ViewData["status"] = reponseJson.StatusCode;
             return View();
         }
+
+        [HttpPost]
+        [Route("Tarefa/Buscar")]
+        // GET: TarefaController/Edit/5
+        public async Task<IActionResult> Buscar(IFormCollection collection)
+        {
+            var id = new Guid(collection["Id"]);
+            string urlApi = $"{_configuration.GetSection("ConnectionStrings")["ConnectionStringsApi"]}/api/GetById?id={id}";
+            var resultado = await client.GetAsync(urlApi);
+            var Json = await resultado.Content.ReadAsStringAsync();
+            ReponseOne reponseJson = JsonConvert.DeserializeObject<ReponseOne>(Json);
+            return View(reponseJson.Value);
+        }
+
+
     }
 }
