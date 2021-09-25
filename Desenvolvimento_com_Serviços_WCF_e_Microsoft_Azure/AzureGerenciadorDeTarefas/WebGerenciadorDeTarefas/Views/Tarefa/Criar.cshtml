@@ -1,0 +1,79 @@
+﻿@model Domain.Entidades.Tarefa
+
+@{
+    ViewData["Title"] = "Criar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var viewBagVariavel = ViewBag.status;
+}
+
+<h1>Criar</h1>
+
+<h4>Tarefa</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Criar" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group d-none">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" name="Id" class="form-control" readonly />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Titulo" class="control-label"></label>
+                <input asp-for="Titulo" name="Titulo" class="form-control" />
+                <span asp-validation-for="Titulo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Descricao" class="control-label"></label>
+                <input asp-for="Descricao" name="Descricao" class="form-control" />
+                <span asp-validation-for="Descricao" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                <input asp-for="Status" name="Status" class="form-control" />
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Responsavel" class="control-label"></label>
+                <input asp-for="Responsavel" name="Responsavel" class="form-control" />
+                <span asp-validation-for="Responsavel" class="text-danger"></span>
+            </div>
+            <div class="form-group d-none">
+                <label asp-for="DtCreate" class="control-label"></label>
+                <input asp-for="DtCreate" name="DtCreate" class="form-control" />
+                <span asp-validation-for="DtCreate" class="text-danger"></span>
+            </div>
+            <div class="form-group d-none">
+                <label asp-for="DtUpdate" class="control-label"></label>
+                <input asp-for="DtUpdate" name="DtUpdate" class="form-control" />
+                <span asp-validation-for="DtUpdate" class="text-danger"></span>
+            </div>
+            <div class="form-group d-none">
+                <label asp-for="PartitionKey" class="control-label"></label>
+                <input asp-for="PartitionKey" value="tarefa" name="PartitionKey" class="form-control" readonly />
+                <span asp-validation-for="PartitionKey" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@{
+    if (viewBagVariavel != null)
+    {
+        <div class="row"><p>Resultado :</p> @viewBagVariavel</div>
+    }
+}
+
+
+<div>
+    |    @Html.ActionLink("Back to List", "Index", "Home")
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

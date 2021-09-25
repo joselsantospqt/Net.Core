@@ -1,0 +1,14 @@
+C:\Git\ASP.net\Desenvolvimento_com_Serviços_WCF_e_Microsoft_Azure\AzureGerenciadorDeTarefas\Domain\bin\Debug\net5.0\Microsoft.Azure.Cosmos.ServiceInterop.dll
+C:\Git\ASP.net\Desenvolvimento_com_Serviços_WCF_e_Microsoft_Azure\AzureGerenciadorDeTarefas\Domain\bin\Debug\net5.0\Cosmos.CRTCompat.dll
+C:\Git\ASP.net\Desenvolvimento_com_Serviços_WCF_e_Microsoft_Azure\AzureGerenciadorDeTarefas\Domain\bin\Debug\net5.0\Domain.deps.json
+C:\Git\ASP.net\Desenvolvimento_com_Serviços_WCF_e_Microsoft_Azure\AzureGerenciadorDeTarefas\Domain\bin\Debug\net5.0\Domain.dll
+C:\Git\ASP.net\Desenvolvimento_com_Serviços_WCF_e_Microsoft_Azure\AzureGerenciadorDeTarefas\Domain\bin\Debug\net5.0\ref\Domain.dll
+C:\Git\ASP.net\Desenvolvimento_com_Serviços_WCF_e_Microsoft_Azure\AzureGerenciadorDeTarefas\Domain\bin\Debug\net5.0\Domain.pdb
+C:\Git\ASP.net\Desenvolvimento_com_Serviços_WCF_e_Microsoft_Azure\AzureGerenciadorDeTarefas\Domain\obj\Debug\net5.0\Domain.csproj.AssemblyReference.cache
+C:\Git\ASP.net\Desenvolvimento_com_Serviços_WCF_e_Microsoft_Azure\AzureGerenciadorDeTarefas\Domain\obj\Debug\net5.0\Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Git\ASP.net\Desenvolvimento_com_Serviços_WCF_e_Microsoft_Azure\AzureGerenciadorDeTarefas\Domain\obj\Debug\net5.0\Domain.AssemblyInfoInputs.cache
+C:\Git\ASP.net\Desenvolvimento_com_Serviços_WCF_e_Microsoft_Azure\AzureGerenciadorDeTarefas\Domain\obj\Debug\net5.0\Domain.AssemblyInfo.cs
+C:\Git\ASP.net\Desenvolvimento_com_Serviços_WCF_e_Microsoft_Azure\AzureGerenciadorDeTarefas\Domain\obj\Debug\net5.0\Domain.csproj.CoreCompileInputs.cache
+C:\Git\ASP.net\Desenvolvimento_com_Serviços_WCF_e_Microsoft_Azure\AzureGerenciadorDeTarefas\Domain\obj\Debug\net5.0\Domain.dll
+C:\Git\ASP.net\Desenvolvimento_com_Serviços_WCF_e_Microsoft_Azure\AzureGerenciadorDeTarefas\Domain\obj\Debug\net5.0\ref\Domain.dll
+C:\Git\ASP.net\Desenvolvimento_com_Serviços_WCF_e_Microsoft_Azure\AzureGerenciadorDeTarefas\Domain\obj\Debug\net5.0\Domain.pdb

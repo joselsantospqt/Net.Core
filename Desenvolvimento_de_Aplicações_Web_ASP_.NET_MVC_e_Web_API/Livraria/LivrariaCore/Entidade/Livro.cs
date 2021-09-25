@@ -26,10 +26,12 @@ namespace LivrariaCore
 
         internal void AdicionarAutor(List<Guid> pAutorId)
         {
-            foreach (var item in pAutorId)
-            {
-                Autores.Add(new AutorLivro(){AutorId = item,LivroId = this.Id});
-            }
+            //foreach (var item in pAutorId)
+            //{
+            //    Autores.Add(new AutorLivro() { AutorId = item, LivroId = this.Id });
+            //}
+
+            pAutorId.Select(a => { Autores.Add(new AutorLivro() { AutorId = a, LivroId = this.Id }); return a; }).ToList();
         }
     }
 }
