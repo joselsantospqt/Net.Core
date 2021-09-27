@@ -20,7 +20,7 @@ namespace FunctionAzGlobal
         public static async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Anonymous, "put")] HttpRequestData req,
             FunctionContext executionContext)
         {
-            var repositorio = new TarefaRepositorio(Environment.GetEnvironmentVariable("ConnectionString", EnvironmentVariableTarget.Process), Environment.GetEnvironmentVariable("Database", EnvironmentVariableTarget.Process));
+            var repositorio = new TarefaRepositorio();
             var okRetorno = req.CreateResponse();
             var logger = executionContext.GetLogger("Put");
             logger.LogInformation("C# HTTP trigger function processed a request.");

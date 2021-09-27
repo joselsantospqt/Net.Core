@@ -25,7 +25,7 @@ namespace FunctionAzGlobal
             logger.LogInformation("C# HTTP trigger function processed a request.");
             string ConnectString = Environment.GetEnvironmentVariable("ConnectionString", EnvironmentVariableTarget.Process);
             string DataBase = Environment.GetEnvironmentVariable("Database", EnvironmentVariableTarget.Process);
-            var repositorio = new TarefaRepositorio(ConnectString, DataBase);
+            var repositorio = new TarefaRepositorio();
             var tarefas = repositorio.GetAll();
             var okRetorno = req.CreateResponse();
             if (tarefas == null)

@@ -25,7 +25,8 @@ namespace FunctionAzGlobal
             Tarefa obj = JsonConvert.DeserializeObject<Tarefa>(requestBody);
             string ConnectString = Environment.GetEnvironmentVariable("ConnectionString", EnvironmentVariableTarget.Process);
             string DataBase = Environment.GetEnvironmentVariable("Database", EnvironmentVariableTarget.Process);
-            var repositorio = new TarefaRepositorio(ConnectString, DataBase); var okRetorno = req.CreateResponse();
+            var repositorio = new TarefaRepositorio(); 
+            var okRetorno = req.CreateResponse();
             if (obj == null)
                 await okRetorno.WriteAsJsonAsync(new BadRequestObjectResult(new { message = "Dados para criação de uma tarefa é obrigatoria" }));
             else

@@ -14,8 +14,10 @@ namespace Domain.Repositorio
         private CosmosClient _CosmosClient { get; set; }
         private Container _Db { get; }
         private static string name_container = "tarefas-container";
+        private string ConnectionString = "AccountEndpoint=https://infnetatazuredb.documents.azure.com:443/;AccountKey=JVjmBYkLoit96YUIsZb7eCrRPMqi3rfX0Tl2v2mDoWZMGucBYRqXNf7LYjGHkOm4yO76pzPhSO2kqBSysPZEeA==;";
+        private string Database = "AT-Infnet-Db";
 
-        public TarefaRepositorio(string ConnectionString, string Database)
+        public TarefaRepositorio()
         {
             _CosmosClient = new CosmosClient(ConnectionString);
             _Db = _CosmosClient.GetContainer(Database, name_container);

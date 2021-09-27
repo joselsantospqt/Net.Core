@@ -21,12 +21,12 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Título</label>
-                <input asp-for="Titulo" name="Titulo" class="form-control" />
+                <input asp-for="Titulo" name="Titulo" type="text" class="form-control" />
                 <span asp-validation-for="Titulo" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label class="control-label">Descrição</label>
-                <input asp-for="Descricao" name="Descricao" class="form-control" />
+                <input asp-for="Descricao" name="Descricao" type="text" class="form-control" />
                 <span asp-validation-for="Descricao" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -42,17 +42,17 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Responsável</label>
-                <input asp-for="Responsavel" name="Responsavel" class="form-control" />
+                <input asp-for="Responsavel" name="Responsavel" type="text" class="form-control" />
                 <span asp-validation-for="Responsavel" class="text-danger"></span>
             </div>
             <div class="form-group d-none">
                 <label asp-for="DtCreate" class="control-label"></label>
-                <input asp-for="DtCreate" name="DtCreate" class="form-control" />
+                <input asp-for="DtCreate" name="DtCreate" type="date" class="form-control" />
                 <span asp-validation-for="DtCreate" class="text-danger"></span>
             </div>
             <div class="form-group d-none">
                 <label asp-for="DtUpdate" class="control-label"></label>
-                <input asp-for="DtUpdate" name="DtUpdate" class="form-control" />
+                <input asp-for="DtUpdate" name="DtUpdate" type="date" class="form-control" />
                 <span asp-validation-for="DtUpdate" class="text-danger"></span>
             </div>
             <div class="form-group d-none">

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace WebGerenciadorDeTarefas.Controllers
@@ -17,7 +18,7 @@ namespace WebGerenciadorDeTarefas.Controllers
         private HttpClient client { get; set; }
         public IConfiguration _configuration { get; }
 
-        public TarefaController(IHttpClientFactory httpClientFactory,IConfiguration configuration)
+        public TarefaController(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
             client = httpClientFactory.CreateClient();
             _configuration = configuration;
@@ -104,13 +105,14 @@ namespace WebGerenciadorDeTarefas.Controllers
         public async Task<IActionResult> Editar(IFormCollection collection)
         {
 
-            var createPost = new Tarefa { 
+            var createPost = new Tarefa
+            {
                 Id = new Guid(collection["Id"]),
                 Titulo = collection["Titulo"],
                 Descricao = collection["Descricao"],
                 Status = collection["Status"],
                 Responsavel = collection["Responsavel"],
-                PartitionKey = collection["PartitionKey"] 
+                PartitionKey = collection["PartitionKey"]
             };
             string urlApi = $"{_configuration.GetSection("ConnectionStrings")["ConnectionStringsApi"]}/api/Put?id={createPost.Id}";
             var putAsJson = JsonConvert.SerializeObject(createPost);
@@ -175,6 +177,11 @@ namespace WebGerenciadorDeTarefas.Controllers
             var Json = await resultado.Content.ReadAsStringAsync();
             ReponseOne reponseJson = JsonConvert.DeserializeObject<ReponseOne>(Json);
             return View(reponseJson.Value);
+        }
+
+        public bool IsTextString(string val)
+        {
+            return Regex.IsMatch(val, @"^[A-Za-z\s]*$");
         }
 
 
