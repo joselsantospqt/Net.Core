@@ -25,6 +25,7 @@ namespace WebGerenciadorDeTarefas
         {
             services.AddControllersWithViews();
             services.AddHttpClient();
+            services.AddApplicationInsightsTelemetry(Configuration["APPINSIGHTS_CONNECTIONSTRING"]);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,7 +52,7 @@ namespace WebGerenciadorDeTarefas
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Tarefa}/{action=Listar}");
             });
         }
     }

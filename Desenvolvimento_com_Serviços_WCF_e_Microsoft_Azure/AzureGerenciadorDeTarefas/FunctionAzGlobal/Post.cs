@@ -1,10 +1,9 @@
 using System;
-using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
-using System.Net;
 using System.Threading.Tasks;
 using Domain.Entidades;
-using Infrastructure.CosmoDb.Repositorio;
+using Domain.Repositorio;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
@@ -24,8 +23,9 @@ namespace FunctionAzGlobal
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             Tarefa obj = JsonConvert.DeserializeObject<Tarefa>(requestBody);
-            var repositorio = new TarefaRepositorio();
-            var okRetorno = req.CreateResponse();
+            string ConnectString = Environment.GetEnvironmentVariable("ConnectionString", EnvironmentVariableTarget.Process);
+            string DataBase = Environment.GetEnvironmentVariable("Database", EnvironmentVariableTarget.Process);
+            var repositorio = new TarefaRepositorio(ConnectString, DataBase); var okRetorno = req.CreateResponse();
             if (obj == null)
                 await okRetorno.WriteAsJsonAsync(new BadRequestObjectResult(new { message = "Dados para criação de uma tarefa é obrigatoria" }));
             else

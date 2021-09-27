@@ -1,0 +1,9 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
+    "ConnectionString": "AccountEndpoint=https://infnetatazuredb.documents.azure.com:443/;AccountKey=JVjmBYkLoit96YUIsZb7eCrRPMqi3rfX0Tl2v2mDoWZMGucBYRqXNf7LYjGHkOm4yO76pzPhSO2kqBSysPZEeA==;",
+    "Database": "AT-Infnet-Db"
+  }
+}

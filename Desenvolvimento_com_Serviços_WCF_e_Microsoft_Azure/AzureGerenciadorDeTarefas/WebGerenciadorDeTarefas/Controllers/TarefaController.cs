@@ -99,8 +99,8 @@ namespace WebGerenciadorDeTarefas.Controllers
         }
 
 
-        // POST: TarefaController/Edit/5
         [HttpPost]
+        [Route("Tarefa/Editar/{Id:guid}")]
         public async Task<IActionResult> Editar(IFormCollection collection)
         {
 
@@ -147,6 +147,7 @@ namespace WebGerenciadorDeTarefas.Controllers
         // POST: TarefaController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("Tarefa/Deletar/{Id:guid}")]
         public async Task<IActionResult> Deletar(IFormCollection collection)
         {
             var id = new Guid(collection["Id"]);

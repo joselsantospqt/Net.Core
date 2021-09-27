@@ -1,8 +1,9 @@
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Net;
 using System.Threading.Tasks;
-using Infrastructure.CosmoDb;
-using Infrastructure.CosmoDb.Repositorio;
+using Domain.Repositorio;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
@@ -18,9 +19,13 @@ namespace FunctionAzGlobal
         public static HttpResponseData Run([HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequestData req,
             FunctionContext executionContext)
         {
+
+
             var logger = executionContext.GetLogger("GetAll");
             logger.LogInformation("C# HTTP trigger function processed a request.");
-            var repositorio = new TarefaRepositorio();
+            string ConnectString = Environment.GetEnvironmentVariable("ConnectionString", EnvironmentVariableTarget.Process);
+            string DataBase = Environment.GetEnvironmentVariable("Database", EnvironmentVariableTarget.Process);
+            var repositorio = new TarefaRepositorio(ConnectString, DataBase);
             var tarefas = repositorio.GetAll();
             var okRetorno = req.CreateResponse();
             if (tarefas == null)

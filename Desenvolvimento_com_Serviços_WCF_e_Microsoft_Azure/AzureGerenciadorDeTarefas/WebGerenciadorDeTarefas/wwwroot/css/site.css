@@ -2,70 +2,250 @@
 for details on configuring this project to bundle and minify static web assets. */
 
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
 }
 
 /* Provide sufficient contrast against white background */
 a {
-  color: #0366d6;
+    color: #0366d6;
 }
 
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  font-size: 14px;
-}
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    font-size: 14px;
 }
 
+
+
 .border-top {
-  border-top: 1px solid #e5e5e5;
+    border-top: 1px solid #e5e5e5;
 }
+
 .border-bottom {
-  border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
 }
 
 .box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
 button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
+    font-size: 1rem;
+    line-height: inherit;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
-html {
-  position: relative;
-  min-height: 100%;
+
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
 }
 
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+.bg-blue-light {
+    background-color: #9ba2ff !important;
 }
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+
+.content-body {
+    background: #ffffffe8;
+    z-index: 10;
+    position: relative;
+    border-radius: 10px;
+    padding: 20pt;
+}
+
+html,
+body {
+    min-height: 100vh;
+    width: 100%;
+    background-color: black;
+    overflow: hidden;
+}
+
+#draw {
+    overflow: hidden;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    min-width: 100%;
+    min-height: 100%;
+}
+
+svg {
+    min-height: 100vh;
+}
+
+* {
+    transform-origin: center;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-duration: 20s;
+}
+
+#land1 {
+    transform: translateY(-10%) scale(1.3);
+    animation-name: anim1;
+}
+
+#land2,
+#whitesun {
+    transform: translateY(-8%) scale(1.2);
+    animation-name: anim2;
+}
+
+#land3 {
+    transform: translateY(-10%) scale(1.3);
+    animation-name: anim3;
+}
+
+#c-left1,
+#c-left2,
+#c-left3 {
+    transform: translateX(-20%) translateY(-10%) scale(1.5);
+    opacity: 0.01;
+    animation-name: anim4;
+}
+
+#c-right1,
+#c-right2,
+#c-right3 {
+    transform: translateX(20%) translateY(-10%) scale(1.5);
+    opacity: 0.01;
+    animation-name: anim5;
+}
+
+#baloons,
+#birds-paradise {
+    transform: translateX(-5%) translateY(-5%) scale(1.2);
+    animation-name: anim6;
+}
+
+#birds {
+    transform: translateX(5%) translateY(-5%) scale(1.2);
+    animation-name: anim7;
+}
+
+#sky {
+    transform: translateY(30%);
+    animation-name: anim8;
+}
+
+#whitesun > path {
+    opacity: 0.5;
+    animation-name: anim9;
+}
+
+@keyframes anim1 {
+    from {
+        transform: translateY(-10%) scale(1.3);
+    }
+
+    to {
+        transform: translateX(0%) translateY(0%) scale(1);
+    }
+}
+
+@keyframes anim2 {
+    from {
+        transform: translateY(-8%) scale(1.2);
+    }
+
+    to {
+        transform: translateX(0%) translateY(0%) scale(1);
+    }
+}
+
+@keyframes anim3 {
+    from {
+        transform: translateY(-10%) scale(1.3);
+    }
+
+    to {
+        transform: translateX(0%) translateY(0%) scale(1);
+    }
+}
+
+@keyframes anim4 {
+    from {
+        transform: translateX(-20%) translateY(-10%) scale(1.5);
+        opacity: 0.01;
+    }
+
+    to {
+        transform: translateX(0%) translateY(0%) scale(1);
+        opacity: 0.15;
+    }
+}
+
+@keyframes anim5 {
+    from {
+        transform: translateX(20%) translateY(-10%) scale(1.5);
+        opacity: 0.01;
+    }
+
+    to {
+        transform: translateX(0%) translateY(0%) scale(1);
+        opacity: 0.15;
+    }
+}
+
+@keyframes anim6 {
+    from {
+        transform: translateX(-5%) translateY(-5%) scale(1.2);
+    }
+
+    to {
+        transform: translateX(0%) translateY(0%) scale(1);
+    }
+}
+
+@keyframes anim7 {
+    from {
+        transform: translateX(5%) translateY(-5%) scale(1.2);
+    }
+
+    to {
+        transform: translateX(0%) translateY(0%) scale(1);
+    }
+}
+
+@keyframes anim8 {
+    from {
+        transform: translateY(30%);
+    }
+
+    to {
+        transform: translateY(0%);
+    }
+}
+
+@keyframes anim9 {
+    from {
+        opacity: 0.2;
+    }
+
+    to {
+        opacity: 0.5;
+    }
 }
