@@ -1,6 +1,6 @@
 # ASP.net MVC 
 Olá, para iniciar qualquer projeto, você vai precisar ter o Visual Studio instalado em sua maquina.
-- Neste repositorio você vai encontrar um projeto de loja virtual com crud e caléndario;
+- Neste repositorio você vai encontrar um projeto de Rede Virtual com crud e caléndario;
 - Não esqueça de utilizar os seguintes pacotes:
 
 ## Microsoft.EntityFrameworkCore:
