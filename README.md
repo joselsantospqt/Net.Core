@@ -1,4 +1,4 @@
-# ASP.net MVC 
+# Net.Core + MVC 
 Olá, para iniciar qualquer projeto, você vai precisar ter o Visual Studio instalado em sua maquina.
 - Neste repositorio você vai encontrar um projeto de Carrinho de compras com crud e caléndario;
 - Não esqueça de utilizar os seguintes pacotes:
