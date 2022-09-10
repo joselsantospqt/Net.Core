@@ -1,0 +1,113 @@
+﻿@model Domain.Entidades.ResponseAll
+
+@{
+    ViewData["Title"] = "Listar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var model = Model.Value;
+}
+
+
+@section Scripts
+    {
+    <script type="text/javascript">
+
+        let array = [];
+        let $button = document.querySelectorAll('.js_lista');
+        let $itens = document.querySelector('tbody').querySelectorAll('tr');
+        let $ArrayIds = document.querySelector('#Value');
+
+
+        $button.forEach((item) => {
+            item.addEventListener('click', function (event) {
+                let target = getEventTarget(event);
+                let tbody = target.closest('tbody').children;
+                let amount = Array.from(tbody);
+                let index = amount.indexOf(target.closest('tr'));
+                $itens[index].classList.toggle("table-active");
+
+                if (target.checked) {
+                    array.push(target.closest('tr').children[1].innerText);
+                    $ArrayIds.value = array.toString();
+                }
+                else {
+                    array.splice(array.indexOf(target.closest('tr').children[1].innerText), 1);
+                    $ArrayIds.value = array;
+                }
+            });
+        });
+
+
+        function reflashChecked() {
+
+        }
+
+        function getEventTarget(e) {
+            e = e || window.event;
+            return e.target || e.srcElement;
+        }
+
+    </script>
+}
+
+
+<h1>Listar</h1>
+
+<p>
+    <a asp-controller="Sorteio" asp-action="Criar">Criar Pessoa</a>
+</p>
+
+<form asp-controller="Sorteio" asp-action="Sortear" method="post">
+    <label asp-for="Value" class="control-label"></label>
+    <input class="form-control d-none" asp-for="Value" name="Value" id="Value" value="" />
+    <div class="form-group">
+        <input type="submit" value="Sortear" class="btn btn-primary" />
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                #
+            </th>
+            <th>
+                Id
+            </th>
+            <th>
+                Nome
+            </th>
+            <th>
+                Key
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in model)
+        {
+            <tr>
+                <td>
+                    <div class="custom-control custom-checkbox">
+                        @Html.CheckBox("false", new { @class = "custom-control-input js_lista", @id = $"customCheck{model.IndexOf(item).ToString()}" })
+                        @Html.Label("false", model.IndexOf(item).ToString(), new { @class = "custom-control-label", @for = $"customCheck{model.IndexOf(item).ToString()}" })
+                    </div>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PartitionKey)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
