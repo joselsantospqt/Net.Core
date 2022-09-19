@@ -35,6 +35,8 @@ namespace FunctionAzGlobal
                 {
                     if (update.Nome != null)
                         pessoa.Nome = update.Nome;
+                    if (update.Vitorias != null && update.Vitorias > 0)
+                        pessoa.Vitorias = update.Vitorias;
                     await repositorio.Update(pessoa);
                     await okRetorno.WriteAsJsonAsync(new OkObjectResult(pessoa));
                 }

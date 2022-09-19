@@ -14,9 +14,7 @@ namespace Domain.Entidades
         [JsonProperty(PropertyName = "nome")]
         public string Nome { get; set; }
         [JsonProperty(PropertyName = "vitorias")]
-        public string Vitorias { get; set; }
-
-
+        public int Vitorias { get; set; }
         public string PartitionKey { get; set; } = "pessoa";
     }
 }

@@ -3,22 +3,29 @@
 @{
     ViewData["Title"] = "Listar";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var model = Model.Value;
+    var model = Model != null ? Model.Value : null;
+    var viewBagStatus = ViewBag.status;
+    var viewBagMessage = ViewBag.message;
 }
 
 
 @section Scripts
     {
+
     <script type="text/javascript">
 
+        //Criação das variaveis
         let array = [];
-        let $button = document.querySelectorAll('.js_lista');
+        let $buttonCheck = document.querySelectorAll('.js_lista');
+        let $buttonClear = document.querySelector('.js_limpar');
+        let $buttonTodos = document.querySelector('.js_todos');
         let $itens = document.querySelector('tbody').querySelectorAll('tr');
         let $ArrayIds = document.querySelector('#Value');
 
 
-        $button.forEach((item) => {
-            item.addEventListener('click', function (event) {
+        //Eventos
+        $buttonCheck.forEach((item) => {
+            item.addEventListener('click', (event) => {
                 let target = getEventTarget(event);
                 let tbody = target.closest('tbody').children;
                 let amount = Array.from(tbody);
@@ -36,15 +43,41 @@
             });
         });
 
+        $buttonTodos.addEventListener('click', () => {
+            array = [];
+            $itens.forEach((item) => {
+                if (!item.classList.contains("table-active") && !item.checked)
+                    item.classList.toggle("table-active");
+                array.push(item.closest('tr').children[1].innerText);
+            });
+            toggleCheckBox(true);
+            $ArrayIds.value = array.toString();
+        });
 
-        function reflashChecked() {
 
+        $buttonClear.addEventListener('click', () => {
+            $itens.forEach((item) => {
+                if (item.classList.contains("table-active"))
+                    item.classList.toggle("table-active");
+            });
+            toggleCheckBox(false);
+            $ArrayIds.value = array = [];
+        });
+
+
+        function toggleCheckBox(valor) {
+            $buttonCheck.forEach((item) => {
+                item.checked = valor;
+            });
         }
 
         function getEventTarget(e) {
             e = e || window.event;
             return e.target || e.srcElement;
         }
+
+
+
 
     </script>
 }
@@ -57,57 +90,76 @@
 </p>
 
 <form asp-controller="Sorteio" asp-action="Sortear" method="post">
-    <label asp-for="Value" class="control-label"></label>
-    <input class="form-control d-none" asp-for="Value" name="Value" id="Value" value="" />
+    <input class="form-control d-none" asp-for="Value" name="Value" id="Value" value="" readonly />
     <div class="form-group">
         <input type="submit" value="Sortear" class="btn btn-primary" />
     </div>
 </form>
 
+<input value="Limpar" class="btn btn-primary js_limpar" />
+
+<input value="Selecionar Todos" class="btn btn-primary js_todos" />
+
 <table class="table">
-    <thead>
+    <thead class="table-dark">
         <tr>
             <th>
                 #
             </th>
+            <th class="d-none"></th>
             <th>
                 Id
             </th>
             <th>
-                Nome
-            </th>
-            <th>
-                Key
+                Vitorias
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in model)
-        {
-            <tr>
-                <td>
-                    <div class="custom-control custom-checkbox">
-                        @Html.CheckBox("false", new { @class = "custom-control-input js_lista", @id = $"customCheck{model.IndexOf(item).ToString()}" })
-                        @Html.Label("false", model.IndexOf(item).ToString(), new { @class = "custom-control-label", @for = $"customCheck{model.IndexOf(item).ToString()}" })
-                    </div>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nome)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PartitionKey)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                </td>
-            </tr>
-        }
+
+        @if (model != null)
+            foreach (var item in model.OrderByDescending(x => x.Vitorias))
+            {
+                <tr>
+                    <td>
+                        <div class="custom-control custom-checkbox">
+                            @Html.CheckBox("false", new { @class = "custom-control-input js_lista", @id = $"customCheck{model.IndexOf(item).ToString()}" })
+                            @Html.Label("false", model.IndexOf(item).ToString(), new { @class = "custom-control-label", @for = $"customCheck{model.IndexOf(item).ToString()}" })
+                        </div>
+                    </td>
+                    <td class="d-none">
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Vitorias)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Editar", "Editar", new { id = item.Id }) |
+                        @Html.ActionLink("Delete", "Deletar", new { id = item.Id })
+                    </td>
+                </tr>
+            }
     </tbody>
 </table>
 
+@{
+    if (viewBagMessage != null)
+    {
+        if (viewBagStatus == "OK")
+        {
+            <div class="alert alert-success" role="alert">
+                @viewBagMessage
+            </div>
+        }
+        else if (viewBagStatus == "Not Found" || viewBagStatus == null)
+        {
+            <div class="alert alert-danger" role="alert">
+                @viewBagMessage
+            </div>
+        }
+    }
+}
