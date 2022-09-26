@@ -119,11 +119,11 @@ namespace WebSorteador.Controllers
                 return View();
             }
             var createPost = new Pessoa
-                {
-                    Id = new Guid(collection["Id"]),
-                    Nome = collection["Nome"],
-                    PartitionKey = collection["PartitionKey"]
-                };
+            {
+                Id = new Guid(collection["Id"]),
+                Nome = collection["Nome"],
+                PartitionKey = collection["PartitionKey"]
+            };
 
             string urlApi = $"{_connectionStrings}{ERequest.Put}?id={createPost.Id}";
             var putAsJson = JsonConvert.SerializeObject(createPost);
@@ -146,21 +146,28 @@ namespace WebSorteador.Controllers
         // GET: SorteioController/Deletar/Id
         public async Task<IActionResult> Deletar(Guid id)
         {
-            string urlApi = $"{_connectionStrings}{ERequest.Delete}?id={id}";
-            var resultado = await client.DeleteAsync(urlApi);
-            var Json = await resultado.Content.ReadAsStringAsync();
-            ResponseOne reponseJson = JsonConvert.DeserializeObject<ResponseOne>(Json);
-            if (resultado.IsSuccessStatusCode)
+            try
             {
-                ViewData["status"] = resultado.StatusCode.ToString();
-                ViewData["message"] = "Deletado com Sucesso !";
+                string urlApi = $"{_connectionStrings}{ERequest.Delete}?id={id}";
+                var resultado = await client.DeleteAsync(urlApi);
+                var Json = await resultado.Content.ReadAsStringAsync();
+                ResponseOne reponseJson = JsonConvert.DeserializeObject<ResponseOne>(Json);
+                if (resultado.IsSuccessStatusCode)
+                {
+                    ViewData["status"] = resultado.StatusCode.ToString();
+                    ViewData["message"] = "Deletado com Sucesso !";
+                    return View("Listar", await BuscarTodasPessoas());
+                }
+
+                ViewData["status"] = resultado.StatusCode;
+                ViewData["message"] = resultado.RequestMessage;
                 return View("Listar", await BuscarTodasPessoas());
             }
-
-            ViewData["status"] = resultado.StatusCode;
-            ViewData["message"] = resultado.RequestMessage;
-            ResponseAll pessoas = await BuscarTodasPessoas();
-            return View("Listar", pessoas);
+            catch (Exception ex) {
+                ViewData["message"] = ex.Message;
+                ViewData["status"] = "Not Found";
+                return View("Listar", await BuscarTodasPessoas());
+            }
         }
         private int RandomNumber(int final)
         {
