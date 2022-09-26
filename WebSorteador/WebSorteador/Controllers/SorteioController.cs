@@ -93,7 +93,9 @@ namespace WebSorteador.Controllers
                 return View();
 
             }
+
             ViewData["status"] = resultado.StatusCode;
+            ViewData["message"] = "Erro ao criar participante !";
             return View();
         }
         [HttpGet]
@@ -111,13 +113,18 @@ namespace WebSorteador.Controllers
         [HttpPost]
         public async Task<IActionResult> Editar(IFormCollection collection)
         {
-
-            var createPost = new Pessoa
+            if (collection["Nome"].ToString().Length < 1)
             {
-                Id = new Guid(collection["Id"]),
-                Nome = collection["Nome"],
-                PartitionKey = collection["PartitionKey"]
-            };
+                ViewData["message"] = "Preencha o campo Nome";
+                return View();
+            }
+            var createPost = new Pessoa
+                {
+                    Id = new Guid(collection["Id"]),
+                    Nome = collection["Nome"],
+                    PartitionKey = collection["PartitionKey"]
+                };
+
             string urlApi = $"{_connectionStrings}{ERequest.Put}?id={createPost.Id}";
             var putAsJson = JsonConvert.SerializeObject(createPost);
             var conteudo = new StringContent(putAsJson, System.Text.Encoding.UTF8, "application/json");
@@ -131,6 +138,7 @@ namespace WebSorteador.Controllers
                 return View(reponseJson.Value);
             }
             ViewData["status"] = resultado.StatusCode;
+            ViewData["message"] = "Erro ao criar participante !";
             return View();
         }
         [HttpGet]
