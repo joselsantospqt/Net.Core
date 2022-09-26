@@ -7,38 +7,47 @@
     var viewBagMessage = ViewBag.message;
 }
 
-<h1>Criar</h1>
-
-<h4>Pessoa</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Criar">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Nome" class="control-label"></label>
-                <input asp-for="Nome" name="Nome" class="form-control" />
-                <span asp-validation-for="Nome" class="text-danger"></span>
+<div class="form-body">
+    <div class="row">
+        <div class="form-holder">
+            <div class="form-content">
+                <div class="form-items">
+                    <h3>Cadastro Participante</h3>
+                    <p>Preencha as informações a baixo</p>
+                    <form asp-action="Criar">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="Nome" class="control-label"></label>
+                            <input asp-for="Nome" name="Nome" class="form-control" />
+                            <span asp-validation-for="Nome" class="text-danger"></span>
+                        </div>
+                        <div class="form-group d-none">
+                            <label asp-for="Vitorias" class="control-label"></label>
+                            <input asp-for="Vitorias" name="Vitorias" class="form-control" value="0" readonly />
+                            <span asp-validation-for="Nome" class="text-danger"></span>
+                        </div>
+                        <div class="form-group d-none">
+                            <label asp-for="PartitionKey" class="control-label"></label>
+                            <input asp-for="PartitionKey" value="pessoa" name="PartitionKey" class="form-control" readonly />
+                            <span asp-validation-for="PartitionKey" class="text-danger"></span>
+                        </div>
+                        <div class="lista_d_btn d-flex pb-3 pt-3">
+                            <input type="submit" value="Salvar" class="btn btn-primary js_submit" />
+                            @Html.ActionLink("Voltar para Lista de participantes", "Listar", "Sorteio")
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="form-group d-none">
-                <label asp-for="Vitorias" class="control-label"></label>
-                <input asp-for="Vitorias" name="Vitorias" class="form-control" value="0" readonly />
-                <span asp-validation-for="Nome" class="text-danger"></span>
-            </div>
-            <div class="form-group d-none">
-                <label asp-for="PartitionKey" class="control-label"></label>
-                <input asp-for="PartitionKey" value="pessoa" name="PartitionKey" class="form-control" readonly />
-                <span asp-validation-for="PartitionKey" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+<div class="modal fade bd-loading-modal" data-backdrop="static" data-keyboard="false" tabindex="-1">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content" style="width: 48px">
+            <span class="fa fa-spinner fa-spin fa-3x"></span>
+        </div>
+    </div>
 </div>
 
 @{
@@ -62,4 +71,15 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+        let $buttonSubmit = document.querySelector('.js_submit');
+        let $modalSpinner = document.querySelector('.bd-loading-modal');
+
+        $buttonSubmit.addEventListener('click', () => {
+            $modalSpinner.classList.toggle("show");
+            $('.bd-loading-modal').show();
+        });
+
+    </script>
 }

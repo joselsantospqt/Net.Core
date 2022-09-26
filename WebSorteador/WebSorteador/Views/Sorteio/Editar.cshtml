@@ -7,43 +7,51 @@
     var viewBagMessage = ViewBag.message;
 }
 
-<h1>Editar</h1>
-
-<h4>Pessoa</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Editar">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group d-none">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" value="@Model.Id" class="form-control" readonly />
-                <span asp-validation-for="Id" class="text-danger"></span>
+<div class="form-body">
+    <div class="row">
+        <div class="form-holder">
+            <div class="form-content">
+                <div class="form-items">
+                    <h3>Editar Participante</h3>
+                    <p>Preencha as informações a baixo</p>
+                    <form asp-action="Editar">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group d-none">
+                            <label asp-for="Id" class="control-label"></label>
+                            <input asp-for="Id" value="@Model.Id" class="form-control" readonly />
+                            <span asp-validation-for="Id" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Nome" class="control-label"></label>
+                            <input asp-for="Nome" value="@Model.Nome" class="form-control" />
+                            <span asp-validation-for="Nome" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Vitorias" class="control-label"></label>
+                            <input asp-for="Vitorias" value="@Model.Vitorias" class="form-control" readonly />
+                        </div>
+                        <div class="form-group d-none">
+                            <label asp-for="PartitionKey" class="control-label"></label>
+                            <input asp-for="PartitionKey" value="@Model.PartitionKey" class="form-control" readonly />
+                            <span asp-validation-for="PartitionKey" class="text-danger"></span>
+                        </div>
+                        <div class="lista_d_btn d-flex pb-3 pt-3">
+                            <input type="submit" value="Salvar" class="btn btn-primary js_submit" />
+                            @Html.ActionLink("Voltar para Lista de participantes", "Listar", "Sorteio")
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Nome" class="control-label"></label>
-                <input asp-for="Nome" value="@Model.Nome" class="form-control" />
-                <span asp-validation-for="Nome" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Vitorias" class="control-label"></label>
-                <input asp-for="Vitorias" value="@Model.Vitorias" class="form-control" readonly />
-                <span asp-validation-for="Vitorias" class="text-danger"></span>
-            </div>
-            <div class="form-group d-none">
-                <label asp-for="PartitionKey" class="control-label"></label>
-                <input asp-for="PartitionKey" value="@Model.PartitionKey" class="form-control" readonly />
-                <span asp-validation-for="PartitionKey" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Salvar" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
-    @Html.ActionLink("Voltar para Lista", "Listar", "Sorteio")
+<div class="modal fade bd-loading-modal" data-backdrop="static" data-keyboard="false" tabindex="-1">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content" style="width: 48px">
+            <span class="fa fa-spinner fa-spin fa-3x"></span>
+        </div>
+    </div>
 </div>
 
 
@@ -68,4 +76,15 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+        let $buttonSubmit = document.querySelector('.js_submit');
+        let $modalSpinner = document.querySelector('.bd-loading-modal');
+
+        $buttonSubmit.addEventListener('click', () => {
+            $modalSpinner.classList.toggle("show");
+            $('.bd-loading-modal').show();
+        });
+
+    </script>
 }

@@ -1,4 +1,5 @@
 ﻿using Domain.Entidades;
+using Domain.Enum;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -16,42 +17,41 @@ namespace WebSorteador.Controllers
     {
         private HttpClient client { get; set; }
         public IConfiguration _configuration { get; }
+        public string _connectionStrings { get; }
 
         public SorteioController(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
             client = httpClientFactory.CreateClient();
             _configuration = configuration;
+            _connectionStrings = $"{_configuration.GetSection("ConnectionStrings")["ConnectionStringsApi"]}/api/";
         }
 
         public async Task<IActionResult> Listar()
         {
-            ResponseAll tarefas = await BuscarTodasPessoas();
-            return View(tarefas);
+            ResponseAll pessoas = await BuscarTodasPessoas();
+            return View(pessoas);
         }
         [HttpPost]
         public async Task<IActionResult> Sortear(IFormCollection collection)
         {
             var vListGuid = collection["Value"].ToString().Length < 1 ? null : collection["Value"].ToString().Split(',').Select(Guid.Parse).ToList();
+            ResponseAll pessoas = await BuscarTodasPessoas();
 
             if (vListGuid == null || vListGuid.Count() < 2)
             {
-                ViewData["message"] = "Selecione Pessoas";
-                return RedirectToAction("Listar");
+                ViewData["message"] = "Número de pessoas insuficiente para o sorteio.";
+                return View("Listar", pessoas);
             }
 
             Guid sorteado = vListGuid[RandomNumber(vListGuid.Count())];
-            string urlApi = $"{_configuration.GetSection("ConnectionStrings")["ConnectionStringsApi"]}/api/GetById?id={sorteado}";
-            var resultado = await client.GetAsync(urlApi);
-            var Json = await resultado.Content.ReadAsStringAsync();
-            ResponseOne reponseJson = JsonConvert.DeserializeObject<ResponseOne>(Json);
-            Pessoa ganhador = reponseJson.Value;
+            Pessoa ganhador = pessoas.Value.First(x => x.Id == sorteado);
             ganhador.Vitorias += 1;
-            urlApi = $"{urlApi.Substring(0, urlApi.IndexOf("/api/") + 5)}Put?id={sorteado}";
+            var urlApi = $"{_connectionStrings}{ERequest.Put}?id={sorteado}";
             var putAsJson = JsonConvert.SerializeObject(ganhador);
             var conteudo = new StringContent(putAsJson, System.Text.Encoding.UTF8, "application/json");
-            resultado = await client.PutAsync(urlApi, conteudo);
-            Json = await resultado.Content.ReadAsStringAsync();
-            reponseJson = JsonConvert.DeserializeObject<ResponseOne>(Json);
+            var resultado = await client.PutAsync(urlApi, conteudo);
+            var Json = await resultado.Content.ReadAsStringAsync();
+            ResponseOne reponseJson = JsonConvert.DeserializeObject<ResponseOne>(Json);
 
             if (resultado.IsSuccessStatusCode)
             {
@@ -61,7 +61,8 @@ namespace WebSorteador.Controllers
             }
 
             ViewData["status"] = resultado.StatusCode;
-            return RedirectToAction("Listar");
+            ViewData["message"] = resultado.RequestMessage;
+            return View("Listar", pessoas);
         }
         public ActionResult Criar()
         {
@@ -79,7 +80,7 @@ namespace WebSorteador.Controllers
                 return View();
             }
 
-            string urlApi = $"{_configuration.GetSection("ConnectionStrings")["ConnectionStringsApi"]}/api/Post";
+            string urlApi = $"{_connectionStrings}{ERequest.Post}";
             var putAsJson = JsonConvert.SerializeObject(createPost);
             var conteudo = new StringContent(putAsJson, System.Text.Encoding.UTF8, "application/json");
             var resultado = await client.PostAsync(urlApi, conteudo);
@@ -100,7 +101,7 @@ namespace WebSorteador.Controllers
         // GET: SorteioController/Editar/id
         public async Task<IActionResult> Editar(Guid id)
         {
-            string urlApi = $"{_configuration.GetSection("ConnectionStrings")["ConnectionStringsApi"]}/api/GetById?id={id}";
+            string urlApi = $"{_connectionStrings}{ERequest.GetById}?id={id}";
             var resultado = await client.GetAsync(urlApi);
             var Json = await resultado.Content.ReadAsStringAsync();
             ResponseOne reponseJson = JsonConvert.DeserializeObject<ResponseOne>(Json);
@@ -117,7 +118,7 @@ namespace WebSorteador.Controllers
                 Nome = collection["Nome"],
                 PartitionKey = collection["PartitionKey"]
             };
-            string urlApi = $"{_configuration.GetSection("ConnectionStrings")["ConnectionStringsApi"]}/api/Put?id={createPost.Id}";
+            string urlApi = $"{_connectionStrings}{ERequest.Put}?id={createPost.Id}";
             var putAsJson = JsonConvert.SerializeObject(createPost);
             var conteudo = new StringContent(putAsJson, System.Text.Encoding.UTF8, "application/json");
             var resultado = await client.PutAsync(urlApi, conteudo);
@@ -137,7 +138,7 @@ namespace WebSorteador.Controllers
         // GET: SorteioController/Deletar/Id
         public async Task<IActionResult> Deletar(Guid id)
         {
-            string urlApi = $"{_configuration.GetSection("ConnectionStrings")["ConnectionStringsApi"]}/api/Delete?id={id}";
+            string urlApi = $"{_connectionStrings}{ERequest.Delete}?id={id}";
             var resultado = await client.DeleteAsync(urlApi);
             var Json = await resultado.Content.ReadAsStringAsync();
             ResponseOne reponseJson = JsonConvert.DeserializeObject<ResponseOne>(Json);
@@ -147,8 +148,11 @@ namespace WebSorteador.Controllers
                 ViewData["message"] = "Deletado com Sucesso !";
                 return View("Listar", await BuscarTodasPessoas());
             }
+
             ViewData["status"] = resultado.StatusCode;
-            return View("Listar");
+            ViewData["message"] = resultado.RequestMessage;
+            ResponseAll pessoas = await BuscarTodasPessoas();
+            return View("Listar", pessoas);
         }
         private int RandomNumber(int final)
         {
@@ -159,11 +163,11 @@ namespace WebSorteador.Controllers
 
         public async Task<ResponseAll> BuscarTodasPessoas()
         {
-            string urlApi = $"{_configuration.GetSection("ConnectionStrings")["ConnectionStringsApi"]}/api/GetAll";
+            string urlApi = $"{_connectionStrings}{ERequest.GetAll}";
             var resultado = await client.GetAsync(urlApi);
             var Json = await resultado.Content.ReadAsStringAsync();
-            ResponseAll tarefas = JsonConvert.DeserializeObject<ResponseAll>(Json);
-            return tarefas;
+            ResponseAll pessoas = JsonConvert.DeserializeObject<ResponseAll>(Json);
+            return pessoas;
         }
     }
 }

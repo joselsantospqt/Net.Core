@@ -19,8 +19,11 @@
         let $buttonCheck = document.querySelectorAll('.js_lista');
         let $buttonClear = document.querySelector('.js_limpar');
         let $buttonTodos = document.querySelector('.js_todos');
+        let $buttonSubmit = document.querySelector('.js_submit');
         let $itens = document.querySelector('tbody').querySelectorAll('tr');
         let $ArrayIds = document.querySelector('#Value');
+        let $modalSpinner = document.querySelector('.bd-loading-modal');
+
 
 
         //Eventos
@@ -41,6 +44,12 @@
                     $ArrayIds.value = array;
                 }
             });
+        });
+
+
+        $buttonSubmit.addEventListener('click', () => {
+            $modalSpinner.classList.toggle("show");
+            $('.bd-loading-modal').show();
         });
 
         $buttonTodos.addEventListener('click', () => {
@@ -82,70 +91,6 @@
     </script>
 }
 
-
-<h1>Listar</h1>
-
-<p>
-    <a asp-controller="Sorteio" asp-action="Criar">Criar Pessoa</a>
-</p>
-
-<form asp-controller="Sorteio" asp-action="Sortear" method="post">
-    <input class="form-control d-none" asp-for="Value" name="Value" id="Value" value="" readonly />
-    <div class="form-group">
-        <input type="submit" value="Sortear" class="btn btn-primary" />
-    </div>
-</form>
-
-<input value="Limpar" class="btn btn-primary js_limpar" />
-
-<input value="Selecionar Todos" class="btn btn-primary js_todos" />
-
-<table class="table">
-    <thead class="table-dark">
-        <tr>
-            <th>
-                #
-            </th>
-            <th class="d-none"></th>
-            <th>
-                Id
-            </th>
-            <th>
-                Vitorias
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-
-        @if (model != null)
-            foreach (var item in model.OrderByDescending(x => x.Vitorias))
-            {
-                <tr>
-                    <td>
-                        <div class="custom-control custom-checkbox">
-                            @Html.CheckBox("false", new { @class = "custom-control-input js_lista", @id = $"customCheck{model.IndexOf(item).ToString()}" })
-                            @Html.Label("false", model.IndexOf(item).ToString(), new { @class = "custom-control-label", @for = $"customCheck{model.IndexOf(item).ToString()}" })
-                        </div>
-                    </td>
-                    <td class="d-none">
-                        @Html.DisplayFor(modelItem => item.Id)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Nome)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Vitorias)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Editar", "Editar", new { id = item.Id }) |
-                        @Html.ActionLink("Delete", "Deletar", new { id = item.Id })
-                    </td>
-                </tr>
-            }
-    </tbody>
-</table>
-
 @{
     if (viewBagMessage != null)
     {
@@ -163,3 +108,71 @@
         }
     }
 }
+
+
+<div class="form-body">
+    <div class="row">
+        <div class="form-holder">
+            <div class="form-content">
+                <div class="form-items">
+                    <h3 class="text-center pb-3">Lista de Participantes</h3>
+                    <form asp-controller="Sorteio" asp-action="Sortear" method="post">
+                        <input class="form-control d-none" asp-for="Value" name="Value" id="Value" value="" readonly />
+                        <div class="lista_d_btn d-flex pb-3">
+                            <input type="submit" value="Sortear" class="btn btn-primary js_submit" />
+                            <input value="Limpar" class="btn btn-primary js_limpar" />
+                            <input value="Selecionar Todos" class="btn btn-primary js_todos" />
+                        </div>
+                    </form>
+                    <table class="table">
+                        <thead class="table-dark">
+                            <tr>
+                                <th> #</th>
+                                <th class="d-none"></th>
+                                <th>Nome</th>
+                                <th>Vitorias</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @if (model != null)
+                                foreach (var item in model.OrderByDescending(x => x.Vitorias))
+                                {
+                                    <tr>
+                                        <td>
+                                            <div class="custom-control custom-checkbox">
+                                                @Html.CheckBox("false", new { @class = "custom-control-input js_lista", @id = $"customCheck{model.IndexOf(item).ToString()}" })
+                                                @Html.Label("false", model.IndexOf(item).ToString(), new { @class = "custom-control-label", @for = $"customCheck{model.IndexOf(item).ToString()}" })
+                                            </div>
+                                        </td>
+                                        <td class="d-none">
+                                            @Html.DisplayFor(modelItem => item.Id)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Nome)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Vitorias)
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("", "Editar", new { id = item.Id }, new { @class = "fa-sharp fa-solid fa-pen orange" }) |
+                                            @Html.ActionLink("", "Deletar", new { id = item.Id }, new { @class = "fa-sharp fa-solid fa-trash orange" })
+                                    </tr>
+                                }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bd-loading-modal" data-backdrop="static" data-keyboard="false" tabindex="-1">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content" style="width: 48px">
+            <span class="fa fa-spinner fa-spin fa-3x"></span>
+        </div>
+    </div>
+</div>
