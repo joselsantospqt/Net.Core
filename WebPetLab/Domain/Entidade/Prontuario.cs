@@ -24,7 +24,7 @@ namespace Domain.Entidade
             Pet = new ProntuarioPet() { PetId = petId, ProntuarioId = this.Id };
         }
 
-        internal void AddUsuarioMedico(Guid usuarioId)
+        internal void AddMedicoResponsavel(Guid usuarioId)
         {
             Medico = new ProntuarioUsuario() { UsuarioId = usuarioId, ProntuarioId = this.Id };
         }
