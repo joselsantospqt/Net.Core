@@ -9,7 +9,7 @@ namespace Domain.Entidade
 {
     public class Medicamento
     {
-        public Medicamento() { Exame = new ExameMedicamento();}
+        public Medicamento() { Prontuario = new ProntuarioMedicamento(); }
 
         [Key]
         public Guid Id { get; set; }
@@ -18,12 +18,11 @@ namespace Domain.Entidade
         public int Quantidade { get; set; }
         public DateTime Data_Inicio { get; set; }
         public DateTime Data_Fim { get; set; }
-        public ExameMedicamento Exame { get; set; }
+        public ProntuarioMedicamento Prontuario { get; set; }
 
-        internal void AddExame(Guid exameId)
+        internal void AddProntuario(Guid prontuarioId)
         {
-            Exame = new ExameMedicamento() { ExameId = exameId, MedicamentoId = this.Id };
+            Prontuario = new ProntuarioMedicamento() { ProntuarioId = prontuarioId, MedicamentoId = this.Id };
         }
-
     }
 }

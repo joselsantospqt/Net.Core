@@ -9,14 +9,13 @@ namespace Domain.Entidade
 {
     public class Exame
     {
-        public Exame() { Prontuario = new ProntuarioExame(); Medicamentos = new List<ExameMedicamento>(); }
+        public Exame() { Prontuario = new ProntuarioExame();}
         [Key]
         public Guid Id { get; set; }
         public string Descricao { get; set; }
         public byte Documento { get; set; }
         public DateTime Data { get; set; }
         public ProntuarioExame Prontuario { get; set; }
-        public IList<ExameMedicamento> Medicamentos { get; set; }
 
         internal void AddProntuario(Guid prontuarioId)
         {
