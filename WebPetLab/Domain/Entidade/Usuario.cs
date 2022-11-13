@@ -9,7 +9,7 @@ namespace Domain.Entidade
 {
     public class Usuario
     {
-        public Usuario() { Pets = new List<UsuarioPet>();}
+        public Usuario() { Pets = new List<UsuarioPet>(); }
         [Key]
         public Guid Id { get; set; }
         public string Nome { get; set; }

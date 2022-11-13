@@ -1,3 +1,5 @@
+using Domain.Service;
+using Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,12 +28,21 @@ namespace PetLabAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddCors();
+            services.AddSingleton<IConfiguration>(Configuration);
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "PetLabAPI", Version = "v1" });
             });
+
+            services.AddScoped<UsuarioService>();
+            services.AddScoped<PetService>();
+            services.AddScoped<AgendamentoService>();
+            services.AddScoped<ProntuarioService>();
+            services.AddScoped<ExameService>();
+            services.AddScoped<MedicamentoService>();
+            services.AddInfrastructure(Configuration.GetConnectionString("dbLocal"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

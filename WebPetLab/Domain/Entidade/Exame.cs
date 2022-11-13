@@ -13,7 +13,7 @@ namespace Domain.Entidade
         [Key]
         public Guid Id { get; set; }
         public string Descricao { get; set; }
-        public byte Documento { get; set; }
+        public string Documento { get; set; }
         public DateTime Data { get; set; }
         public ProntuarioExame Prontuario { get; set; }
 

@@ -31,7 +31,7 @@ namespace Domain.Service
             Guid idProntuario,
             string descricao,
             DateTime data,
-            byte documento
+            string documento
            )
         {
             var exame = new Exame();
