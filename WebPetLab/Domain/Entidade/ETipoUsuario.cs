@@ -9,9 +9,10 @@ namespace Domain.Entidade
 {
     public enum ETipoUsuario
     {
-        [Description("Médico")]
-        Medico,
         [Description("Tutor")]
-        Tutor
+        Tutor,
+        [Description("Médico")]
+        Medico
+    
     }
 }

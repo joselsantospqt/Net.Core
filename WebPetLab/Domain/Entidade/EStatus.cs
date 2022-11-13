@@ -9,11 +9,12 @@ namespace Domain.Entidade
 {
     public enum EStatus
     {
+        [Description("Pendente")]
+        Pendente,
         [Description("Aprovado")]
         Aprovado,
         [Description("Recusado")]
-        Recusado,
-        [Description("Pendente")]
-        Pendente
+        Recusado
+
     }
 }

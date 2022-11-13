@@ -13,13 +13,14 @@ namespace Domain.Entidade
         [Key]
         public Guid Id { get; set; }
         public string Nome { get; set; }
+        public string Sobrenome { get; set; }
         public int Telefone { get; set; }
         public int Cpf { get; set; }
         public int Cnpj { get; set; }
         public DateTime DataNascimento { get; set; }
         public string Email { get; set; }
         public string Senha { get; set; }
-        public string ImagemUrlPessoa { get; set; }
+        public string ImagemUrlusuario { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public ETipoUsuario TipoUsuario { get; set; }
