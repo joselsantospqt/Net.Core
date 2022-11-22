@@ -17,7 +17,7 @@ namespace Domain.Service
             RepositorioAgendamento = repositorioAgendamento;
         }
 
-        public Agendamento GetAgendamento(Guid id)
+        public Agendamento GetAgendamentoById(Guid id)
         {
             return RepositorioAgendamento.GetById(id);
         }
@@ -29,12 +29,13 @@ namespace Domain.Service
 
         public Agendamento CreateAgendamento(
             Guid idMedico,
-            Guid idPet
+            Guid idPet,
+            DateTime data
            )
         {
 
             var agendamento = new Agendamento();
-            agendamento.Data = DateTime.UtcNow;
+            agendamento.Data = data;
             agendamento.AddPet(idPet);
             agendamento.AddMedicoResponsavel(idMedico);
             agendamento.Status = EStatus.Pendente;

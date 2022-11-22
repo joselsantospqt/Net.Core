@@ -17,7 +17,7 @@ namespace Domain.Service
             RepositorioExame = repositorioExame;
         }
 
-        public Exame GetExame(Guid id)
+        public Exame GetExameById(Guid id)
         {
             return RepositorioExame.GetById(id);
         }
@@ -30,7 +30,6 @@ namespace Domain.Service
         public Exame CreateExame(
             Guid idProntuario,
             string descricao,
-            DateTime data,
             string documento
            )
         {

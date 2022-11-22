@@ -20,12 +20,12 @@ namespace Infrastructure.EntityFramework.Repositorio
 
         public IEnumerable<Usuario> GetAll()
         {
-            return _db.Usuario.AsNoTracking().ToList();
+            return _db.Usuario.Include(x => x.Pets).AsNoTracking().ToList();
         }
 
         public Usuario GetById(Guid id)
         {
-            return _db.Usuario.FirstOrDefault();
+            return _db.Usuario.Include(x => x.Pets).FirstOrDefault();
         }
 
         public void Remove(Guid id)

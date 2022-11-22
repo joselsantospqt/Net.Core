@@ -17,7 +17,7 @@ namespace Domain.Service
             RepositorioUsuario = repositorioUsuario;
         }
 
-        public Usuario GetUsuario(Guid id)
+        public Usuario GetUsuarioById(Guid id)
         {
             return RepositorioUsuario.GetById(id);
         }
@@ -36,7 +36,6 @@ namespace Domain.Service
             DateTime dataDeNascimento,
             string email,
             string senha,
-            string imagemUrlPessoa,
             ETipoUsuario tipoUsuario
            )
         {
@@ -92,5 +91,6 @@ namespace Domain.Service
         {
             RepositorioUsuario.Remove(id);
         }
+
     }
 }

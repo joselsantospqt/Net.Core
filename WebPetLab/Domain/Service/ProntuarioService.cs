@@ -17,7 +17,7 @@ namespace Domain.Service
             RepositorioProntuario = repositorioProntuario;
         }
 
-        public Prontuario GetProntuario(Guid id)
+        public Prontuario GetProntuarioById(Guid id)
         {
             return RepositorioProntuario.GetById(id);
         }
@@ -31,8 +31,7 @@ namespace Domain.Service
             Guid idPet,
             Guid idMedico,
             string resumo,
-            string descricao,
-            DateTime data
+            string descricao
            )
         {
             var prontuario = new Prontuario();

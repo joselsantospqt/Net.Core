@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{A93D8BFA-2517-4904-90E8-41CD30ACC78E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{A93D8BFA-2517-4904-90E8-41CD30ACC78E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{A4691D92-2AB1-40D7-B002-28E24F325B3C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{A4691D92-2AB1-40D7-B002-28E24F325B3C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetLabAPI", "PetLabAPI\PetLabAPI.csproj", "{779E6CCF-77E7-4D49-B0B5-C69E0F6D97E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetLabAPI", "PetLabAPI\PetLabAPI.csproj", "{779E6CCF-77E7-4D49-B0B5-C69E0F6D97E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProjectAPI", "TestProjectAPI\TestProjectAPI.csproj", "{01397BD0-1F6D-4524-B24D-AE7B83B414A2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProjectAPI", "TestProjectAPI\TestProjectAPI.csproj", "{776501B0-8D5D-4768-A5E9-47AABE699F93}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{779E6CCF-77E7-4D49-B0B5-C69E0F6D97E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{779E6CCF-77E7-4D49-B0B5-C69E0F6D97E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{779E6CCF-77E7-4D49-B0B5-C69E0F6D97E7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{01397BD0-1F6D-4524-B24D-AE7B83B414A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{01397BD0-1F6D-4524-B24D-AE7B83B414A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{01397BD0-1F6D-4524-B24D-AE7B83B414A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{01397BD0-1F6D-4524-B24D-AE7B83B414A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{776501B0-8D5D-4768-A5E9-47AABE699F93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{776501B0-8D5D-4768-A5E9-47AABE699F93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{776501B0-8D5D-4768-A5E9-47AABE699F93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{776501B0-8D5D-4768-A5E9-47AABE699F93}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

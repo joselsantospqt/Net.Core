@@ -17,7 +17,7 @@ namespace Domain.Service
             RepositorioMedicamento = repositorioMedicamento;
         }
 
-        public Medicamento GetMedicamento(Guid id)
+        public Medicamento GetMedicamentoById(Guid id)
         {
             return RepositorioMedicamento.GetById(id);
         }

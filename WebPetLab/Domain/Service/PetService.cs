@@ -17,7 +17,7 @@ namespace Domain.Service
             RepositorioPet = repositorioPet;
         }
 
-        public Pet GetUsuario(Guid id)
+        public Pet GetPetById(Guid id)
         {
             return RepositorioPet.GetById(id);
         }
@@ -74,10 +74,9 @@ namespace Domain.Service
         }
 
 
-        public void DeleteUsuario(Guid id)
+        public void DeletePet(Guid id)
         {
             RepositorioPet.Remove(id);
         }
-
     }
 }
