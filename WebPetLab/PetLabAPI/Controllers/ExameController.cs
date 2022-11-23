@@ -4,6 +4,7 @@ using Domain.Service;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -46,9 +47,9 @@ namespace PetLabAPI.Controllers
 
 
         [HttpGet("{idProntuario:Guid}")]
-        public ActionResult GetExamesByProntuarioId([FromRoute] Guid id)
+        public ActionResult GetExamesByProntuarioId([FromRoute] Guid idProntuario)
         {
-            var exames = _ServiceExame.GetAll().Where(x => x.Prontuario.ProntuarioId == id);
+            var exames = _ServiceExame.GetAll().Where(x => x.Prontuario.ProntuarioId == idProntuario);
 
             if (exames == null)
                 return NoContent();
@@ -58,11 +59,22 @@ namespace PetLabAPI.Controllers
 
 
 
-        [HttpPost]
+        [HttpPost("{idProntuario:Guid}")]
         public ActionResult Exame([FromRoute] Guid idProntuario, [FromBody] CreateExame exameCreate)
         {
 
-            var exame = _ServiceExame.CreateExame(idProntuario, exameCreate.Descricao, exameCreate.Documento);
+            FileStream stream = new FileStream(
+                exameCreate.Documento, FileMode.Open, FileAccess.Read);
+            BinaryReader reader = new BinaryReader(stream);
+
+            byte[] photo = reader.ReadBytes((int)stream.Length);
+
+            reader.Close();
+            stream.Close();
+
+
+
+            var exame = _ServiceExame.CreateExame(idProntuario, exameCreate.Descricao, photo);
 
             return Created("api/[controller]", exame);
         }
@@ -70,7 +82,7 @@ namespace PetLabAPI.Controllers
 
         [HttpDelete("{id:Guid}")]
         //[Authorize]
-        public ActionResult Delete(Guid id)
+        public ActionResult Delete([FromRoute] Guid id)
         {
 
             _ServiceExame.DeleteExame(id);

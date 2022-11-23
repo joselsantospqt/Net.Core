@@ -5,11 +5,14 @@
 02 - Utilizar o Console do Gerenciador de Pacotes;
 03 - Executar o comando : cd .\PetLabAPI
 04 - Colocar o Class Library "Infrastructure" como Projeto Padrão no Console do Gerenciador de Pacotes;
-04 - Executar o comando : Add-Migration initial
-05 - Abrir o POWRSHELL e Executar o comando : dotnet ef database update
+05 - Executar o comando : Add-Migration initial
+06 - Definir como projeto inicializar "Infrastructure"
+07 - Utilizar o Console do Gerenciador de Pacotes e Executar o comando : dotnet ef database update
 
-//NUGET-CONSOLE
-03 - add-migration "addCommentTable"
-04 - database-update
+//NUGET-CONSOLE PETLABWEB MVC
+01 - Definir como projeto inicializar "PETLABWEB"
+02 - Utilizar o Console do Gerenciador de Pacotes e Executar o comando : Add-Migration initial
+03 - Abrir o Power Shell e executar : dotnet ef database update
+---- CASO FOR NECESSARIO;
 05 - add-migration "addPessoaTable"
 06 - database-update

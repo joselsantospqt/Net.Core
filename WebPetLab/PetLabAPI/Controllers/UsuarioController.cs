@@ -1,6 +1,7 @@
 ﻿using Domain.Entidade;
 using Domain.Entidade.Request;
 using Domain.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -23,7 +24,7 @@ namespace PetLabAPI.Controllers
 
 
         [HttpGet("getAll")]
-        //[Authorize]
+        [Authorize]
         public ActionResult GetAll()
         {
             var getAllUsuario = _ServiceUsuario.GetAll();
@@ -34,7 +35,7 @@ namespace PetLabAPI.Controllers
 
 
         [HttpGet("{id:Guid}")]
-        //[Authorize]
+        [Authorize]
         public ActionResult GetById([FromRoute] Guid id)
         {
 
@@ -48,10 +49,11 @@ namespace PetLabAPI.Controllers
 
 
         [HttpGet("{email}")]
+        [Authorize]
         public ActionResult GetByEmail([FromRoute] string email)
         {
 
-            var usuario = _ServiceUsuario.GetAll().Where(x => x.Email == email);
+            var usuario = _ServiceUsuario.GetAll().Where(x => x.Email == email).First();
 
             if (usuario == null)
                 return NoContent();
@@ -65,14 +67,14 @@ namespace PetLabAPI.Controllers
         public ActionResult Usuario([FromBody] CreateUsuario create)
         {
 
-            var usuario = _ServiceUsuario.CreateUsuario(create.Nome, create.Sobrenome, create.Telefone, create.Cpf, create.Cnpj, create.DataNascimento, create.Email, create.Senha, create.TipoUsuario);
+            var usuario = _ServiceUsuario.CreateUsuario(create.Id, create.Nome, create.Sobrenome, create.Telefone, create.Cpf, create.Cnpj, create.DataNascimento, create.Email, create.Senha, create.TipoUsuario);
 
             return Created("api/[controller]", usuario);
         }
 
 
         [HttpDelete("{id:Guid}")]
-        //[Authorize]
+        [Authorize]
         public ActionResult Delete(Guid id)
         {
 
@@ -83,7 +85,7 @@ namespace PetLabAPI.Controllers
 
 
         [HttpPut("{id:Guid}")]
-        //[Authorize]
+        [Authorize]
         public ActionResult Put([FromRoute] Guid id, [FromBody] Usuario update)
         {
             Usuario usuarioUpdate = update;

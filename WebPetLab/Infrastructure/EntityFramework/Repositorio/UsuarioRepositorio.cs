@@ -39,7 +39,7 @@ namespace Infrastructure.EntityFramework.Repositorio
         }
         public void SaveUpdate(Usuario usuario)
         {
-            if (usuario.Id.Equals(new Guid("{00000000-0000-0000-0000-000000000000}")))
+            if (usuario.Cpf == null && usuario.Cnpj == null && usuario.UpdatedAt == new DateTime())
                 _db.Add(usuario);
             else
                 _db.Update(usuario);

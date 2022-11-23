@@ -27,9 +27,9 @@ namespace TestProjectAPI
             var usuario = new Usuario();
             usuario.Nome = "José";
             usuario.Sobrenome = "Teste";
-            usuario.Telefone = 1234567489;
-            usuario.Cpf = 1234444;
-            usuario.Cnpj = 0;
+            usuario.Telefone = "";
+            usuario.Cpf = "";
+            usuario.Cnpj = "";
             usuario.DataNascimento = DateTime.UtcNow;
             usuario.Email = "teste@petshop.com";
             usuario.Senha = "12346477";
@@ -37,7 +37,7 @@ namespace TestProjectAPI
             usuario.CreatedAt = DateTime.UtcNow;
             usuario.UpdatedAt = new DateTime();
 
-            var usuarioCriado = _Service.CreateUsuario(usuario.Nome, usuario.Sobrenome, usuario.Telefone, usuario.Cpf, usuario.Cnpj, usuario.DataNascimento, usuario.Email, usuario.Senha, usuario.TipoUsuario);
+            var usuarioCriado = _Service.CreateUsuario(usuario.Id, usuario.Nome, usuario.Sobrenome, usuario.Telefone, usuario.Cpf, usuario.Cnpj, usuario.DataNascimento, usuario.Email, usuario.Senha, usuario.TipoUsuario);
 
             Assert.Equal(usuario.Id, usuarioCriado.Id);
             Assert.True(usuario.Nome == usuarioCriado.Nome);

@@ -1,0 +1,250 @@
+﻿@{
+
+    var pessoaId = ViewBag.ID;
+    var pessoaEmail = ViewBag.Email;
+    var pessoaImagem = ViewBag.url;
+
+}
+<!doctype html>
+<html lang="pt-br" class="light-theme">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <environment include="Development">
+        <link rel="icon" href="~/assets/img/favicon-32x32.png" type="image/png" />
+
+
+        <!-- Bootstrap CSS -->
+        <link href="~/assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/assets/css/bootstrap-extended.css" rel="stylesheet" />
+        <link href="~/assets/css/style.css" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+        <link href="~/assets/plugins/datetimepicker/css/classic.css" rel="stylesheet" />
+        <link href="~/assets/plugins/datetimepicker/css/classic.time.css" rel="stylesheet" />
+        <link href="~/assets/plugins/datetimepicker/css/classic.date.css" rel="stylesheet" />
+        <link href="~/assets/plugins/Drag-And-Drop/dist/imageuploadify.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.min.css">
+    </environment>
+
+    <environment exclude="Development">
+        <link rel="icon" href="~/assets/img/favicon-32x32.png" type="image/png" />
+
+
+        <!-- Bootstrap CSS -->
+        <link href="~/assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/assets/css/bootstrap-extended.css" rel="stylesheet" />
+        <link href="~/assets/css/style.css" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+        <link href="~/assets/plugins/datetimepicker/css/classic.css" rel="stylesheet" />
+        <link href="~/assets/plugins/datetimepicker/css/classic.time.css" rel="stylesheet" />
+        <link href="~/assets/plugins/datetimepicker/css/classic.date.css" rel="stylesheet" />
+        <link href="~/assets/plugins/Drag-And-Drop/dist/imageuploadify.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.min.css">
+    </environment>
+
+    <title>Pet Lab Veterinária</title>
+</head>
+
+<body>
+
+
+    <!--Inicio wrapper-->
+    <div class="wrapper">
+        <!--Inicio header-->
+        <header class="top-header">
+            <nav class="navbar navbar-expand gap-3">
+                <div class="mobile-toggle-icon fs-3">
+                    <i class="bi bi-list"></i>
+                </div>
+
+                <div class="top-navbar-right ms-auto">
+                    <ul class="navbar-nav align-items-center">
+                        <li class="nav-item search-toggle-icon">
+                            <a class="nav-link" href="#">
+                                <div class="">
+                                    <i class="bi bi-search"></i>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown dropdown-user-setting">
+                            <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="#" data-bs-toggle="dropdown">
+                                <div class="user-setting d-flex align-items-center">
+                                    <img src="~/assets/img/cover.jpg" class="user-img" alt="">
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Perfil" asp-action="Detalhes" asp-route-id="@pessoaId">
+                                        <div class="d-flex align-items-center">
+                                            <img src="~/assets/img/cover.jpg" alt="" class="rounded-circle" width="54" height="54">
+                                            <div class="ms-3">
+                                                <h6 class="mb-0 dropdown-user-name">@pessoaEmail</h6>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Perfil" asp-action="Detalhes" asp-route-id="@pessoaId">
+                                        <div class="d-flex align-items-center">
+                                            <div class=""><i class="bi bi-person-fill"></i></div>
+                                            <div class="ms-3"><span>Ver o perfil</span></div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Perfil" asp-action="Editar" asp-route-id="@pessoaId">
+                                        <div class="d-flex align-items-center">
+                                            <div class=""><i class="bi bi-gear-fill"></i></div>
+                                            <div class="ms-3"><span>Editar perfil</span></div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Autenticacao" asp-action="Login">
+                                        <div class="d-flex align-items-center">
+                                            <div class=""><i class="bi bi-lock-fill"></i></div>
+                                            <div class="ms-3"><span>Sair</span></div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!--fim header-->
+        <!--incio sidebar -->
+        <aside class="sidebar-wrapper" data-simplebar="true">
+            <div class="sidebar-header">
+                <div>
+                    <img src="~/assets/img/brand-logo-2.png" class="img-fluid w-75" alt="">
+                </div>
+
+                <div class="toggle-icon ms-auto">
+                    <i class="bi bi-list"></i>
+                </div>
+            </div>
+            <!--Navegação-->
+            <ul class="metismenu" id="menu">
+                <li>
+                    <a href="/feed/index">
+                        <div class="parent-icon">
+                            <i class="bi bi-file-earmark-break-fill"></i>
+                        </div>
+                        <div class="menu-title">Seu feed</div>
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Feed" asp-action="TodosPosts" asp-route-id="@pessoaId">
+                        <div class="fm-icon-box">
+                            <i class="bi bi-file-earmark-break-fill"></i>
+                        </div>
+                        <div class="menu-title">Seu Posts</div>
+                    </a>
+                </li>
+
+                <li class="menu-label">Sua rede</li>
+                <li>
+                    <a asp-controller="Amigos" asp-action="List">
+                        <div class="">
+                            <i class="bi bi-people-fill"></i>
+                        </div>
+                        <div class="menu-title">Ver Amigos</div>
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Amigos" asp-action="View">
+                        <div class="">
+                            <i class="bi bi-people-fill"></i>
+                        </div>
+                        <div class="menu-title">Pessoas da Rede</div>
+                    </a>
+                </li>
+
+                @*<li class="menu-label">Perfil</li>
+                    <li>
+
+                            <div class="menu-title"> <i class="bi bi-person-lines-fill"></i> Opções de perfil</div>
+
+                        <ul>
+                            <li>
+                                <a href="/perfil/perfilusuario"><i class="bi bi-circle"></i>Ver perfil</a>
+                            </li>
+                            <li>
+                                <a href="/perfil/editarperfil"><i class="bi bi-circle"></i>Editar perfil</a>
+                            </li>
+                            <li>
+                                <a href="/perfil/excluirconta"><i class="bi bi-circle"></i>Excluir conta</a>
+                            </li>
+                        </ul>
+                    </li>*@
+
+                @*<li class="menu-label">Trilhas</li>
+                    <li>
+
+
+                            <div class="menu-title"><i class="bi bi-compass"></i> Opções de Trilhas</div>
+
+                        <ul>
+                            <li>
+                                <a href="/trilhas/trilhasconfirmadas"><i class="bi bi-circle"></i>Trilhas confirmadas</a>
+                            </li>
+                            <li>
+                                <a href="/trilhas/criartrilha"><i class="bi bi-circle"></i>Criar trilha</a>
+                            </li>
+                            <li>
+                                <a href="/trilhas/listartrilhas"><i class="bi bi-circle"></i>Editar trilha</a>
+                            </li>
+                            <li>
+                                <a href="/trilhas/listartrilhas"><i class="bi bi-circle"></i>Excluir trilha</a>
+                            </li>
+                        </ul>
+                    </li>*@
+            </ul>
+            <!--fim navegação-->
+        </aside>
+
+        <!--fim sidebar -->
+        <!--inicio content-->
+        <div class="bg-surface">
+            @RenderBody()
+        </div>
+
+
+        <!--fim main-->
+
+    </div>
+    <!--fim wrapper-->
+
+    <environment include="Development">
+        <script src="~/assets/js/bootstrap.bundle.min.js"></script>
+        <script src="~/assets/js/jquery.min.js"></script>
+        <script src="~/assets/js/app.js"></script>
+
+    </environment>
+    <environment exclude="Development">
+        <script src="~/assets/js/bootstrap.bundle.min.js"></script>
+        <script src="~/assets/js/jquery.min.js"></script>
+        <script src="~/assets/js/app.js"></script>
+    
+    </environment>
+
+
+
+    @RenderSection("scripts", required: false)
+</body>
+
+</html>

@@ -46,9 +46,9 @@ namespace PetLabAPI.Controllers
 
 
         [HttpGet("{idProntuario:Guid}")]
-        public ActionResult GetMedicamentoByProntuarioId([FromRoute] Guid id)
+        public ActionResult GetMedicamentoByProntuarioId([FromRoute] Guid idProntuario)
         {
-            var medicamentos = _ServiceMedicamento.GetAll().Where(x => x.Prontuario.ProntuarioId == id);
+            var medicamentos = _ServiceMedicamento.GetAll().Where(x => x.Prontuario.ProntuarioId == idProntuario);
 
             if (medicamentos == null)
                 return NoContent();
@@ -58,7 +58,7 @@ namespace PetLabAPI.Controllers
 
 
 
-        [HttpPost]
+        [HttpPost("{idProntuario:Guid}")]
         public ActionResult Medicamento([FromRoute] Guid idProntuario, [FromBody] CreateMedicamento medicamentoCreate)
         {
 
@@ -70,7 +70,7 @@ namespace PetLabAPI.Controllers
 
         [HttpDelete("{id:Guid}")]
         //[Authorize]
-        public ActionResult Delete(Guid id)
+        public ActionResult Delete([FromRoute] Guid id)
         {
 
             _ServiceMedicamento.DeleteMedicamento(id);

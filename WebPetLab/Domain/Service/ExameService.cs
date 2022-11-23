@@ -30,7 +30,7 @@ namespace Domain.Service
         public Exame CreateExame(
             Guid idProntuario,
             string descricao,
-            string documento
+            byte[] documento
            )
         {
             var exame = new Exame();

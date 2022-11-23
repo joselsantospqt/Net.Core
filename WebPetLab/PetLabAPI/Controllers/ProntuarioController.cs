@@ -47,9 +47,9 @@ namespace PetLabAPI.Controllers
 
 
         [HttpGet("{idPet:Guid}")]
-        public ActionResult GetProntuariosByPetId([FromRoute] Guid id)
+        public ActionResult GetProntuariosByPetId([FromRoute] Guid idPet)
         {
-            var prontuarios = _ServiceProntuario.GetAll().Where(x => x.Pet.PetId == id);
+            var prontuarios = _ServiceProntuario.GetAll().Where(x => x.Pet.PetId == idPet);
 
             if (prontuarios == null)
                 return NoContent();
@@ -59,7 +59,7 @@ namespace PetLabAPI.Controllers
 
 
 
-        [HttpPost]
+        [HttpPost("{idMedico:Guid}/{idPet:Guid}")]
         public ActionResult Prontuario([FromRoute] Guid idMedico, [FromRoute] Guid idPet, [FromBody] CreateProntuario prontuarioCreate)
         {
 

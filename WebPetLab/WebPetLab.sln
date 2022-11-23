@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastru
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetLabAPI", "PetLabAPI\PetLabAPI.csproj", "{779E6CCF-77E7-4D49-B0B5-C69E0F6D97E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProjectAPI", "TestProjectAPI\TestProjectAPI.csproj", "{776501B0-8D5D-4768-A5E9-47AABE699F93}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestProjectAPI", "TestProjectAPI\TestProjectAPI.csproj", "{776501B0-8D5D-4768-A5E9-47AABE699F93}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetLabWeb", "PetLabWeb\PetLabWeb.csproj", "{DD19BA10-595E-40CB-917B-C9017C481EED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{776501B0-8D5D-4768-A5E9-47AABE699F93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{776501B0-8D5D-4768-A5E9-47AABE699F93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{776501B0-8D5D-4768-A5E9-47AABE699F93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD19BA10-595E-40CB-917B-C9017C481EED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD19BA10-595E-40CB-917B-C9017C481EED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD19BA10-595E-40CB-917B-C9017C481EED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD19BA10-595E-40CB-917B-C9017C481EED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

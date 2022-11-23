@@ -1,0 +1,86 @@
+﻿<!doctype html>
+
+<html lang="pt-br" class="light-theme">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <environment include="Development">
+        <link rel="icon" href="~/assets/img/favicon-32x32.png" type="image/png" />
+
+
+        <!-- Bootstrap CSS -->
+        <link href="~/assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/assets/css/bootstrap-extended.css" rel="stylesheet" />
+        <link href="~/assets/css/style.css" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    </environment>
+
+    <environment exclude="Development">
+        <link rel="icon" href="~/assets/img/favicon-32x32.png" type="image/png" />
+
+
+        <!-- Bootstrap CSS -->
+        <link href="~/assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/assets/css/bootstrap-extended.css" rel="stylesheet" />
+        <link href="~/assets/css/style.css" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    </environment>
+
+    <title>Pet Lab Veterinária</title>
+
+</head>
+
+<body>
+    <!--Inicio wrapper-->
+    <div class="wrapper">
+        <!--fim sidebar -->
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-light bg-white rounded-0 border-bottom">
+                <div class="container">
+                    <div class="col-12 p-0 flex-column d-flex align-items-center justify-content-center my-3">
+                        <!-- logo -->
+                        <a class="navbar-brand" href="#"><img src="~/assets/img/brand-logo-2.png" width="400" alt="" /></a>
+                        <!-- fim da logo -->
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <!--inicio content-->
+        <div class="bg-surface">
+            <div class="wrapper">
+                @RenderBody()
+            </div>
+            <div>
+
+            </div>
+        </div>
+        <footer class="bg-white border-top p-3 text-center fixed-bottom">
+            <p class="mb-0">2022 © Pet Lab Veterinária - Todos os Direitos Reservados</p>
+        </footer>
+
+        <!--fim main-->
+
+    </div>
+    <!--fim wrapper-->
+    <environment include="Development">
+        <script src="~/assets/js/bootstrap.bundle.min.js" asp-fallback-src="~/assets/js/bootstrap.bundle.min.js" asp-fallback-test="window.jQuery"></script>
+        <script src="~/assets/js/jquery.min.js" asp-fallback-src="~/assets/js/bootstrap.bundle.min.js" asp-fallback-test="window.jQuery"></script>
+        <script src="~/assets/js/app.js" asp-fallback-src="~/assets/js/app.js" asp-fallback-test="window.jQuery"></script>
+
+    </environment>
+    <environment exclude="Development">
+        <script src="~/assets/js/bootstrap.bundle.min.js" asp-fallback-src="~/assets/js/bootstrap.bundle.min.js" asp-fallback-test="window.jQuery"></script>
+        <script src="~/assets/js/jquery.min.js" asp-fallback-src="~/assets/js/bootstrap.bundle.min.js" asp-fallback-test="window.jQuery"></script>
+        <script src="~/assets/js/app.js" asp-fallback-src="~/assets/js/app.js" asp-fallback-test="window.jQuery"></script>
+    </environment>
+
+    @RenderSection("scripts", required: false)
+
+</body>
+
+</html>

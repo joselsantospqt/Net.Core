@@ -1,4 +1,5 @@
 ﻿using Domain.Entidade;
+using Domain.Entidade.Request;
 using Domain.Repositorio;
 using System;
 using System.Collections.Generic;
@@ -22,17 +23,28 @@ namespace Domain.Service
             return RepositorioUsuario.GetById(id);
         }
 
+        public Usuario GetValidaUsuarioLogin(CredenciaisUsuario credenciaisUsuario)
+        {
+
+            Usuario user = RepositorioUsuario.GetById(credenciaisUsuario.idUsuario);
+            if (user != null && user.Senha == credenciaisUsuario.PasswordHash)
+                return user;
+            else
+                return null;
+        }
+
         public IEnumerable<Usuario> GetAll()
         {
             return RepositorioUsuario.GetAll();
         }
 
         public Usuario CreateUsuario(
+            Guid id,
             string nome,
             string sobrenome,
-            int telefone,
-            int cpf,
-            int cnpj,
+            string telefone,
+            string cpf,
+            string cnpj,
             DateTime dataDeNascimento,
             string email,
             string senha,
@@ -41,6 +53,7 @@ namespace Domain.Service
         {
 
             var usuario = new Usuario();
+            usuario.Id = id;
             usuario.Nome = nome;
             usuario.Sobrenome = sobrenome;
             usuario.Telefone = telefone;
