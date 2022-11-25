@@ -25,7 +25,7 @@ namespace Infrastructure.EntityFramework.Repositorio
 
         public Exame GetById(Guid id)
         {
-            return _db.Exame.Include(x => x.Prontuario).FirstOrDefault();
+            return _db.Exame.Include(x => x.Prontuario).Where(x => x.Id == id).FirstOrDefault();
         }
 
         public void Remove(Guid id)

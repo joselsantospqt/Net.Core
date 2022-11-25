@@ -14,6 +14,8 @@ namespace Domain.Entidade.Request
         public string Telefone { get; set; }
         public string Cpf { get; set; }
         public string Cnpj { get; set; }
+        public string Crm { get; set; }
+
         public DateTime DataNascimento { get; set; }
         public string Email { get; set; }
         public string Senha { get; set; }

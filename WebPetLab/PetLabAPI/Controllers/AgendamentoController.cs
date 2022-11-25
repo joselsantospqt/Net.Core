@@ -1,5 +1,6 @@
 ﻿using Domain.Entidade;
 using Domain.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace PetLabAPI.Controllers
         }
 
         [HttpGet("getAll")]
-        //[Authorize]
+        [Authorize]
         public ActionResult GetAll()
         {
             var getAllPet = _ServiceAgendamento.GetAll();
@@ -29,7 +30,7 @@ namespace PetLabAPI.Controllers
         }
 
         [HttpGet("{id:Guid}")]
-        //[Authorize]
+        [Authorize]
         public ActionResult GetById([FromRoute] Guid id)
         {
 
@@ -41,6 +42,7 @@ namespace PetLabAPI.Controllers
             return Ok(agendamento);
         }
 
+        [Authorize]
         [HttpGet("{email}")]
         public ActionResult GetAgendamentoByPet([FromRoute] Guid id)
         {
@@ -53,6 +55,7 @@ namespace PetLabAPI.Controllers
         }
 
         [HttpPost("{idMedico:Guid}/{idPet:Guid}/{data}")]
+        [Authorize]
         public ActionResult Agendamento([FromRoute] Guid idMedico, [FromRoute] Guid idPet, [FromRoute] string data)
         {
 
@@ -62,7 +65,7 @@ namespace PetLabAPI.Controllers
         }
 
         [HttpDelete("{id:Guid}")]
-        //[Authorize]
+        [Authorize]
         public ActionResult Delete(Guid id)
         {
 
@@ -72,7 +75,7 @@ namespace PetLabAPI.Controllers
         }
 
         [HttpPut("{id:Guid}")]
-        //[Authorize]
+        [Authorize]
         public ActionResult Put([FromRoute] Guid id, [FromBody] Agendamento update)
         {
             Agendamento agendamentoUpdate = update;

@@ -33,15 +33,15 @@ namespace PetLabAPI.Controllers
             if (resultado)
             {
                 var usuario = _Service.GetValidaUsuarioLogin(Login);
-                var tokenString = GerarTokenJWT(usuario);
-                return Ok(new { token = tokenString });
+                TokenCode token = GerarTokenJWT(usuario);
+                return Ok(token);
             }
             else
             {
                 return Unauthorized();
             }
         }
-        private string GerarTokenJWT(Usuario usuario)
+        private TokenCode GerarTokenJWT(Usuario usuario)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var claims = new List<Claim>();
@@ -60,7 +60,13 @@ namespace PetLabAPI.Controllers
 
             var securityToken = tokenHandler.CreateToken(token);
             var stringToken = tokenHandler.WriteToken(securityToken);
-            return stringToken;
+
+            return new TokenCode()
+            {
+                IdUser = usuario.Id.ToString(),
+                Token = stringToken,
+                Expires = token.Expires.Value
+            };
         }
 
         private bool ValidarUsuario(CredenciaisUsuario Login)

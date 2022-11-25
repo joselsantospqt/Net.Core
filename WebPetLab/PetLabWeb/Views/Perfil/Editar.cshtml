@@ -1,0 +1,118 @@
+﻿@model Domain.Entidade.Usuario
+@using Domain.Entidade;
+
+@{
+    ViewData["Title"] = "Editar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main class="page-content">
+
+    <div class="profile-cover bg-dark"></div>
+
+    <div class="row">
+        <div class="col-12 col-lg-8">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="mb-0">Seu perfil</h5>
+                    <hr>
+                    <div class="card shadow-none border">
+                        <div class="card-header">
+                            <h6 class="mb-0">INFORMAÇÃO DO USUÁRIO</h6>
+                        </div>
+                        <div class="card-body">
+                            <form asp-action="Editar" method="post" enctype="multipart/form-data" class="row g-3">
+                                <div class="col-6">
+                                    <label asp-for="Nome" class="form-label">Nome</label>
+                                    <input type="text" asp-for="Nome" name="Nome" class="form-control" value="@Model.Nome">
+                                    <br />
+                                    <label asp-for="Sobrenome" class="form-label">Sobrenome</label>
+                                    <input type="text" asp-for="Sobrenome" name="Sobrenome" class="form-control" value="@Model.Sobrenome">
+                                    <br />
+                                    <label asp-for="Telefone" class="form-label">Telefone</label>
+                                    <input type="text" asp-for="Telefone" name="Telefone" class="form-control" value="@Model.Telefone">
+                                    <br />
+                                    <label asp-for="Cpf" class="form-label">Cpf</label>
+                                    <input type="text" asp-for="Cpf" name="Cpf" class="form-control" value="@Model.Cpf">
+                                    <br />
+                                    <label asp-for="Cnpj" class="form-label">Cnpj</label>
+                                    <input type="text" asp-for="Cnpj" name="Cnpj" class="form-control" value="@Model.Cnpj">
+                                    <br />
+                                    <label asp-for="Crm" class="form-label">Crm</label>
+                                    <input type="text" asp-for="Crm" name="Crm" class="form-control" value="@Model.Crm">
+                                    <br />
+                                    <label asp-for="DataNascimento" class="form-label">Data Nascimento</label>
+                                    <input type="datetime" asp-for="DataNascimento" name="DataNascimento" class="form-control datepicker" value="@Model.DataNascimento">
+                                    <br />
+                                    <p class="form-label">Selecione o tipo de Perfil:</p>
+                                    <label asp-for="TipoUsuario" class="form-label p-2">Tutor:</label>
+                                    @Html.RadioButton("TipoUsuario", ETipoUsuario.Tutor, @Model.TipoUsuario == ETipoUsuario.Tutor ? true : false)
+                                    <label asp-for="TipoUsuario" class="form-label p-2">Médico:</label>
+                                    @Html.RadioButton("TipoUsuario", ETipoUsuario.Medico, @Model.TipoUsuario == ETipoUsuario.Medico ? true : false)
+
+                                </div>
+                                <div class="col-6">
+                                    <label asp-for="ImagemUrlusuario" class="col-sm-12 col-form-label">Foto do perfil:</label>
+                                    <img src="~/assets/img/Image_not_available.png" width="320px" height="320px" />
+                                    <br />
+                                    <div class="col-sm-12">
+                                        <input type="file" asp-for="ImagemUrlusuario" name="ImagemUrlPessoa" class="form-control">
+                                    </div>
+                                    <br />
+                                    <div class="col-sm-12">
+                                        <a asp-controller="Perfil" asp-action="ExcluirImagem" asp-route-id="@Model.Id"><button type="button" class="btn btn-sm btn-danger px-5">Excluir Foto</button></a>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <input type="submit" value="Salvar" class="btn btn-primary" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-4">
+            <div class="card shadow-sm border-0 overflow-hidden">
+                <ul class="list-group list-group-flush">
+                    <li>
+                        <div class="col py-4 text-center">
+                            <h5 class="mb-0">Excluir todos seus dados.</h5>
+                            <a asp-controller="Perfil" asp-action="Excluir" asp-route-id="@Model.Id"><button type="button" class="btn btn-sm btn-danger px-5">Excluir conta</button></a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            @*<div class="card shadow-sm  border-bronze overflow-hidden">
+                    <ul class="list-group list-group-flush">
+                        <li>
+                            <div class="col py-4 text-center">
+                                <a asp-controller="Perfil" asp-action="PainelAdm"><button type="button" class="btn btn-sm btn-warning px-5">Painel Administrativo</button></a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>*@
+
+        </div>
+    </div>
+    <!--fim row-->
+
+</main>
+<!--fim main-->
+
+<div>
+    <a asp-controller="Home" asp-action="Home">Voltar para o Home</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+
+        $(".datepicker").datepicker({
+            format: "dd/mm/yyyy",
+            language: "pt-BR"
+        });
+    </script>
+}

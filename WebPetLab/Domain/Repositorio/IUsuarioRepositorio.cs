@@ -9,6 +9,7 @@ namespace Domain.Repositorio
 {
     public interface IUsuarioRepositorio
     {
+        Usuario GetByEmail(string email);
         Usuario GetById(Guid id);
         void Remove(Guid id);
         IEnumerable<Usuario> GetAll();

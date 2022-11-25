@@ -17,24 +17,29 @@ using System.Threading.Tasks;
 
 namespace PetLabWeb.Controllers
 {
+    [Authorize]
     public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
-
+        private readonly IHttpContextAccessor _HttpContextAccessor;
         private IdentityUser _sessionExtensions;
 
         public HomeController(IHttpContextAccessor httpContextAccessor, IConfiguration configuration, ILogger<HomeController> logger) : base(configuration)
         {
             _logger = logger;
+            _HttpContextAccessor = httpContextAccessor;
             _sessionExtensions = SessionExtensionsModel.GetObject<IdentityUser>(httpContextAccessor.HttpContext.Session, "UserSign");
         }
 
+        public IActionResult Home()
+        {
+            return View();
+        }
 
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-
-
+            bool PrimeiroAcesso = false;
             CredenciaisUsuario Autorizicao = new()
             {
                 idUsuario = Guid.Parse(_sessionExtensions.Id),
@@ -57,19 +62,37 @@ namespace PetLabWeb.Controllers
                 var retorno = await ApiSave(createUsuario, "Usuario");
                 if (retorno.StatusCode != HttpStatusCode.OK)
                 {
-                    ModelState.AddModelError(string.Empty, retorno.Content.ToString());
-                    return RedirectToAction("Autenticacao", "Login");
+                    SessionExtensionsModel.RemoveObject(_HttpContextAccessor.HttpContext.Session, "UserSign");
+                    SessionExtensionsModel.RemoveObject(_HttpContextAccessor.HttpContext.Session, "Token");
+
+                    ViewData["Status"] = retorno.Content.ToString();
+                    return RedirectToAction("Login", "Autenticacao");
                 }
 
+                PrimeiroAcesso = true;
                 value = await ApiToken(Autorizicao);
             }
 
             if (value.Token != null)
             {
-                SessionExtensionsModel.SetObject(this.HttpContext.Session, "Token", value);
+
                 var pessoa = await ApiFindById<Usuario>(value.Token, _sessionExtensions.Email, "Usuario");
-                if (pessoa != null)
-                    return RedirectToAction("Index", "Feed", pessoa);
+
+                if (value.Token != null && pessoa != null)
+                    SessionExtensionsModel.SetObject(this.HttpContext.Session, "Token", value);
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Falhar ao realizar login !");
+                    return RedirectToAction("Autenticacao", "Login");
+                }
+
+                if (PrimeiroAcesso)
+                    return RedirectToAction("Editar", "Perfil", pessoa);
+
+                return RedirectToAction("Home", "Home");
+
+
+
             }
 
             ModelState.AddModelError(string.Empty, "Houve uma Falha, Contate o Administrador.");

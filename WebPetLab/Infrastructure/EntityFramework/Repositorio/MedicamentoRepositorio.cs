@@ -25,7 +25,7 @@ namespace Infrastructure.EntityFramework.Repositorio
 
         public Medicamento GetById(Guid id)
         {
-            return _db.Medicamento.Include(x => x.Prontuario).FirstOrDefault();
+            return _db.Medicamento.Include(x => x.Prontuario).Where(x => x.Id == id).FirstOrDefault();
         }
 
         public void Remove(Guid id)

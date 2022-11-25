@@ -63,6 +63,8 @@ namespace Domain.Service
                 pet.ImagemUrlPet = PetUpdate.ImagemUrlPet;
             if (PetUpdate.Agendamentos.Count() > 0)
                 pet.Agendamentos = PetUpdate.Agendamentos;
+            if (PetUpdate.Prontuarios.Count() > 0)
+                pet.Prontuarios = PetUpdate.Prontuarios;
             pet.UpdatedAt = DateTime.UtcNow;
 
             RepositorioPet.SaveUpdate(pet);

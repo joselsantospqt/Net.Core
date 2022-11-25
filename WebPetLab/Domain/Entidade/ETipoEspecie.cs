@@ -21,7 +21,7 @@ namespace Domain.Entidade
         Anfibios,
         [Description("Vermiforme")]
         Vermiforme,
-        [Description("Nao_Vermiforme")]
+        [Description("Não Vermiforme")]
         Nao_Vermiforme,
         [Description("Invertebrados Com 3 Pares ou Mais Pernas")]
         Invertebrados

@@ -9,7 +9,7 @@ namespace Domain.Entidade
 {
     public class Pet
     {
-        public Pet() { Tutor = new UsuarioPet(); Agendamentos = new List<AgendamentoPet>(); }
+        public Pet() { Tutor = new UsuarioPet(); Agendamentos = new List<AgendamentoPet>(); Prontuarios = new List<ProntuarioPet>(); }
         [Key]
         public Guid Id { get; set; }
         public string Nome { get; set; }
@@ -20,6 +20,7 @@ namespace Domain.Entidade
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public IList<AgendamentoPet> Agendamentos { get; set; }
+        public IList<ProntuarioPet> Prontuarios { get; set; }
 
         internal void AddTutor(Guid usuarioId)
         {

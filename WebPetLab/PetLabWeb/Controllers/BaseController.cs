@@ -43,7 +43,7 @@ namespace PetLabWeb.Controllers
             }
             catch (Exception ex)
             {
-                return new TokenCode();
+                return new TokenCode() { Exception = ex};
             }
         }
 
@@ -55,6 +55,14 @@ namespace PetLabWeb.Controllers
             return response != null ? new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent("Cadastro Realizado") } : new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent("Falha ao Cadastrar Usuario.") };
         }
 
+        public async Task<HttpResponseMessage> ApiRemove(string jwt, Object id, string path)
+        {
+            var request = new RestRequest($"{path}/{id}", Method.Delete);
+            _httpClient.Authenticator = new JwtAuthenticator(jwt);
+            var response= await _httpClient.DeleteAsync(request);
+            return response != null ? new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent("Deletado com sucesso!") } : new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent("Falha ao Deletar.") };
+        }
+
         public async Task<TipoRetorno> ApiFindById<TipoRetorno>(string jwt, Object id, string path)
         {
             var request = new RestRequest($"{path}/{id}", Method.Get);
@@ -62,15 +70,7 @@ namespace PetLabWeb.Controllers
             return await _httpClient.GetAsync<TipoRetorno>(request);
         }
 
-        public async Task<TipoRetorno> ApiUpdate<TipoRetorno>(string jwt, Object id, Object objeto, string path)
-        {
-            var request = new RestRequest($"{path}/{id}", Method.Put);
-            request.AddJsonBody(objeto);
-            _httpClient.Authenticator = new JwtAuthenticator(jwt);
-            return await _httpClient.PutAsync<TipoRetorno>(request);
-        }
-
-        public async Task<List<TipoRetorno>> ApiFind<TipoRetorno>(string jwt, string path)
+        public async Task<List<TipoRetorno>> ApiFindAll<TipoRetorno>(string jwt, string path)
         {
             var request = new RestRequest($"{path}", Method.Get);
             _httpClient.Authenticator = new JwtAuthenticator(jwt);
@@ -84,6 +84,14 @@ namespace PetLabWeb.Controllers
             return await _httpClient.GetAsync<List<TipoRetorno>>(request);
         }
 
+        public async Task<TipoRetorno> ApiUpdate<TipoRetorno>(string jwt, Object id, Object objeto, string path)
+        {
+            var request = new RestRequest($"{path}/{id}", Method.Put);
+            request.AddJsonBody(objeto);
+            _httpClient.Authenticator = new JwtAuthenticator(jwt);
+            return await _httpClient.PutAsync<TipoRetorno>(request);
+        }
+
         public async Task<TipoRetorno> ApiSaveAutorize<TipoRetorno>(string jwt, Object objeto, string path)
         {
             var request = new RestRequest($"{path}", Method.Post);
@@ -92,13 +100,6 @@ namespace PetLabWeb.Controllers
             return await _httpClient.PostAsync<TipoRetorno>(request);
         }
 
-        public async Task<HttpResponseMessage> ApiRemove(string jwt, Object id, string path)
-        {
-            var request = new RestRequest($"{path}/{id}", Method.Delete);
-            _httpClient.Authenticator = new JwtAuthenticator(jwt);
-            var response= await _httpClient.DeleteAsync(request);
-            return response != null ? new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent("Deletado com sucesso!") } : new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent("Falha ao Deletar.") };
-        }
 
     }
 }

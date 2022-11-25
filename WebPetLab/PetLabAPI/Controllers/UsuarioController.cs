@@ -29,10 +29,36 @@ namespace PetLabAPI.Controllers
         {
             var getAllUsuario = _ServiceUsuario.GetAll();
 
+            if (getAllUsuario == null)
+                return NoContent();
+
+            return Ok(getAllUsuario);
+        }
+
+        [HttpGet("getAllTutor")]
+        [Authorize]
+        public ActionResult GetAllTutor()
+        {
+            var getAllUsuario = _ServiceUsuario.GetAll().Where(x => x.TipoUsuario == ETipoUsuario.Tutor).ToList();
+
+            if (getAllUsuario == null)
+                return NoContent();
+
             return Ok(getAllUsuario);
         }
 
 
+        [HttpGet("getAllMedico")]
+        [Authorize]
+        public ActionResult GetAllMedico()
+        {
+            var getAllUsuario = _ServiceUsuario.GetAll().Where(x => x.TipoUsuario == ETipoUsuario.Medico).ToList();
+
+            if (getAllUsuario == null)
+                return NoContent();
+
+            return Ok(getAllUsuario);
+        }
 
         [HttpGet("{id:Guid}")]
         [Authorize]
@@ -53,7 +79,7 @@ namespace PetLabAPI.Controllers
         public ActionResult GetByEmail([FromRoute] string email)
         {
 
-            var usuario = _ServiceUsuario.GetAll().Where(x => x.Email == email).First();
+            var usuario = _ServiceUsuario.GetUsuarioByEmail(email);
 
             if (usuario == null)
                 return NoContent();
@@ -66,8 +92,12 @@ namespace PetLabAPI.Controllers
         [HttpPost]
         public ActionResult Usuario([FromBody] CreateUsuario create)
         {
+            var usuario = _ServiceUsuario.GetUsuarioById(create.Id);
 
-            var usuario = _ServiceUsuario.CreateUsuario(create.Id, create.Nome, create.Sobrenome, create.Telefone, create.Cpf, create.Cnpj, create.DataNascimento, create.Email, create.Senha, create.TipoUsuario);
+            if (usuario != null)
+                return NoContent();
+
+            usuario = _ServiceUsuario.CreateUsuario(create.Id, create.Nome, create.Sobrenome, create.Telefone, create.Cpf, create.Cnpj, create.Crm, create.DataNascimento, create.Email, create.Senha, create.TipoUsuario);
 
             return Created("api/[controller]", usuario);
         }

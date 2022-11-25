@@ -47,12 +47,6 @@ namespace PetLabWeb.Areas.Identity.Pages.Account
         {
 
             [Required]
-            [StringLength(100, ErrorMessage = "O {0} deve ter pelo menos {2} e no máximo {1} caracteres.", MinimumLength = 5)]
-            [DataType(DataType.Text)]
-            [Display(Name = "Nome")]
-            public string Nome { get; set; }
-
-            [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
@@ -62,7 +56,7 @@ namespace PetLabWeb.Areas.Identity.Pages.Account
             [DataType(DataType.PhoneNumber)]
             [Display(Name = "Telefone")]
             public string Telefone { get; set; }
-        
+
             [Required]
             [StringLength(100, ErrorMessage = "O {0} deve ter pelo menos {2} e no máximo {1} caracteres.", MinimumLength = 6)]
             [DataType(DataType.Password)]
@@ -89,10 +83,12 @@ namespace PetLabWeb.Areas.Identity.Pages.Account
             {
                 IdentityResult result = new IdentityResult();
 
-                var user = new IdentityUser { 
-                    UserName = Input.Email, 
+                var user = new IdentityUser
+                {
+                    UserName = Input.Email,
                     Email = Input.Email,
-                    PhoneNumber = Input.Telefone};
+                    PhoneNumber = Input.Telefone
+                };
 
                 var vValidaEmail = await _userManager.FindByEmailAsync(Input.Email) != null ? true : false;
                 if (Input.Password != Input.ConfirmPassword)

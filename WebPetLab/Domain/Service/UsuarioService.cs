@@ -9,13 +9,17 @@ using System.Threading.Tasks;
 
 namespace Domain.Service
 {
-   public class UsuarioService
+    public class UsuarioService
     {
         private IUsuarioRepositorio RepositorioUsuario { get; }
 
         public UsuarioService(IUsuarioRepositorio repositorioUsuario)
         {
             RepositorioUsuario = repositorioUsuario;
+        }
+        public Usuario GetUsuarioByEmail(string email)
+        {
+            return RepositorioUsuario.GetByEmail(email);
         }
 
         public Usuario GetUsuarioById(Guid id)
@@ -45,6 +49,7 @@ namespace Domain.Service
             string telefone,
             string cpf,
             string cnpj,
+            string crm,
             DateTime dataDeNascimento,
             string email,
             string senha,
@@ -59,6 +64,7 @@ namespace Domain.Service
             usuario.Telefone = telefone;
             usuario.Cpf = cpf;
             usuario.Cnpj = cnpj;
+            usuario.Crm = crm;
             usuario.DataNascimento = dataDeNascimento;
             usuario.Email = email;
             usuario.Senha = senha;
@@ -85,6 +91,12 @@ namespace Domain.Service
                 usuario.Cpf = UsuarioUpdate.Cpf;
             if (UsuarioUpdate.Cnpj != usuario.Cnpj)
                 usuario.Cnpj = UsuarioUpdate.Cnpj;
+            if (UsuarioUpdate.Crm != usuario.Crm)
+                usuario.Crm = UsuarioUpdate.Crm;
+            if (UsuarioUpdate.DataNascimento != usuario.DataNascimento)
+                usuario.DataNascimento = UsuarioUpdate.DataNascimento;
+            if (UsuarioUpdate.TipoUsuario != usuario.TipoUsuario)
+                usuario.TipoUsuario = UsuarioUpdate.TipoUsuario;
             if (UsuarioUpdate.ImagemUrlusuario != null && UsuarioUpdate.ImagemUrlusuario.Length == 0)
                 usuario.ImagemUrlusuario = UsuarioUpdate.ImagemUrlusuario;
             if (UsuarioUpdate.Pets.Count() > 0)

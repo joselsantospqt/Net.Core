@@ -1,6 +1,7 @@
 ﻿using Domain.Entidade;
 using Domain.Entidade.Request;
 using Domain.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace PetLabAPI.Controllers
 
 
         [HttpGet("getAll")]
-        //[Authorize]
+        [Authorize]
         public ActionResult GetAll()
         {
             var getAllPet = _ServiceExame.GetAll();
@@ -33,7 +34,7 @@ namespace PetLabAPI.Controllers
 
 
         [HttpGet("{id:Guid}")]
-        //[Authorize]
+        [Authorize]
         public ActionResult GetById([FromRoute] Guid id)
         {
 
@@ -46,7 +47,7 @@ namespace PetLabAPI.Controllers
         }
 
 
-        [HttpGet("{idProntuario:Guid}")]
+        [HttpGet("GetExamesByProntuarioId/{idProntuario:Guid}")]
         public ActionResult GetExamesByProntuarioId([FromRoute] Guid idProntuario)
         {
             var exames = _ServiceExame.GetAll().Where(x => x.Prontuario.ProntuarioId == idProntuario);
@@ -81,7 +82,7 @@ namespace PetLabAPI.Controllers
 
 
         [HttpDelete("{id:Guid}")]
-        //[Authorize]
+        [Authorize]
         public ActionResult Delete([FromRoute] Guid id)
         {
 
@@ -92,7 +93,7 @@ namespace PetLabAPI.Controllers
 
 
         [HttpPut("{id:Guid}")]
-        //[Authorize]
+        [Authorize]
         public ActionResult Put([FromRoute] Guid id, [FromBody] Exame update)
         {
             Exame exameUpdate = update;

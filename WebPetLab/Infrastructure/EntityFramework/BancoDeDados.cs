@@ -28,6 +28,9 @@ namespace Infrastructure.EntityFramework
                 .HasMany(p => p.Agendamentos).WithOne();
 
             modelBuilder.Entity<Pet>()
+                .HasMany(p => p.Prontuarios).WithOne();
+
+            modelBuilder.Entity<Pet>()
                 .HasOne(b => b.Tutor).WithOne();
 
             modelBuilder.Entity<Agendamento>()

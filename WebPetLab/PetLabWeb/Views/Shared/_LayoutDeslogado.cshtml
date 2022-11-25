@@ -40,12 +40,37 @@
     <div class="wrapper">
         <!--fim sidebar -->
         <header>
-            <nav class="navbar navbar-expand-lg navbar-light bg-white rounded-0 border-bottom">
+            <nav class="navbar navbar-expand-lg navbar-light bg-yellow rounded-0 border-bottom">
                 <div class="container">
-                    <div class="col-12 p-0 flex-column d-flex align-items-center justify-content-center my-3">
+                    <div class="col-12 p-0 d-flex align-items-center justify-content-center my-3">
                         <!-- logo -->
-                        <a class="navbar-brand" href="#"><img src="~/assets/img/brand-logo-2.png" width="400" alt="" /></a>
+                        <a class="navbar-brand" href="#"><img src="~/assets/img/brand-logo-2.png" width="200" alt="" /></a>
                         <!-- fim da logo -->
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav">
+                                <li class="nav-item active">
+                                    <a class="nav-link"  asp-controller="Autenticacao" asp-action="Home">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link"  asp-controller="Autenticacao" asp-action="Sobre">Sobre</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link"  asp-controller="Autenticacao" asp-action="Servicos">Serviços</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link"  asp-controller="Autenticacao" asp-action="Contatos">Contatos</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link"  asp-controller="Autenticacao" asp-action="Parceiros">Parceiros</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link"  asp-controller="Autenticacao" asp-action="Login">Login</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </nav>

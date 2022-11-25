@@ -25,7 +25,7 @@ namespace Infrastructure.EntityFramework.Repositorio
 
         public Usuario GetById(Guid id)
         {
-            return _db.Usuario.Include(x => x.Pets).FirstOrDefault();
+            return _db.Usuario.Include(x => x.Pets).Where(x => x.Id == id).FirstOrDefault();
         }
 
         public void Remove(Guid id)
@@ -46,6 +46,11 @@ namespace Infrastructure.EntityFramework.Repositorio
 
             _db.SaveChanges();
 
+        }
+
+        public Usuario GetByEmail(string email)
+        {
+            return _db.Usuario.Include(x => x.Pets).Where(x => x.Email == email).FirstOrDefault();
         }
     }
 }

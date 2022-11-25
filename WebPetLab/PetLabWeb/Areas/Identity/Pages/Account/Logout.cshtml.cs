@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using PetLabWeb.Models;
 
 namespace PetLabWeb.Areas.Identity.Pages.Account
 {
@@ -15,11 +17,13 @@ namespace PetLabWeb.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LogoutModel> _logger;
+        private readonly IHttpContextAccessor _HttpContextAccessor;
 
-        public LogoutModel(SignInManager<IdentityUser> signInManager, ILogger<LogoutModel> logger)
+        public LogoutModel(SignInManager<IdentityUser> signInManager, ILogger<LogoutModel> logger, IHttpContextAccessor httpContextAccessor)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _HttpContextAccessor = httpContextAccessor;
         }
 
         public void OnGet()
@@ -30,6 +34,8 @@ namespace PetLabWeb.Areas.Identity.Pages.Account
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
+            SessionExtensionsModel.RemoveObject(_HttpContextAccessor.HttpContext.Session, "UserSign");
+            SessionExtensionsModel.RemoveObject(_HttpContextAccessor.HttpContext.Session, "Token");
             if (returnUrl != null)
             {
                 return LocalRedirect(returnUrl);

@@ -1,6 +1,7 @@
 using Domain.Entidade;
 using Domain.Repositorio;
 using Domain.Service;
+using Infrastructure.EntityFramework.Repositorio;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -9,14 +10,12 @@ using Xunit;
 
 namespace TestProjectAPI
 {
-    public class UnitTest1 : IClassFixture<UsuarioService>
+    public class UnitTest1
     {
-
-        UsuarioService _Service;
-
-        public UnitTest1(UsuarioService usuarioService)
+        UsuarioMockService _service;
+        public UnitTest1()
         {
-            _Service = usuarioService;
+            _service = new UsuarioMockService();
         }
 
         [Fact(DisplayName = "Cadastrar Usuário")]
@@ -37,7 +36,7 @@ namespace TestProjectAPI
             usuario.CreatedAt = DateTime.UtcNow;
             usuario.UpdatedAt = new DateTime();
 
-            var usuarioCriado = _Service.CreateUsuario(usuario.Id, usuario.Nome, usuario.Sobrenome, usuario.Telefone, usuario.Cpf, usuario.Cnpj, usuario.DataNascimento, usuario.Email, usuario.Senha, usuario.TipoUsuario);
+            var usuarioCriado = _service.CreateUsuario(usuario.Id, usuario.Nome, usuario.Sobrenome, usuario.Telefone, usuario.Cpf, usuario.Cnpj, usuario.DataNascimento, usuario.Email, usuario.Senha, usuario.TipoUsuario);
 
             Assert.Equal(usuario.Id, usuarioCriado.Id);
             Assert.True(usuario.Nome == usuarioCriado.Nome);
@@ -49,7 +48,6 @@ namespace TestProjectAPI
             Assert.True(usuario.Email == usuarioCriado.Email);
             Assert.True(usuario.Senha == usuarioCriado.Senha);
             Assert.True(usuario.ImagemUrlusuario == usuarioCriado.ImagemUrlusuario);
-            Assert.True(usuario.CreatedAt == usuarioCriado.CreatedAt);
         }
 
 

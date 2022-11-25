@@ -1,0 +1,97 @@
+﻿@model IEnumerable<Domain.Entidade.Pet>
+
+@{
+    ViewData["Title"] = "Listar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Listar</h1>
+
+<main class="page-content">
+
+    <div class="row py-5">
+        <div class="col-10 col-lg-9 col-xl-9 col-xxl-9 d-flex justify-content-between mx-auto">
+            <a asp-controller="Amigos" asp-action="List">
+                <div>
+                    <h5 class="border radius-10 p-3 primary-dc"><i class="bi bi-people-fill primary-dc"></i>Veterinária</h5>
+                </div>
+            </a>
+            <a href="#">
+                <div>
+                    <h5 class="border radius-10 p-3 primary-dc"><i class="bi bi-card-checklist primary-dc"></i>Minhas Consultas</h5>
+                </div>
+            </a>
+            <div>
+                <a asp-controller="Pet" asp-action="Criar">
+                    <h5 class="border radius-10 p-3 primary-dc"><i class="bi bi-compass-fill primary-dc"></i>Novo Pet</h5>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row py-5">
+        <div class="col-10 col-lg-9 col-xl-9 col-xxl-9 d-flex justify-content-between mx-auto">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Id)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Nome)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DataNascimento)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Especie)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ImagemUrlPet)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CreatedAt)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.UpdatedAt)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Id)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Nome)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DataNascimento)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Especie)
+                            </td>
+                            <td>
+                                <img src="@item.ImagemUrlPet" width="320px" height="320px" />
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CreatedAt)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UpdatedAt)
+                            </td>
+                            <td>
+                                <a asp-controller="Pet" asp-action="Deletar" asp-route-id="@item.Id">Deletar</a>
+                                |
+                                <a asp-controller="Pet" asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>

@@ -1,6 +1,7 @@
 ﻿using Domain.Entidade;
 using Domain.Entidade.Request;
 using Domain.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -14,15 +15,16 @@ namespace PetLabAPI.Controllers
     public class ProntuarioController : ControllerBase
     {
         private ProntuarioService _ServiceProntuario;
-
-        public ProntuarioController(ProntuarioService serviceProntuario)
+        private PetService _ServicePet;
+        public ProntuarioController(ProntuarioService serviceProntuario, PetService servicePet)
         {
             _ServiceProntuario = serviceProntuario;
+            _ServicePet = servicePet;
         }
 
 
         [HttpGet("getAll")]
-        //[Authorize]
+        [Authorize]
         public ActionResult GetAll()
         {
             var getAllPet = _ServiceProntuario.GetAll();
@@ -33,7 +35,7 @@ namespace PetLabAPI.Controllers
 
 
         [HttpGet("{id:Guid}")]
-        //[Authorize]
+        [Authorize]
         public ActionResult GetById([FromRoute] Guid id)
         {
 
@@ -46,10 +48,16 @@ namespace PetLabAPI.Controllers
         }
 
 
-        [HttpGet("{idPet:Guid}")]
+        [HttpGet("GetProntuariosByPetId/{idPet:Guid}")]
+        [Authorize]
         public ActionResult GetProntuariosByPetId([FromRoute] Guid idPet)
         {
-            var prontuarios = _ServiceProntuario.GetAll().Where(x => x.Pet.PetId == idPet);
+            var pet = _ServicePet.GetPetById(idPet);
+            IList<Prontuario> prontuarios = new List<Prontuario>();
+            foreach (var prontuario in pet.Prontuarios)
+            {
+                prontuarios.Add(_ServiceProntuario.GetProntuarioById(prontuario.ProntuarioId));
+            }
 
             if (prontuarios == null)
                 return NoContent();
@@ -60,6 +68,7 @@ namespace PetLabAPI.Controllers
 
 
         [HttpPost("{idMedico:Guid}/{idPet:Guid}")]
+        [Authorize]
         public ActionResult Prontuario([FromRoute] Guid idMedico, [FromRoute] Guid idPet, [FromBody] CreateProntuario prontuarioCreate)
         {
 
@@ -70,7 +79,7 @@ namespace PetLabAPI.Controllers
 
 
         [HttpDelete("{id:Guid}")]
-        //[Authorize]
+        [Authorize]
         public ActionResult Delete(Guid id)
         {
 
@@ -81,7 +90,7 @@ namespace PetLabAPI.Controllers
 
 
         [HttpPut("{id:Guid}")]
-        //[Authorize]
+        [Authorize]
         public ActionResult Put([FromRoute] Guid id, [FromBody] Prontuario update)
         {
             Prontuario prontuarioUpdate = update;
