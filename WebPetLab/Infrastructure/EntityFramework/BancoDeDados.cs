@@ -16,8 +16,7 @@ namespace Infrastructure.EntityFramework
         public DbSet<Pet> Pet { get; set; }
         public DbSet<Agendamento> Agendamento { get; set; }
         public DbSet<Prontuario> Prontuario { get; set; }
-        public DbSet<Exame> Exame { get; set; }
-        public DbSet<Medicamento> Medicamento { get; set; }
+        public DbSet<Documento> Documento { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -29,6 +28,9 @@ namespace Infrastructure.EntityFramework
 
             modelBuilder.Entity<Pet>()
                 .HasMany(p => p.Prontuarios).WithOne();
+
+            modelBuilder.Entity<Pet>()
+             .HasMany(p => p.Documentos).WithOne();
 
             modelBuilder.Entity<Pet>()
                 .HasOne(b => b.Tutor).WithOne();
@@ -46,16 +48,13 @@ namespace Infrastructure.EntityFramework
                 .HasOne(b => b.Medico).WithOne();
 
             modelBuilder.Entity<Prontuario>()
-               .HasMany(p => p.Exames).WithOne();
+               .HasMany(p => p.Documentos).WithOne();
 
-            modelBuilder.Entity<Prontuario>()
-              .HasMany(p => p.Medicamentos).WithOne();
-
-            modelBuilder.Entity<Exame>()
-              .HasOne(p => p.Prontuario).WithOne();
-
-            modelBuilder.Entity<Medicamento>()
-              .HasOne(p => p.Prontuario).WithOne();
+            modelBuilder.Entity<Documento>()
+              .HasOne(p => p.Prontuario).WithOne();    
+            
+            modelBuilder.Entity<Documento>()
+              .HasOne(p => p.Pet).WithOne();
 
         }
     }

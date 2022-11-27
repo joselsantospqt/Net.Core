@@ -9,7 +9,7 @@ namespace Domain.Entidade
 {
     public class Prontuario
     {
-        public Prontuario() { Pet = new ProntuarioPet(); Medico = new ProntuarioUsuario(); Exames = new List<ProntuarioExame>(); Medicamentos = new List<ProntuarioMedicamento>(); }
+        public Prontuario() { Pet = new ProntuarioPet(); Medico = new ProntuarioUsuario(); Documentos = new List<ProntuarioDocumento>();}
         [Key]
         public Guid Id { get; set; }
         public string Resumo { get; set; }
@@ -17,9 +17,7 @@ namespace Domain.Entidade
         public DateTime Data { get; set; }
         public ProntuarioPet Pet { get; set; }
         public ProntuarioUsuario Medico { get; set; }
-        public IList<ProntuarioExame> Exames { get; set; }
-        public IList<ProntuarioMedicamento> Medicamentos { get; set; }
-
+        public IList<ProntuarioDocumento> Documentos { get; set; }
         internal void AddPet(Guid petId)
         {
             Pet = new ProntuarioPet() { PetId = petId, ProntuarioId = this.Id };

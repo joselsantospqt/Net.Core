@@ -21,8 +21,7 @@ namespace Infrastructure
             services.AddScoped<IPetRepositorio, PetRepositorio>();
             services.AddScoped<IAgendamentoRepositorio, AgendamentoRepositorio>();
             services.AddScoped<IProntuarioRepositorio, ProntuarioRepositorio>();
-            services.AddScoped<IExameRepositorio, ExameRepositorio>();
-            services.AddScoped<IMedicamentoRepositorio, MedicamentoRepositorio>();
+            services.AddScoped<IDocumentoRepositorio, DocumentoRepositorio>();
         }
     }
 }

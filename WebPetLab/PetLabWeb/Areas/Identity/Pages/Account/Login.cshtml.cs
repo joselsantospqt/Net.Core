@@ -86,7 +86,7 @@ namespace PetLabWeb.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     var userIdentity = await _userManager.FindByEmailAsync(Input.Email);
-                    SessionExtensionsModel.SetObject(this.HttpContext.Session, "UserSign", userIdentity);
+                    SessionExtensionsHelp.SetObject(this.HttpContext.Session, "UserSign", userIdentity);
                     _logger.LogInformation("User logged in.");
                     return RedirectToAction("Index", "Home");
                 }

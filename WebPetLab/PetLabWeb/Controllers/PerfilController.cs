@@ -1,5 +1,6 @@
 ﻿using Domain.Entidade;
 using Domain.Entidade.Request;
+using Domain.Entidade.View;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -26,11 +27,20 @@ namespace PetLabWeb.Controllers
         public PerfilController(IHttpContextAccessor httpContextAccessor, IConfiguration configuration, ILogger<PerfilController> logger) : base(configuration)
         {
             _logger = logger;
-            _sessionUserSign = SessionExtensionsModel.GetObject<IdentityUser>(httpContextAccessor.HttpContext.Session, "UserSign");
-            _sessionToken = SessionExtensionsModel.GetObject<TokenCode>(httpContextAccessor.HttpContext.Session, "Token");
+            _sessionUserSign = SessionExtensionsHelp.GetObject<IdentityUser>(httpContextAccessor.HttpContext.Session, "UserSign");
+            _sessionToken = SessionExtensionsHelp.GetObject<TokenCode>(httpContextAccessor.HttpContext.Session, "Token");
         }
 
-        public async Task<IActionResult> Editar(Usuario usuario)
+        [HttpGet]
+        [Route("Perfil/Medicos")]
+        public async Task<IActionResult> Medicos()
+        {
+            var medicos = await ApiFindAll<Usuario>(_sessionToken.Token, "Usuario/GetAllMedico");
+            return View(medicos);
+        }
+
+
+        public IActionResult Editar(Usuario usuario)
         {
             return View(usuario);
         }
@@ -73,18 +83,19 @@ namespace PetLabWeb.Controllers
             usuario.Crm = collection["Crm"];
             usuario.Cnpj = collection["Cnpj"];
             usuario.DataNascimento = Convert.ToDateTime(collection["DataNascimento"]);
-            usuario.TipoUsuario = collection["TipoUsuario"].ToString() != ETipoUsuario.Medico.ToString() ? ETipoUsuario.Tutor : ETipoUsuario.Medico;
+            usuario.TipoUsuario = EnumDescriptionHelp.ParseEnum<ETipoUsuario>(collection["TipoUsuario"]);
 
             var retorno = await ApiUpdate<Usuario>(_sessionToken.Token, _sessionUserSign.Id, usuario, "Usuario");
 
             if (retorno == null)
             {
-                ViewData["MensagemRetorno"] = "Houve Um erro durante o update !";
+                ViewData["messenger"] = "Houve Um erro durante o update !";
             }
+            ViewData["messenger"] = "Alterado com Sucesso !";
             //else
             //    await _blobstorage.SaveUpdate(fileName, ms);
 
-            return Redirect(retorno.Id.ToString());
+            return View("Editar", retorno);
 
         }
         private string RandomNumber()
@@ -127,7 +138,7 @@ namespace PetLabWeb.Controllers
         [Route("Perfil/Detalhes/{Id:guid}")]
         public async Task<IActionResult> Detalhes(Guid id)
         {
-            Usuario usuario = await ApiFindById<Usuario>(_sessionToken.Token, id, "Usuario");
+            ViewDetalhes usuario = await ApiFindById<ViewDetalhes>(_sessionToken.Token, id, "Usuario/GetUsuarioDetalhes");
 
             return View(usuario);
         }

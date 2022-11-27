@@ -1,8 +1,7 @@
-﻿@model IEnumerable<Domain.Entidade.Pet>
-@using EnumsNET
-@using Domain.Entidade
+﻿@model IEnumerable<Domain.Entidade.Usuario>
+
 @{
-    ViewData["Title"] = "Listar Pets";
+    ViewData["Title"] = "Listar Medicos";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -16,33 +15,28 @@
         <div class="col-12 d-flex justify-content-center mx-auto">
             <div class="card shadow-sm border-0">
                 <div class="card-body">
-                    <h5 class="mb-0">Página Pets</h5>
+                    <h5 class="mb-0">Página Médicos</h5>
                     <hr>
 
                     <div class="col-10 col-lg-9 col-xl-9 col-xxl-9 d-flex justify-content-between mx-auto">
-                        <a asp-controller="Perfil" asp-action="Medicos">
+                        <a asp-controller="Home" asp-action="Home">
                             <div>
-                                <h5 class="border radius-10 p-3 primary-dc"><i class="bi bi-people-fill primary-dc"></i>Veterinários</h5>
+                                <h5 class="border radius-10 p-3 primary-dc"><i class="bi bi-house-fill primary-dc"></i>Home</h5>
                             </div>
                         </a>
-                        <a href="#">
+                        <a asp-controller="Agendamento" asp-action="Listar">
                             <div>
                                 <h5 class="border radius-10 p-3 primary-dc"><i class="bi bi-card-checklist primary-dc"></i>Minhas Consultas</h5>
                             </div>
                         </a>
-                        <div>
-                            <a asp-controller="Pet" asp-action="Criar">
-                                <h5 class="border radius-10 p-3 primary-dc"><i class="bi bi-compass-fill primary-dc"></i>Novo Pet</h5>
-                            </a>
-                        </div>
                     </div>
 
                     <div class="card shadow-none border">
                         <div class="card-body">
-                            @*PETS*@
+                            @*MEDICOS*@
                             <div class="card shadow-sm border-0 overflow-hidden">
                                 <div class="card-body">
-                                    <h5 class="mb-0">Pets</h5>
+                                    <h5 class="mb-0">Médicos</h5>
                                     <hr>
                                     <div class="card shadow-none border">
                                         <div class="card-header">
@@ -54,10 +48,11 @@
                                                     <tr>
                                                         <th> #</th>
                                                         <th>@Html.DisplayNameFor(model => model.Nome)</th>
-                                                        <th>@Html.DisplayNameFor(model => model.DataNascimento)</th>
-                                                        <th>@Html.DisplayNameFor(model => model.Especie)</th>
-                                                        <th>@Html.DisplayNameFor(model => model.CreatedAt)</th>
-                                                        <th>@Html.DisplayNameFor(model => model.UpdatedAt)</th>
+                                                        <th>@Html.DisplayNameFor(model => model.Sobrenome)</th>
+                                                        <th>@Html.DisplayNameFor(model => model.Telefone)</th>
+                                                        <th>@Html.DisplayNameFor(model => model.Cnpj)</th>
+                                                        <th>@Html.DisplayNameFor(model => model.Email)</th>
+                                                        <th>@Html.DisplayNameFor(model => model.TipoUsuario)</th>
                                                         <th>   </th>
                                                     </tr>
                                                 </thead>
@@ -73,15 +68,15 @@
                                                                     </div>
                                                                 </td>
                                                                 <td>@Html.DisplayFor(modelItem => item.Nome)</td>
-                                                                <td> @Html.DisplayFor(modelItem => item.DataNascimento)</td>
-                                                                <td> @Html.DisplayFor(modelItem => item.Especie)</td>
-                                                                <td> @Html.DisplayFor(modelItem => item.CreatedAt)</td>
-                                                                <td> @Html.DisplayFor(modelItem => item.UpdatedAt)</td>
+                                                                <td>@Html.DisplayFor(modelItem => item.Sobrenome)</td>
+                                                                <td>@Html.DisplayFor(modelItem => item.Telefone)</td>
+                                                                <td>@Html.DisplayFor(modelItem => item.Cnpj)</td>
+                                                                <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                                                                <td> @Html.DisplayFor(modelItem => item.TipoUsuario)</td>
                                                                 <td>
-                                                                    @Html.ActionLink("", "Editar", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-pen yellow", data_toggle = "tooltip", title = "Editar" }) |
-                                                                    @Html.ActionLink("", "Deletar", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-trash yellow", data_toggle = "tooltip", title = "Deletar" })|
+                                                                    @Html.ActionLink("", "Agendar", "Agendamento", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-plus yellow", data_toggle = "tooltip", title = "Novo Agendamento" })|
                                                                     @Html.ActionLink("", "Detalhes", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-inbox yellow", data_toggle = "tooltip", title = "Detalhes" })
-                                                            </tr>
+</tr>
                                                         }
                                                 </tbody>
                                             </table>

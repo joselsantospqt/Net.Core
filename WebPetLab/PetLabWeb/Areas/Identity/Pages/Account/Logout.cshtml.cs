@@ -34,8 +34,8 @@ namespace PetLabWeb.Areas.Identity.Pages.Account
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
-            SessionExtensionsModel.RemoveObject(_HttpContextAccessor.HttpContext.Session, "UserSign");
-            SessionExtensionsModel.RemoveObject(_HttpContextAccessor.HttpContext.Session, "Token");
+            SessionExtensionsHelp.RemoveObject(_HttpContextAccessor.HttpContext.Session, "UserSign");
+            SessionExtensionsHelp.RemoveObject(_HttpContextAccessor.HttpContext.Session, "Token");
             if (returnUrl != null)
             {
                 return LocalRedirect(returnUrl);

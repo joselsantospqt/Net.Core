@@ -20,12 +20,12 @@ namespace Infrastructure.EntityFramework.Repositorio
 
         public IEnumerable<Pet> GetAll()
         {
-            return _db.Pet.Include(x => x.Tutor).Include(x => x.Agendamentos).Include(x => x.Prontuarios).AsNoTracking().ToList();
+            return _db.Pet.Include(x => x.Tutor).Include(x => x.Agendamentos).Include(x => x.Prontuarios).Include(x => x.Documentos).AsNoTracking().ToList();
         }
 
         public Pet GetById(Guid id)
         {
-            return _db.Pet.Include(x => x.Tutor).Include(x => x.Agendamentos).Include(x => x.Prontuarios).Where(x => x.Id == id).FirstOrDefault();
+            return _db.Pet.Include(x => x.Tutor).Include(x => x.Agendamentos).Include(x => x.Prontuarios).Include(x => x.Documentos).Where(x => x.Id == id).FirstOrDefault();
         }
 
         public void Remove(Guid id)

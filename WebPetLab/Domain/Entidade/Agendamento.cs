@@ -12,8 +12,17 @@ namespace Domain.Entidade
         public Agendamento() { Pet = new AgendamentoPet(); MedicoResponsavel = new AgendamentoUsuario(); }
         [Key]
         public Guid Id { get; set; }
+        [Required]
+        [DataType(DataType.Date)]
+        [Display(Name = "Data")]
         public DateTime Data { get; set; }
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Status")]
         public EStatus Status { get; set; }
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Comentario")]
         public string Comentario { get; set; }
         public AgendamentoPet Pet { get; set; }
         public AgendamentoUsuario MedicoResponsavel { get; set; }

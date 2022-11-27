@@ -1,0 +1,63 @@
+﻿@model Domain.Entidade.Agendamento
+
+@{
+    ViewData["Title"] = "Editar Agendamento";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<main class="page-content">
+
+    <div class="profile-cover bg-dark"></div>
+
+    <div class="row">
+        <div class="col-12 col-lg-8 d-flex justify-content-center mx-auto">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="mb-0">@ViewData["Title"]</h5>
+                    <hr>
+                    <div class="card shadow-none border">
+                        <div class="card-header">
+                            <h6 class="mb-0">INFORMAÇÃO DO AGENDAMENTO</h6>
+                        </div>
+                        <div class="card-body">
+                            <form asp-action="Editar" method="post" enctype="multipart/form-data" class="row g-3">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="form-group">
+                                    <label asp-for="Data" class="control-label"></label>
+                                    <input asp-for="Data" name="Data" class="form-control datepicker" />
+                                    <span asp-validation-for="Data" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Status" class="control-label"></label>
+                                    <input asp-for="Status" name="Status" class="form-control" />
+                                    <span asp-validation-for="Status" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Comentario" class="control-label"></label>
+                                    <input asp-for="Comentario" name="Comentario" class="form-control" />
+                                    <span asp-validation-for="Comentario" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Save" class="btn btn-primary" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script type="text/javascript">
+
+        $(".datepicker").datepicker({
+            format: "dd/mm/yyyy",
+            language: "pt-BR"
+        });
+    </script>
+}

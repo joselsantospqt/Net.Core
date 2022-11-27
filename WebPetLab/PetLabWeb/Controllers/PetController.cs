@@ -1,6 +1,6 @@
 ﻿using Domain.Entidade;
 using Domain.Entidade.Request;
-
+using Domain.Entidade.View;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -26,8 +26,8 @@ namespace PetLabWeb.Controllers
         public PetController(IHttpContextAccessor httpContextAccessor, IConfiguration configuration, ILogger<PetController> logger) : base(configuration)
         {
             _logger = logger;
-            _sessionUserSign = SessionExtensionsModel.GetObject<IdentityUser>(httpContextAccessor.HttpContext.Session, "UserSign");
-            _sessionToken = SessionExtensionsModel.GetObject<TokenCode>(httpContextAccessor.HttpContext.Session, "Token");
+            _sessionUserSign = SessionExtensionsHelp.GetObject<IdentityUser>(httpContextAccessor.HttpContext.Session, "UserSign");
+            _sessionToken = SessionExtensionsHelp.GetObject<TokenCode>(httpContextAccessor.HttpContext.Session, "Token");
         }
 
         [HttpGet]
@@ -42,9 +42,14 @@ namespace PetLabWeb.Controllers
         [Route("Pet/BuscarEmail/{Id}")]
         public async Task<IActionResult> BuscarEmail(string Id)
         {
-            var pets = await ApiFindAllById<Pet>(_sessionToken.Token, Id, "Pet/GetAllPetsByEmail");
+            var pessoa = await ApiFindById<Usuario>(_sessionToken.Token, _sessionUserSign.Email, "Usuario");
+            if (pessoa.TipoUsuario == ETipoUsuario.Medico)
+            {
+                var pets = await ApiFindAllById<Pet>(_sessionToken.Token, Id, "Pet/GetAllPetsByEmail");
+                return RedirectToAction("Listar", "Pet", _sessionUserSign.Id);
+            }
+            return RedirectToAction("Autenticacao", "AccessDenied");
 
-            return RedirectToAction("Listar", "Pet", _sessionUserSign.Id);
         }
 
         public IActionResult Criar()
@@ -97,7 +102,6 @@ namespace PetLabWeb.Controllers
             return generator.Next(0, 1000000).ToString("D6");
         }
 
-
         [HttpGet]
         [Route("Pet/Deletar/{Id:guid}")]
         public async Task<IActionResult> Deletar(Guid id)
@@ -107,13 +111,67 @@ namespace PetLabWeb.Controllers
         }
 
         [HttpPost]
-        [Route("Pet/DeletarPet/{Id:guid}")]
-        public async Task<IActionResult> DeletarPet(Guid id)
+        [Route("Pet/DeletarPet")]
+        public async Task<IActionResult> DeletarPet(IFormCollection collection)
         {
-            var pet = await ApiRemove(_sessionToken.Token, id, "Pet");
+            var pet = await ApiRemove(_sessionToken.Token, new Guid(collection["Id"]), "Pet");
             return RedirectToAction("Listar", new { id = _sessionUserSign.Id });
         }
 
+        [HttpGet]
+        [Route("Pet/Detalhes/{Id:guid}")]
+        public async Task<IActionResult> Detalhes(Guid id)
+        {
+            var detalhes = await ApiFindById<ViewDetalhes>(_sessionToken.Token, id, "Pet/GetPetsDetalhes");
+            return View(detalhes);
+        }
+
+        [HttpGet]
+        [Route("Pet/Editar/{Id:guid}")]
+        public async Task<IActionResult> Editar(Guid id)
+        {
+            var pet = await ApiFindById<Pet>(_sessionToken.Token, id, "Pet");
+            return View(pet);
+        }
+
+        [HttpPost]
+        [Route("Pet/Editar/{Id:guid}")]
+        public async Task<IActionResult> Editar(Guid id, IFormCollection collection)
+        {
+            var existeImagem = false;
+
+            MemoryStream ms = new MemoryStream();
+            var fileName = $"Perfil_{id}{RandomNumber()}_.png";
+
+
+            foreach (var item in this.Request.Form.Files)
+            {
+                existeImagem = true;
+
+                item.CopyTo(ms);
+
+                ms.Position = 0;
+            }
+
+            Pet pet = await ApiFindById<Pet>(_sessionToken.Token, id, "Pet");
+
+            pet.Nome = collection["Nome"];
+            pet.DataNascimento = Convert.ToDateTime(collection["DataNascimento"]);
+            pet.Especie = EnumDescriptionHelp.ParseEnum<ETipoEspecie>(collection["Especie"]);
+
+            var retorno = await ApiUpdate<Pet>(_sessionToken.Token, pet.Id, pet, "Pet");
+
+            if (retorno == null)
+            {
+                ViewData["messenger"] = "Houve Um erro durante o update !";
+            }
+            ViewData["messenger"] = "Alterado com Sucesso !";
+            //else
+            //    await _blobstorage.SaveUpdate(fileName, ms);
+
+            return View("Editar", retorno);
+
+        }
 
     }
 }

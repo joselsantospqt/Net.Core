@@ -43,8 +43,7 @@ namespace PetLabAPI
             services.AddScoped<PetService>();
             services.AddScoped<AgendamentoService>();
             services.AddScoped<ProntuarioService>();
-            services.AddScoped<ExameService>();
-            services.AddScoped<MedicamentoService>();
+            services.AddScoped<DocumentoService>();
             services.AddInfrastructure(Configuration.GetConnectionString("dbLocal"));
 
             services.AddAuthentication

@@ -20,12 +20,12 @@ namespace Infrastructure.EntityFramework.Repositorio
 
         public IEnumerable<Prontuario> GetAll()
         {
-            return _db.Prontuario.Include(x => x.Pet).Include(x => x.Medico).Include(x => x.Exames).Include(x => x.Medicamentos).AsNoTracking().ToList();
+            return _db.Prontuario.Include(x => x.Pet).Include(x => x.Medico).Include(x => x.Documentos).AsNoTracking().ToList();
         }
 
         public Prontuario GetById(Guid id)
         {
-            return _db.Prontuario.Include(x => x.Pet).Include(x => x.Medico).Include(x => x.Exames).Include(x => x.Medicamentos).Where(x => x.Id == id).FirstOrDefault();
+            return _db.Prontuario.Include(x => x.Pet).Include(x => x.Medico).Include(x => x.Documentos).Where(x => x.Id == id).FirstOrDefault();
         }
 
         public void Remove(Guid id)

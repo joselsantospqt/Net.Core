@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Domain.Entidade
 {
-    public class ProntuarioExame
+    public class ProntuarioDocumento
     {
         public int Id { get; set; }
         public Guid ProntuarioId { get; set; }
-        public Guid ExameId { get; set; }
+        public Guid DocumentoId { get; set; }
     }
 }

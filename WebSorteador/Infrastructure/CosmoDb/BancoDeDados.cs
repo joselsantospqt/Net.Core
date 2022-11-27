@@ -12,8 +12,10 @@ namespace Infrastructure.CosmoDb
         public Container Container { get; }
         private CosmosClient CosmosClient { get; set; }
 
-        private string ConnectionString = "";
-        private string Database = "";
+        private string ConnectionString = "AccountEndpoint=https://sinqiasorteador-db.documents.azure.com:443/;AccountKey=ESG9cvLIry4Nj9Wstc5YRJruXFsFoBZbx4Hy3QMugSHl7lxcsrCxiLfvodcwP14joDWFqt6NtHkl57rzVjBlxQ==;";
+        private string Database = "sinqia-db";
+        //private string ConnectionString = "";
+        //private string Database = "";
         public BancoDeDados(string container)
         {
             try

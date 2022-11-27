@@ -56,10 +56,8 @@ namespace Domain.Service
                 prontuario.Descricao = ProntuarioUpdate.Descricao;
             if (ProntuarioUpdate.Data != prontuario.Data)
                 prontuario.Data = ProntuarioUpdate.Data;
-            if (ProntuarioUpdate.Exames.Count > 0)
-                prontuario.Exames = ProntuarioUpdate.Exames;
-            if (ProntuarioUpdate.Medicamentos.Count > 0)
-                prontuario.Medicamentos = ProntuarioUpdate.Medicamentos;
+            if (ProntuarioUpdate.Documentos.Count > 0)
+                prontuario.Documentos = ProntuarioUpdate.Documentos;
 
             RepositorioProntuario.SaveUpdate(prontuario);
 

@@ -69,9 +69,6 @@ namespace Domain.Service
 
             RepositorioPet.SaveUpdate(pet);
 
-            //CRIAR UM RETORNO PARA SAVEUPDATE PARA VERIFICAR SE FOI PERSISTIDO A IMAGEM
-            //DEPOIS INCLUIR O REPOSITORIO DA UPLOAD DE IMAGEM AQUI
-
             return pet;
         }
 

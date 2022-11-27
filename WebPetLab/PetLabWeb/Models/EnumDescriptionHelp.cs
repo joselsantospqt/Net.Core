@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PetLabWeb.Models
 {
-    public static class EnumDescriptionModel
+    public static class EnumDescriptionHelp
     {
 
         public static string GetDescription<T>(this T enumValue)
@@ -28,6 +28,11 @@ namespace PetLabWeb.Models
             }
 
             return description;
+        }
+
+        public static T ParseEnum<T>(string value)
+        {
+            return (T)Enum.Parse(typeof(T), value, true);
         }
     }
 }

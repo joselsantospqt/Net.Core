@@ -4,6 +4,7 @@
 @{
     ViewData["Title"] = "Editar";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var mensagem = ViewBag.messenger;
 }
 
 <main class="page-content">
@@ -23,50 +24,81 @@
                         <div class="card-body">
                             <form asp-action="Editar" method="post" enctype="multipart/form-data" class="row g-3">
                                 <div class="col-6">
-                                    <label asp-for="Nome" class="form-label">Nome</label>
-                                    <input type="text" asp-for="Nome" name="Nome" class="form-control" value="@Model.Nome">
+                                    <div class="form-group">
+                                        <label asp-for="Nome" class="form-label">Nome</label>
+                                        <input type="text" asp-for="Nome" name="Nome" class="form-control" value="@Model.Nome">
+                                        <span asp-validation-for="Nome" class="text-danger"></span>
+                                    </div>
                                     <br />
-                                    <label asp-for="Sobrenome" class="form-label">Sobrenome</label>
-                                    <input type="text" asp-for="Sobrenome" name="Sobrenome" class="form-control" value="@Model.Sobrenome">
+                                    <div class="form-group">
+                                        <label asp-for="Sobrenome" class="form-label">Sobrenome</label>
+                                        <input type="text" asp-for="Sobrenome" name="Sobrenome" class="form-control" value="@Model.Sobrenome">
+                                        <span asp-validation-for="Sobrenome" class="text-danger"></span>
+                                    </div>
                                     <br />
-                                    <label asp-for="Telefone" class="form-label">Telefone</label>
-                                    <input type="text" asp-for="Telefone" name="Telefone" class="form-control" value="@Model.Telefone">
+                                    <div class="form-group">
+                                        <label asp-for="Telefone" class="form-label">Telefone</label>
+                                        <input type="text" asp-for="Telefone" name="Telefone" class="form-control" value="@Model.Telefone">
+                                        <span asp-validation-for="Telefone" class="text-danger"></span>
+                                    </div>
                                     <br />
-                                    <label asp-for="Cpf" class="form-label">Cpf</label>
-                                    <input type="text" asp-for="Cpf" name="Cpf" class="form-control" value="@Model.Cpf">
+                                    <div class="form-group">
+                                        <label asp-for="Cpf" class="form-label">Cpf</label>
+                                        <input type="text" asp-for="Cpf" name="Cpf" class="form-control" value="@Model.Cpf">
+                                        <span asp-validation-for="Cpf" class="text-danger"></span>
+                                    </div>
                                     <br />
-                                    <label asp-for="Cnpj" class="form-label">Cnpj</label>
-                                    <input type="text" asp-for="Cnpj" name="Cnpj" class="form-control" value="@Model.Cnpj">
+                                    <div class="form-group">
+                                        <label asp-for="Cnpj" class="form-label">Cnpj</label>
+                                        <input type="text" asp-for="Cnpj" name="Cnpj" class="form-control" value="@Model.Cnpj">
+                                        <span asp-validation-for="Cnpj" class="text-danger"></span>
+                                    </div>
                                     <br />
-                                    <label asp-for="Crm" class="form-label">Crm</label>
-                                    <input type="text" asp-for="Crm" name="Crm" class="form-control" value="@Model.Crm">
+                                    <div class="form-group">
+                                        <label asp-for="Crm" class="form-label">Crm</label>
+                                        <input type="text" asp-for="Crm" name="Crm" class="form-control" value="@Model.Crm">
+                                        <span asp-validation-for="Crm" class="text-danger"></span>
+                                    </div>
                                     <br />
-                                    <label asp-for="DataNascimento" class="form-label">Data Nascimento</label>
-                                    <input type="datetime" asp-for="DataNascimento" name="DataNascimento" class="form-control datepicker" value="@Model.DataNascimento">
+                                    <div class="form-group">
+                                        <label asp-for="DataNascimento" class="form-label">Data Nascimento</label>
+                                        <input type="datetime" asp-for="DataNascimento" name="DataNascimento" class="form-control datepicker" value="@Model.DataNascimento">
+                                        <span asp-validation-for="DataNascimento" class="text-danger"></span>
+                                    </div>
                                     <br />
-                                    <p class="form-label">Selecione o tipo de Perfil:</p>
-                                    <label asp-for="TipoUsuario" class="form-label p-2">Tutor:</label>
-                                    @Html.RadioButton("TipoUsuario", ETipoUsuario.Tutor, @Model.TipoUsuario == ETipoUsuario.Tutor ? true : false)
-                                    <label asp-for="TipoUsuario" class="form-label p-2">Médico:</label>
-                                    @Html.RadioButton("TipoUsuario", ETipoUsuario.Medico, @Model.TipoUsuario == ETipoUsuario.Medico ? true : false)
-
+                                    <div class="form-group">
+                                        <p class="form-label">Selecione o tipo de Perfil:</p>
+                                        <label asp-for="TipoUsuario" class="form-label p-2">Tutor:</label>
+                                        @Html.RadioButton("TipoUsuario", ETipoUsuario.Tutor, @Model.TipoUsuario == ETipoUsuario.Tutor ? true : false)
+                                        <label asp-for="TipoUsuario" class="form-label p-2">Médico:</label>
+                                        @Html.RadioButton("TipoUsuario", ETipoUsuario.Medico, @Model.TipoUsuario == ETipoUsuario.Medico ? true : false)
+                                        <span asp-validation-for="TipoUsuario" class="text-danger"></span>
+                                    </div>
                                 </div>
                                 <div class="col-6">
-                                    <label asp-for="ImagemUrlusuario" class="col-sm-12 col-form-label">Foto do perfil:</label>
-                                    <img src="~/assets/img/Image_not_available.png" width="320px" height="320px" />
-                                    <br />
-                                    <div class="col-sm-12">
-                                        <input type="file" asp-for="ImagemUrlusuario" name="ImagemUrlPessoa" class="form-control">
+                                    <div class="form-group">
+                                        <label asp-for="ImagemUrlusuario" class="col-sm-12 col-form-label">Foto do perfil:</label>
+                                        <img src="~/assets/img/Image_not_available.png" width="320px" height="320px" />
+                                        <br />
+                                        <div class="col-sm-12">
+                                            <input type="file" asp-for="ImagemUrlusuario" name="ImagemUrlPessoa" class="form-control">
+                                            <span asp-validation-for="ImagemUrlusuario" class="text-danger"></span>
+                                        </div>
                                     </div>
                                     <br />
                                     <div class="col-sm-12">
-                                        <a asp-controller="Perfil" asp-action="ExcluirImagem" asp-route-id="@Model.Id"><button type="button" class="btn btn-sm btn-danger px-5">Excluir Foto</button></a>
+                                        <a asp-controller="Perfil" asp-action="ExcluirImagem" asp-route-id="@Model.Id" class="btn btn-sm btn-danger px-5">Excluir Foto></a>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <input type="submit" value="Salvar" class="btn btn-primary" />
                                 </div>
                             </form>
+                            @{if (mensagem != null)
+                                {
+                                    <p class="text-warning">@mensagem</p>
+                                }
+                            }
                         </div>
                     </div>
 
@@ -109,6 +141,9 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
     <script type="text/javascript">
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
 
         $(".datepicker").datepicker({
             format: "dd/mm/yyyy",

@@ -1,5 +1,6 @@
 ﻿using Domain.Entidade;
 using Domain.Entidade.Request;
+using Domain.Entidade.View;
 using Domain.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -15,15 +16,23 @@ namespace PetLabAPI.Controllers
     [ApiController]
     public class UsuarioController : ControllerBase
     {
+        private PetService _ServicePet;
         private UsuarioService _ServiceUsuario;
+        private AgendamentoService _ServiceAgendamento;
+        private ProntuarioService _ServiceProntuario;
+        private DocumentoService _ServiceDocumento;
 
-        public UsuarioController(UsuarioService serviceUsuario)
+        public UsuarioController(PetService servicePet, UsuarioService serviceUsuario, AgendamentoService serviceAgendamento, ProntuarioService serviceProntuario, DocumentoService serviceDocumento)
         {
+            _ServicePet = servicePet;
             _ServiceUsuario = serviceUsuario;
+            _ServiceDocumento = serviceDocumento;
+            _ServiceProntuario = serviceProntuario;
+            _ServiceAgendamento = serviceAgendamento;
         }
 
 
-        [HttpGet("getAll")]
+        [HttpGet("GetAll")]
         [Authorize]
         public ActionResult GetAll()
         {
@@ -35,7 +44,7 @@ namespace PetLabAPI.Controllers
             return Ok(getAllUsuario);
         }
 
-        [HttpGet("getAllTutor")]
+        [HttpGet("GetAllTutor")]
         [Authorize]
         public ActionResult GetAllTutor()
         {
@@ -48,7 +57,7 @@ namespace PetLabAPI.Controllers
         }
 
 
-        [HttpGet("getAllMedico")]
+        [HttpGet("GetAllMedico")]
         [Authorize]
         public ActionResult GetAllMedico()
         {
@@ -124,6 +133,42 @@ namespace PetLabAPI.Controllers
 
             return Ok(updateUsuario);
 
+        }
+        [HttpGet("GetUsuarioDetalhes/{id:Guid}")]
+        [Authorize]
+        public ActionResult GetUsuarioDetalhes([FromRoute] Guid id)
+        {
+            var usuario = _ServiceUsuario.GetUsuarioById(id);
+            var Detalhes = new ViewDetalhes()
+            {
+                Usuario = usuario
+            };
+
+            foreach (var itemPet in usuario.Pets)
+            {
+                var pet = _ServicePet.GetPetById(itemPet.PetId);
+                Detalhes.ListaPet.Add(pet);
+
+                foreach (var item in pet.Agendamentos)
+                {
+                    Detalhes.Agendamentos.Add(_ServiceAgendamento.GetAgendamentoById(item.AgendamentoId));
+                }
+
+                foreach (var item in pet.Prontuarios)
+                {
+                    var prontuario = _ServiceProntuario.GetProntuarioById(item.ProntuarioId);
+                    foreach (var itemDocumento in prontuario.Documentos)
+                    {
+                        Detalhes.Documentos.Add(_ServiceDocumento.GetDocumentoById(itemDocumento.DocumentoId));
+                    }
+                    Detalhes.Prontuarios.Add(prontuario);
+                }
+            }
+
+            if (Detalhes == null)
+                return NoContent();
+
+            return Ok(Detalhes);
         }
 
 

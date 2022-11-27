@@ -28,7 +28,7 @@ namespace PetLabWeb.Controllers
         {
             _logger = logger;
             _HttpContextAccessor = httpContextAccessor;
-            _sessionExtensions = SessionExtensionsModel.GetObject<IdentityUser>(httpContextAccessor.HttpContext.Session, "UserSign");
+            _sessionExtensions = SessionExtensionsHelp.GetObject<IdentityUser>(httpContextAccessor.HttpContext.Session, "UserSign");
         }
 
         public IActionResult Home()
@@ -62,8 +62,8 @@ namespace PetLabWeb.Controllers
                 var retorno = await ApiSave(createUsuario, "Usuario");
                 if (retorno.StatusCode != HttpStatusCode.OK)
                 {
-                    SessionExtensionsModel.RemoveObject(_HttpContextAccessor.HttpContext.Session, "UserSign");
-                    SessionExtensionsModel.RemoveObject(_HttpContextAccessor.HttpContext.Session, "Token");
+                    SessionExtensionsHelp.RemoveObject(_HttpContextAccessor.HttpContext.Session, "UserSign");
+                    SessionExtensionsHelp.RemoveObject(_HttpContextAccessor.HttpContext.Session, "Token");
 
                     ViewData["Status"] = retorno.Content.ToString();
                     return RedirectToAction("Login", "Autenticacao");
@@ -79,7 +79,7 @@ namespace PetLabWeb.Controllers
                 var pessoa = await ApiFindById<Usuario>(value.Token, _sessionExtensions.Email, "Usuario");
 
                 if (value.Token != null && pessoa != null)
-                    SessionExtensionsModel.SetObject(this.HttpContext.Session, "Token", value);
+                    SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Token", value);
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Falhar ao realizar login !");

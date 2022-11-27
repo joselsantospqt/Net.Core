@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PetLabWeb.Models
 {
-    public static class SessionExtensionsModel
+    public static class SessionExtensionsHelp
     {
         public static void SetObject(this ISession session, string key, object value)
         {

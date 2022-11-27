@@ -38,6 +38,9 @@
 
 /* Like comentario*/
 
+.yellow {
+    color: #daac00 !important;
+}
 
 .bg-yellow {
     background-color: #daac00 !important;
@@ -1083,6 +1086,19 @@ a {
 
 .table-responsive {
     white-space: nowrap;
+}
+
+.table-warning {
+    --bs-table-bg: #daac00 !important;
+    border-color: #daac00 !important;
+}
+
+thead.table-warning th:first-of-type {
+    border-radius: 25% 0% 0% 0% !important;
+}
+
+thead.table-warning th:last-of-type {
+    border-radius: 0% 25% 0% 0% !important;
 }
 
 .fm-menu .list-group a {

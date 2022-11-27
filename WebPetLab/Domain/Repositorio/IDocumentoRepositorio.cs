@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Domain.Repositorio
 {
-    public interface IExameRepositorio
+    public interface IDocumentoRepositorio
     {
-        Exame GetById(Guid id);
+        Documento GetById(Guid id);
         void Remove(Guid id);
-        IEnumerable<Exame> GetAll();
-        void SaveUpdate(Exame exame);
+        IEnumerable<Documento> GetAll();
+        void SaveUpdate(Documento documento);
     }
 }

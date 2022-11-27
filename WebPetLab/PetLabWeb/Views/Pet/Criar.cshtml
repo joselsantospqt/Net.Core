@@ -3,8 +3,17 @@
 @using Domain.Entidade;
 
 @{
-    ViewData["Title"] = "Criar";
+    ViewData["Title"] = "Criar Pet";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    List<SelectListItem> listItems = new List<SelectListItem>();
+    foreach (ETipoEspecie item in (ETipoEspecie[])Enum.GetValues(typeof(ETipoEspecie)))
+    {
+        listItems.Add(new SelectListItem
+        {
+            Text = item.GetDescription(),
+            Value = item.ToString()
+        });
+    }
 }
 
 <main class="page-content">
@@ -24,12 +33,12 @@
                                 <div class="col-md-6 col-sm-12">
                                     <div class="form-group">
                                         <label asp-for="Nome" class="control-label"></label>
-                                        <input asp-for="Nome" class="form-control" />
+                                        <input asp-for="Nome" name="Nome" class="form-control" />
                                         <span asp-validation-for="Nome" class="text-danger"></span>
                                     </div>
                                     <div class="form-group">
                                         <label asp-for="DataNascimento" class="form-label">Data Nascimento</label>
-                                        <input type="datetime" asp-for="DataNascimento" name="DataNascimento" class="form-control datepicker">
+                                        <input asp-for="DataNascimento" name="DataNascimento" class="form-control datepicker">
                                         <span asp-validation-for="DataNascimento" class="text-danger"></span>
                                     </div>
                                     <br />
