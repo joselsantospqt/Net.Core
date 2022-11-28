@@ -1,5 +1,4 @@
-﻿@using PetLabWeb.Models
-@using Microsoft.AspNetCore.Identity;
+﻿@using Microsoft.AspNetCore.Identity;
 @{
     var UserSign = SessionExtensionsHelp.GetObject<IdentityUser>(this.Context.Session, "UserSign");
     var pessoaId = UserSign.Id;
@@ -155,6 +154,14 @@
                             <div class="menu-title">Pets</div>
                         </a>
                     </li>
+                <li>
+                        <a asp-controller="Documento" asp-action="Listar" asp-route-id="@pessoaId">
+                            <div class="">
+                                <i class="bi bi-folder yellow"></i>
+                            </div>
+                            <div class="menu-title">Documentos</div>
+                        </a>
+                    </li>
 
                 @*<li class="menu-label">Sua área</li>
                     <li>
@@ -174,7 +181,7 @@
                 <li>
                     <a asp-controller="Perfil" asp-action="Medicos">
                         <div class="">
-                            <i class="bi bi-people"></i>
+                            <i class="bi bi-people yellow"></i>
                         </div>
                         <div class="menu-title">Ver Médicos</div>
                     </a>

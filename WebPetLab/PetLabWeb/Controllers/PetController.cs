@@ -61,38 +61,42 @@ namespace PetLabWeb.Controllers
         [Route("Pet/Criar")]
         public async Task<IActionResult> Criar(IFormCollection collection)
         {
-            var existeImagem = false;
-
-            MemoryStream ms = new MemoryStream();
-            var fileName = $"Perfil_{_sessionUserSign.Id}{RandomNumber()}_.png";
-
-
-            foreach (var item in this.Request.Form.Files)
+            try
             {
-                existeImagem = true;
+                var existeImagem = false;
 
-                item.CopyTo(ms);
+                MemoryStream ms = new MemoryStream();
+                var fileName = $"Perfil_{_sessionUserSign.Id}{RandomNumber()}_.png";
 
-                ms.Position = 0;
+
+                foreach (var item in this.Request.Form.Files)
+                {
+                    existeImagem = true;
+
+                    item.CopyTo(ms);
+
+                    ms.Position = 0;
+                }
+
+                CreatePet pet = new CreatePet();
+
+                //if (existeImagem)
+                pet.Nome = collection["Nome"];
+                pet.DataNascimento = Convert.ToDateTime(collection["DataNascimento"]);
+                pet.Especie = EnumDescriptionHelp.ParseEnum<ETipoEspecie>(collection["Especie"]);
+
+
+                var retorno = await ApiSaveAutorize<Pet>(_sessionToken.Token, pet, $"Pet/{_sessionUserSign.Id}");
+                //else
+                //    await _blobstorage.SaveUpdate(fileName, ms);
+
+                return RedirectToAction("Listar", new { id = _sessionUserSign.Id });
             }
-
-            CreatePet pet = new CreatePet();
-
-            //if (existeImagem)
-            pet.Nome = collection["Nome"];
-            pet.DataNascimento = Convert.ToDateTime(collection["DataNascimento"]);
-            pet.Especie = (ETipoEspecie)Enum.Parse(typeof(ETipoEspecie), collection["Especie"], true);
-
-            var retorno = await ApiSaveAutorize<Pet>(_sessionToken.Token, pet, $"Pet/{_sessionUserSign.Id}");
-
-            if (retorno == null)
+            catch (Exception ex)
             {
-                ViewData["MensagemRetorno"] = "Houve Um erro ao criar novo Pet !";
+                ViewData["MensagemRetorno"] = ex.ToString();
+                return View();
             }
-            //else
-            //    await _blobstorage.SaveUpdate(fileName, ms);
-
-            return RedirectToAction("Listar", new { id = _sessionUserSign.Id });
 
         }
 
@@ -111,10 +115,10 @@ namespace PetLabWeb.Controllers
         }
 
         [HttpPost]
-        [Route("Pet/DeletarPet")]
-        public async Task<IActionResult> DeletarPet(IFormCollection collection)
+        [Route("Pet/Deletar/{Id:guid}")]
+        public async Task<IActionResult> Deletar(Guid id, IFormCollection collection)
         {
-            var pet = await ApiRemove(_sessionToken.Token, new Guid(collection["Id"]), "Pet");
+            var pet = await ApiRemove(_sessionToken.Token, id, "Pet");
             return RedirectToAction("Listar", new { id = _sessionUserSign.Id });
         }
 
@@ -122,7 +126,7 @@ namespace PetLabWeb.Controllers
         [Route("Pet/Detalhes/{Id:guid}")]
         public async Task<IActionResult> Detalhes(Guid id)
         {
-            var detalhes = await ApiFindById<ViewDetalhes>(_sessionToken.Token, id, "Pet/GetPetsDetalhes");
+            var detalhes = await ApiFindById<ViewModel>(_sessionToken.Token, id, "Pet/GetPetsDetalhes");
             return View(detalhes);
         }
 

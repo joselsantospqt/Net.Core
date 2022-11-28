@@ -12,9 +12,20 @@ namespace Domain.Entidade
         public Pet() { Tutor = new UsuarioPet(); Agendamentos = new List<AgendamentoPet>(); Prontuarios = new List<ProntuarioPet>(); Documentos = new List<DocumentoPet>(); }
         [Key]
         public Guid Id { get; set; }
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Nome")]
         public string Nome { get; set; }
+        [Required]
+        [DataType(DataType.DateTime)]
+        [Display(Name = "Data Nascimento")]
         public DateTime DataNascimento { get; set; }
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Espécie")]
         public ETipoEspecie Especie { get; set; }
+        [DataType(DataType.Text)]
+        [Display(Name = "Imagem do Pet")]
         public string ImagemUrlPet { get; set; }
         public UsuarioPet Tutor { get; set; }
         public DateTime CreatedAt { get; set; }

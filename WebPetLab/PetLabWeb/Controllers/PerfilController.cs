@@ -138,7 +138,17 @@ namespace PetLabWeb.Controllers
         [Route("Perfil/Detalhes/{Id:guid}")]
         public async Task<IActionResult> Detalhes(Guid id)
         {
-            ViewDetalhes usuario = await ApiFindById<ViewDetalhes>(_sessionToken.Token, id, "Usuario/GetUsuarioDetalhes");
+            ViewModel usuario = await ApiFindById<ViewModel>(_sessionToken.Token, id, "Usuario/GetUsuarioDetalhes");
+
+            return View(usuario);
+        }
+
+
+        [HttpGet]
+        [Route("Perfil/DetalhesMedico/{Id:guid}")]
+        public async Task<IActionResult> DetalhesMedico(Guid id)
+        {
+            ViewModel usuario = await ApiFindById<ViewModel>(_sessionToken.Token, id, "Usuario/GetUsuarioDetalhes");
 
             return View(usuario);
         }

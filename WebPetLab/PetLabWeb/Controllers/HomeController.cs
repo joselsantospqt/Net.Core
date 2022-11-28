@@ -23,6 +23,7 @@ namespace PetLabWeb.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IHttpContextAccessor _HttpContextAccessor;
         private IdentityUser _sessionExtensions;
+        private string textoVazio = "-----------------------";
 
         public HomeController(IHttpContextAccessor httpContextAccessor, IConfiguration configuration, ILogger<HomeController> logger) : base(configuration)
         {
@@ -55,7 +56,14 @@ namespace PetLabWeb.Controllers
                     Email = _sessionExtensions.Email,
                     Nome = _sessionExtensions.UserName.Substring(0, _sessionExtensions.UserName.IndexOf('@')),
                     Senha = _sessionExtensions.PasswordHash,
-                    Telefone = _sessionExtensions.PhoneNumber
+                    Telefone = _sessionExtensions.PhoneNumber,
+                    Sobrenome = textoVazio,
+                    Cpf = textoVazio,
+                    Cnpj = textoVazio,
+                    Crm = textoVazio,
+                    ImagemUrlusuario = textoVazio,
+                    DataNascimento = DateTime.UtcNow,
+                    TipoUsuario = ETipoUsuario.Tutor
                 };
 
 

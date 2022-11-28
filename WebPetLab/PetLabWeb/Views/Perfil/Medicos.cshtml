@@ -1,7 +1,10 @@
 ﻿@model IEnumerable<Domain.Entidade.Usuario>
+@using PetLabWeb.Models
+@using Microsoft.AspNetCore.Identity;
 
 @{
-    ViewData["Title"] = "Listar Medicos";
+    var UserSign = SessionExtensionsHelp.GetObject<IdentityUser>(this.Context.Session, "UserSign");
+    ViewData["Title"] = "Listar Médicos";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -15,7 +18,7 @@
         <div class="col-12 d-flex justify-content-center mx-auto">
             <div class="card shadow-sm border-0">
                 <div class="card-body">
-                    <h5 class="mb-0">Página Médicos</h5>
+                    <h5 class="mb-0">@ViewData["Title"]</h5>
                     <hr>
 
                     <div class="col-10 col-lg-9 col-xl-9 col-xxl-9 d-flex justify-content-between mx-auto">
@@ -24,7 +27,7 @@
                                 <h5 class="border radius-10 p-3 primary-dc"><i class="bi bi-house-fill primary-dc"></i>Home</h5>
                             </div>
                         </a>
-                        <a asp-controller="Agendamento" asp-action="Listar">
+                        <a asp-controller="Agendamento" asp-action="Listar" asp-route-id="@UserSign.Id">
                             <div>
                                 <h5 class="border radius-10 p-3 primary-dc"><i class="bi bi-card-checklist primary-dc"></i>Minhas Consultas</h5>
                             </div>
@@ -74,9 +77,9 @@
                                                                 <td>@Html.DisplayFor(modelItem => item.Email)</td>
                                                                 <td> @Html.DisplayFor(modelItem => item.TipoUsuario)</td>
                                                                 <td>
-                                                                    @Html.ActionLink("", "Agendar", "Agendamento", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-plus yellow", data_toggle = "tooltip", title = "Novo Agendamento" })|
-                                                                    @Html.ActionLink("", "Detalhes", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-inbox yellow", data_toggle = "tooltip", title = "Detalhes" })
-</tr>
+                                                                    @Html.ActionLink("", "Criar", "Agendamento", new { Id = item.Id, IdTutor = UserSign.Id }, new { @class = "bi-sharp bi-solid bi-plus yellow", data_toggle = "tooltip", title = "Novo Agendamento" })|
+                                                                    @Html.ActionLink("", "DetalhesMedico", new { Id = item.Id }, new { @class = "bi-sharp bi-solid bi-inbox yellow", data_toggle = "tooltip", title = "Detalhes" })
+                                                            </tr>
                                                         }
                                                 </tbody>
                                             </table>
@@ -96,7 +99,7 @@
 
 
 <script type="text/javascript">
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip()
-        })
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
 </script>

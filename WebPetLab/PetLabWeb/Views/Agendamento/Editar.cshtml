@@ -1,8 +1,31 @@
 ﻿@model Domain.Entidade.Agendamento
-
+@using EnumsNET;
+@using Domain.Entidade;
+@using Microsoft.AspNetCore.Identity;
 @{
     ViewData["Title"] = "Editar Agendamento";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var UserSign = SessionExtensionsHelp.GetObject<IdentityUser>(this.Context.Session, "UserSign");
+    var pessoaId = UserSign.Id;
+
+
+    List<SelectListItem> listItems = new List<SelectListItem>();
+    foreach (EStatus item in (EStatus[])Enum.GetValues(typeof(ETipoEspecie)))
+    {
+        int n;
+        var status = item.GetDescription();
+
+        var result = Int32.TryParse(status, out n);
+        if (!result)
+        {
+            listItems.Add(new SelectListItem
+            {
+                Text = item.GetDescription(),
+                Value = item.ToString()
+            });
+        }
+    }
 }
 
 
@@ -25,12 +48,12 @@
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <div class="form-group">
                                     <label asp-for="Data" class="control-label"></label>
-                                    <input asp-for="Data" name="Data" class="form-control datepicker" />
+                                    @Html.EditorFor(model => model.Data, "Data", "Data")
                                     <span asp-validation-for="Data" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="Status" class="control-label"></label>
-                                    <input asp-for="Status" name="Status" class="form-control" />
+                                    @Html.DropDownListFor(model => model.Status, listItems, new { @class = "form-control", data_toggle = "tooltip", title = "Status", name = "Status" })
                                     <span asp-validation-for="Status" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
@@ -38,10 +61,12 @@
                                     <input asp-for="Comentario" name="Comentario" class="form-control" />
                                     <span asp-validation-for="Comentario" class="text-danger"></span>
                                 </div>
-                                <div class="form-group">
-                                    <input type="submit" value="Save" class="btn btn-primary" />
+                                <div class="form-group d-flex justify-content-between">
+                                    <input type="submit" value="Salvar" class="btn btn-primary" /> |
+                                    <a asp-action="Listar" asp-route-id="@pessoaId" class="btn btn-primary"><i class="bi-sharp bi-solid bi-arrow-bar-left"></i></a>
                                 </div>
                             </form>
+                        
                         </div>
                     </div>
                 </div>
@@ -55,9 +80,7 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script type="text/javascript">
 
-        $(".datepicker").datepicker({
-            format: "dd/mm/yyyy",
-            language: "pt-BR"
-        });
+        var DateTime = document.getElementById("Data");
+        DateTime.classList.add("form-control");
     </script>
 }

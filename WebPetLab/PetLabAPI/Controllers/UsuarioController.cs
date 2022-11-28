@@ -106,7 +106,7 @@ namespace PetLabAPI.Controllers
             if (usuario != null)
                 return NoContent();
 
-            usuario = _ServiceUsuario.CreateUsuario(create.Id, create.Nome, create.Sobrenome, create.Telefone, create.Cpf, create.Cnpj, create.Crm, create.DataNascimento, create.Email, create.Senha, create.TipoUsuario);
+            usuario = _ServiceUsuario.CreateUsuario(create.Id, create.Nome, create.Sobrenome, create.Telefone, create.Cpf, create.Cnpj, create.Crm, create.DataNascimento, create.Email, create.Senha, create.TipoUsuario, create.ImagemUrlusuario);
 
             return Created("api/[controller]", usuario);
         }
@@ -139,7 +139,7 @@ namespace PetLabAPI.Controllers
         public ActionResult GetUsuarioDetalhes([FromRoute] Guid id)
         {
             var usuario = _ServiceUsuario.GetUsuarioById(id);
-            var Detalhes = new ViewDetalhes()
+            var Detalhes = new ViewModel()
             {
                 Usuario = usuario
             };
@@ -147,21 +147,25 @@ namespace PetLabAPI.Controllers
             foreach (var itemPet in usuario.Pets)
             {
                 var pet = _ServicePet.GetPetById(itemPet.PetId);
-                Detalhes.ListaPet.Add(pet);
+                Detalhes.ListaPets.Add(pet);
+                Detalhes.ListaPets.First(x => x.Id == itemPet.PetId).Tutor = itemPet;
 
                 foreach (var item in pet.Agendamentos)
                 {
                     Detalhes.Agendamentos.Add(_ServiceAgendamento.GetAgendamentoById(item.AgendamentoId));
+                    Detalhes.Agendamentos.First(x => x.Id == item.AgendamentoId).Pet = item;
                 }
 
                 foreach (var item in pet.Prontuarios)
                 {
-                    var prontuario = _ServiceProntuario.GetProntuarioById(item.ProntuarioId);
-                    foreach (var itemDocumento in prontuario.Documentos)
-                    {
-                        Detalhes.Documentos.Add(_ServiceDocumento.GetDocumentoById(itemDocumento.DocumentoId));
-                    }
-                    Detalhes.Prontuarios.Add(prontuario);
+                    Detalhes.Prontuarios.Add(_ServiceProntuario.GetProntuarioById(item.ProntuarioId));
+                    Detalhes.Prontuarios.First(x => x.Id == item.ProntuarioId).Pet = item;
+                }
+
+                foreach (var item in pet.Documentos)
+                {
+                    Detalhes.Documentos.Add(_ServiceDocumento.GetDocumentoById(item.DocumentoId));
+                    Detalhes.Documentos.First(x => x.Id == item.DocumentoId).Pet = item;
                 }
             }
 

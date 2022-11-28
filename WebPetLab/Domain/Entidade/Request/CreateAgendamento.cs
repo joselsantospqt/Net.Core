@@ -9,17 +9,20 @@ namespace Domain.Entidade.Request
 {
     public class CreateAgendamento
     {
+        public CreateAgendamento() { Pets = new List<Pet>(); }
+        public Guid Id { get; set; }
         [Required]
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
         [Display(Name = "Data")]
         public DateTime Data { get; set; }
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Status")]
         public EStatus Status { get; set; }
-        [Required]
-        [DataType(DataType.Text)]
-        [Display(Name = "Comentario")]
+        [Display(Name = "Comentários")]
         public string Comentario { get; set; }
+        public IList<Pet> Pets { get; set; }
+        public Usuario MedicoResponsavel { get; set; }
+        public Guid Tutor { get; set; }
     }
 }

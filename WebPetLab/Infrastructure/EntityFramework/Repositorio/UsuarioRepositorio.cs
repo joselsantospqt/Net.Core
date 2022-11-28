@@ -39,8 +39,11 @@ namespace Infrastructure.EntityFramework.Repositorio
         }
         public void SaveUpdate(Usuario usuario)
         {
-            if (usuario.Cpf == null && usuario.Cnpj == null && usuario.UpdatedAt == new DateTime())
+            if (usuario.CreatedAt == new DateTime() && usuario.UpdatedAt == new DateTime())
+            {
+                usuario.CreatedAt = DateTime.UtcNow;
                 _db.Add(usuario);
+            }
             else
                 _db.Update(usuario);
 

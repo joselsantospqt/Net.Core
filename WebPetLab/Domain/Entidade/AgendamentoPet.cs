@@ -9,7 +9,7 @@ namespace Domain.Entidade
     public class AgendamentoPet
     {
         public int Id { get; set; }
-        public Guid AgendamentoId { get; set; }
         public Guid PetId { get; set; }
+        public Guid AgendamentoId { get; set; }
     }
 }

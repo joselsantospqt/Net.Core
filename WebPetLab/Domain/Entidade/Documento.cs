@@ -12,13 +12,37 @@ namespace Domain.Entidade
         public Documento() { Prontuario = new ProntuarioDocumento(); Pet = new DocumentoPet(); }
         [Key]
         public Guid Id { get; set; }
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Nome")]
         public string Nome { get; set; }
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Descrição")]
         public string Descricao { get; set; }
+        [Required]
+        [DataType(DataType.PhoneNumber)]
+        [Display(Name = "Quantidade")]
         public int Quantidade { get; set; }
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Tipo do Documento")]
         public ETipoDocumento TipoDocumento { get; set; }
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Anexo")]
         public byte[] Anexo { get; set; }
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Tipo Anexo")]
         public string TipoAnexo { get; set; }
+        [Required]
+        [DataType(DataType.DateTime)]
+        [Display(Name = "Data Inicio")]
         public DateTime DataInicio { get; set; }
+        [Required]
+        [DataType(DataType.DateTime)]
+        [Display(Name = "Data Fim")]
         public DateTime DataFim { get; set; }
         public ProntuarioDocumento Prontuario { get; set; }
         public DocumentoPet Pet { get; set; }

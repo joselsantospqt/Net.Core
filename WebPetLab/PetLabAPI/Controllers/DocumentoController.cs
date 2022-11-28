@@ -15,10 +15,19 @@ namespace PetLabAPI.Controllers
     [ApiController]
     public class DocumentoController : ControllerBase
     {
+        private PetService _ServicePet;
+        private UsuarioService _ServiceUsuario;
+        private AgendamentoService _ServiceAgendamento;
+        private ProntuarioService _ServiceProntuario;
         private DocumentoService _ServiceDocumento;
-        public DocumentoController(DocumentoService serviceDocumento)
+
+        public DocumentoController(PetService servicePet, UsuarioService serviceUsuario, AgendamentoService serviceAgendamento, ProntuarioService serviceProntuario, DocumentoService serviceDocumento)
         {
+            _ServicePet = servicePet;
+            _ServiceUsuario = serviceUsuario;
             _ServiceDocumento = serviceDocumento;
+            _ServiceProntuario = serviceProntuario;
+            _ServiceAgendamento = serviceAgendamento;
         }
 
 
@@ -48,6 +57,7 @@ namespace PetLabAPI.Controllers
 
 
         [HttpGet("GetDocumentosByProntuarioId/{idProntuario:Guid}")]
+        [Authorize]
         public ActionResult GetDocumentosByProntuarioId([FromRoute] Guid idProntuario)
         {
             var documentos = _ServiceDocumento.GetAll().Where(x => x.Prontuario.ProntuarioId == idProntuario);
@@ -56,6 +66,30 @@ namespace PetLabAPI.Controllers
                 return NoContent();
 
             return Ok(documentos);
+        }
+
+        [HttpGet("GetDocumentosAllById/{Id:Guid}")]
+        [Authorize]
+        public ActionResult GetDocumentosAllById([FromRoute] Guid id)
+        {
+            var usuario = _ServiceUsuario.GetUsuarioById(id);
+
+
+            IList<Documento> Documentos = new List<Documento>();
+            foreach (var item in usuario.Pets)
+            {
+                var pet = _ServicePet.GetPetById(item.PetId);
+                foreach (var doc in pet.Documentos)
+                {
+                    Documentos.Add(_ServiceDocumento.GetDocumentoById(doc.DocumentoId));
+                    Documentos.First(x => x.Id == doc.DocumentoId).Pet = doc;
+                }
+            }
+
+            if (Documentos == null)
+                return NoContent();
+
+            return Ok(Documentos);
         }
 
 

@@ -56,7 +56,6 @@ namespace PetLabAPI.Controllers
         [Authorize]
         public ActionResult Pet([FromRoute] Guid id, [FromBody] CreatePet create)
         {
-
             var pet = _ServicePet.CreatePet(id, create.Nome, create.DataNascimento, create.Especie);
             return Created("api/[controller]", pet);
         }
@@ -110,6 +109,8 @@ namespace PetLabAPI.Controllers
             foreach (var pet in usuario.Pets)
             {
                 Pets.Add(_ServicePet.GetPetById(pet.PetId));
+                Pets.First(x => x.Id == pet.PetId).Tutor = pet;
+
             }
 
             if (Pets == null)
@@ -123,24 +124,30 @@ namespace PetLabAPI.Controllers
         public ActionResult GetPetsDetalhes([FromRoute] Guid id)
         {
             var pet = _ServicePet.GetPetById(id);
-            var Detalhes = new ViewDetalhes()
+            var Detalhes = new ViewModel()
             {
-                Pet = pet
+                Pet = pet,
+                Usuario = _ServiceUsuario.GetUsuarioById(pet.Tutor.UsuarioId)
             };
+
+            Detalhes.ListaPets.Add(pet);
 
             foreach (var item in pet.Agendamentos)
             {
                 Detalhes.Agendamentos.Add(_ServiceAgendamento.GetAgendamentoById(item.AgendamentoId));
+                Detalhes.Agendamentos.First(x => x.Id == item.AgendamentoId).Pet = item;
             }
 
             foreach (var item in pet.Prontuarios)
             {
-                var prontuario = _ServiceProntuario.GetProntuarioById(item.ProntuarioId);
-                foreach (var itemDocumento in prontuario.Documentos)
-                {
-                    Detalhes.Documentos.Add(_ServiceDocumento.GetDocumentoById(itemDocumento.DocumentoId));
-                }
-                Detalhes.Prontuarios.Add(prontuario);
+                Detalhes.Prontuarios.Add(_ServiceProntuario.GetProntuarioById(item.ProntuarioId));
+                Detalhes.Prontuarios.First(x => x.Id == item.ProntuarioId).Pet = item;
+            }
+
+            foreach (var item in pet.Documentos)
+            {
+                Detalhes.Documentos.Add(_ServiceDocumento.GetDocumentoById(item.DocumentoId));
+                Detalhes.Documentos.First(x => x.Id == item.DocumentoId).Pet = item;
             }
 
             if (Detalhes == null)

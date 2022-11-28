@@ -15,6 +15,5 @@ namespace Domain.Entidade
         Aprovado,
         [Description("Recusado")]
         Recusado
-
     }
 }

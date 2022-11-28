@@ -26,7 +26,7 @@
                 <div class="card-body">
                     <div class="card shadow-none border">
                         <div class="card-header">
-                            <h6 class="mb-0">CRIAR PET</h6>
+                            <h6 class="mb-0">@ViewData["Title"]</h6>
                         </div>
                         <div class="card-body">
                             <form asp-action="Criar" method="post" enctype="multipart/form-data" class="row g-3">
@@ -38,36 +38,13 @@
                                     </div>
                                     <div class="form-group">
                                         <label asp-for="DataNascimento" class="form-label">Data Nascimento</label>
-                                        <input asp-for="DataNascimento" name="DataNascimento" class="form-control datepicker">
+                                        <input asp-for="DataNascimento" name="DataNascimento" class="form-control">
                                         <span asp-validation-for="DataNascimento" class="text-danger"></span>
                                     </div>
                                     <br />
                                     <div class="form-group">
-                                        <p class="form-label">Selecione o tipo de espécie:</p>
-                                        <label asp-for="Especie" class="form-label p-2">@ETipoEspecie.Anfibios.GetDescription():</label>
-                                        @Html.RadioButton("Especie", ETipoEspecie.Anfibios, false)
-                                        <br />
-                                        <label asp-for="Especie" class="form-label p-2">@ETipoEspecie.Aves.GetDescription():</label>
-                                        @Html.RadioButton("Especie", ETipoEspecie.Aves, false)
-                                        <br />
-                                        <label asp-for="Especie" class="form-label p-2">@ETipoEspecie.Invertebrados.GetDescription():</label>
-                                        @Html.RadioButton("Especie", ETipoEspecie.Invertebrados, false)
-                                        <br />
-                                        <label asp-for="Especie" class="form-label p-2">@ETipoEspecie.Mamiferos.GetDescription():</label>
-                                        @Html.RadioButton("Especie", ETipoEspecie.Mamiferos, false)
-                                        <br />
-                                        <label asp-for="Especie" class="form-label p-2">@ETipoEspecie.Vermiforme.GetDescription():</label>
-                                        @Html.RadioButton("Especie", ETipoEspecie.Vermiforme, false)
-                                        <br />
-                                        <label asp-for="Especie" class="form-label p-2">@ETipoEspecie.Nao_Vermiforme.GetDescription():</label>
-                                        @Html.RadioButton("Especie", ETipoEspecie.Nao_Vermiforme, false)
-                                        <br />
-                                        <label asp-for="Especie" class="form-label p-2">@ETipoEspecie.Peixes.GetDescription():</label>
-                                        @Html.RadioButton("Especie", ETipoEspecie.Peixes, false)
-                                        <br />
-                                        <label asp-for="Especie" class="form-label p-2">@ETipoEspecie.Repteis.GetDescription():</label>
-                                        @Html.RadioButton("Especie", ETipoEspecie.Repteis, false)
-
+                                        <label asp-for="Especie" class="control-label"></label>
+                                        @Html.DropDownListFor(model => model.Especie, listItems, new { @class = "form-control", data_toggle = "tooltip", title = "Especies", name = "Especie" })
                                         <span asp-validation-for="Especie" class="text-danger"></span>
                                     </div>
                                     <div class="form-group">
@@ -94,12 +71,4 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-
-    <script type="text/javascript">
-
-        $(".datepicker").datepicker({
-            format: "dd/mm/yyyy",
-            language: "pt-BR"
-        });
-    </script>
 }

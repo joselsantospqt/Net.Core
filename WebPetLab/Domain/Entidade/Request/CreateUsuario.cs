@@ -26,30 +26,36 @@ namespace Domain.Entidade.Request
         public string Telefone { get; set; }
         [Required]
         [DataType(DataType.PhoneNumber)]
-        [Display(Name = "Cpf")]
+        [Display(Name = "CPF")]
         public string Cpf { get; set; }
         [Required]
         [DataType(DataType.Text)]
-        [Display(Name = "Cnpj")]
+        [Display(Name = "CNPJ")]
         public string Cnpj { get; set; }
         [Required]
         [DataType(DataType.Text)]
-        [Display(Name = "Crm")]
+        [Display(Name = "CRM")]
         public string Crm { get; set; }
         [Required]
-        [DataType(DataType.Date)]
-        [Display(Name = "DataNascimento")]
+        [DataType(DataType.DateTime)]
+        [Display(Name = "Data Nascimento")]
         public DateTime DataNascimento { get; set; }
-        [Required]
-        [DataType(DataType.Text)]
-        [Display(Name = "ImagemUrlusuario")]
+
+        [Display(Name = "Imagem do Usuário")]
         public string ImagemUrlusuario { get; set; }
         [Required]
         [DataType(DataType.Text)]
-        [Display(Name = "TipoUsuario")]
+        [Display(Name = "Tipo Usuário")]
         public ETipoUsuario TipoUsuario { get; set; }
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Email")]
         public string Email { get; set; }
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "Senha")]
         public string Senha { get; set; }
+
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }

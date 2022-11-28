@@ -2,7 +2,7 @@
 @using Domain.Entidade;
 
 @{
-    ViewData["Title"] = "Editar";
+    ViewData["Title"] = "Editar Usuário";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var mensagem = ViewBag.messenger;
 }
@@ -15,7 +15,7 @@
         <div class="col-12 col-lg-8">
             <div class="card shadow-sm border-0">
                 <div class="card-body">
-                    <h5 class="mb-0">Seu perfil</h5>
+                    <h5 class="mb-0">@ViewData["Title"]</h5>
                     <hr>
                     <div class="card shadow-none border">
                         <div class="card-header">
@@ -62,7 +62,7 @@
                                     <br />
                                     <div class="form-group">
                                         <label asp-for="DataNascimento" class="form-label">Data Nascimento</label>
-                                        <input type="datetime" asp-for="DataNascimento" name="DataNascimento" class="form-control datepicker" value="@Model.DataNascimento">
+                                        @Html.EditorFor(model => model.DataNascimento, "DataNascimento", "DataNascimento")
                                         <span asp-validation-for="DataNascimento" class="text-danger"></span>
                                     </div>
                                     <br />
@@ -145,9 +145,7 @@
             $('[data-toggle="tooltip"]').tooltip()
         })
 
-        $(".datepicker").datepicker({
-            format: "dd/mm/yyyy",
-            language: "pt-BR"
-        });
+        var DateTime = document.getElementById("DataNascimento");
+        DateTime.classList.add("form-control");
     </script>
 }

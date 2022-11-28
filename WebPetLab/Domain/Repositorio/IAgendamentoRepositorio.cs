@@ -10,6 +10,8 @@ namespace Domain.Repositorio
     public interface IAgendamentoRepositorio
     {
         Agendamento GetById(Guid id);
+        //Criar uma função pra retornar todos os agendamentos associados aos médicos
+        //IEnumerable<Agendamento> GetAllByIdMedico(Guid id);
         void Remove(Guid id);
         IEnumerable<Agendamento> GetAll();
         void SaveUpdate(Agendamento agendamento);

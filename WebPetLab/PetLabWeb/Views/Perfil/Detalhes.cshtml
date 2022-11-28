@@ -1,10 +1,13 @@
-﻿@model Domain.Entidade.View.ViewDetalhes
+﻿@model Domain.Entidade.View.ViewModel
 @using Domain.Entidade
 @using EnumsNET;
+@using Microsoft.AspNetCore.Identity;
 
 @{
     ViewData["Title"] = "Detalhes Perfil";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var UserSign = SessionExtensionsHelp.GetObject<IdentityUser>(this.Context.Session, "UserSign");
+    var pessoaId = UserSign.Id;
 }
 
 <main class="page-content">
@@ -24,76 +27,76 @@
                         </div>
                         <div class="card-body">
                             <dl class="row">
-                                <dt class="col-sm-2">
+                                <dt class="col-sm-4">
                                     @Html.DisplayNameFor(model => model.Usuario.Nome)
                                 </dt>
-                                <dd class="col-sm-10">
+                                <dd class="col-sm-8">
                                     @Html.DisplayFor(model => model.Usuario.Nome)
                                 </dd>
-                                <dt class="col-sm-2">
+                                <dt class="col-sm-4">
                                     @Html.DisplayNameFor(model => model.Usuario.Sobrenome)
                                 </dt>
-                                <dd class="col-sm-10">
+                                <dd class="col-sm-8">
                                     @Html.DisplayFor(model => model.Usuario.Sobrenome)
                                 </dd>
-                                <dt class="col-sm-2">
+                                <dt class="col-sm-4">
                                     @Html.DisplayNameFor(model => model.Usuario.Telefone)
                                 </dt>
-                                <dd class="col-sm-10">
+                                <dd class="col-sm-8">
                                     @Html.DisplayFor(model => model.Usuario.Telefone)
                                 </dd>
-                                <dt class="col-sm-2">
+                                <dt class="col-sm-4">
                                     @Html.DisplayNameFor(model => model.Usuario.Cpf)
                                 </dt>
-                                <dd class="col-sm-10">
+                                <dd class="col-sm-8">
                                     @Html.DisplayFor(model => model.Usuario.Cpf)
                                 </dd>
-                                <dt class="col-sm-2">
+                                <dt class="col-sm-4">
                                     @Html.DisplayNameFor(model => model.Usuario.Cnpj)
                                 </dt>
-                                <dd class="col-sm-10">
+                                <dd class="col-sm-8">
                                     @Html.DisplayFor(model => model.Usuario.Cnpj)
                                 </dd>
-                                <dt class="col-sm-2">
+                                <dt class="col-sm-4">
                                     @Html.DisplayNameFor(model => model.Usuario.Crm)
                                 </dt>
-                                <dd class="col-sm-10">
+                                <dd class="col-sm-8">
                                     @Html.DisplayFor(model => model.Usuario.Crm)
                                 </dd>
-                                <dt class="col-sm-2">
+                                <dt class="col-sm-4">
                                     @Html.DisplayNameFor(model => model.Usuario.DataNascimento)
                                 </dt>
-                                <dd class="col-sm-10">
+                                <dd class="col-sm-8">
                                     @Html.DisplayFor(model => model.Usuario.DataNascimento)
                                 </dd>
-                                <dt class="col-sm-2">
+                                <dt class="col-sm-4">
                                     @Html.DisplayNameFor(model => model.Usuario.Email)
                                 </dt>
-                                <dd class="col-sm-10">
+                                <dd class="col-sm-8">
                                     @Html.DisplayFor(model => model.Usuario.Email)
                                 </dd>
-                                <dt class="col-sm-2">
+                                <dt class="col-sm-4">
                                     @Html.DisplayNameFor(model => model.Usuario.ImagemUrlusuario)
                                 </dt>
-                                <dd class="col-sm-10">
+                                <dd class="col-sm-8">
                                     <img src="@Model.Usuario.ImagemUrlusuario" width="320px" height="320px" />
                                 </dd>
-                                <dt class="col-sm-2">
+                                <dt class="col-sm-4">
                                     @Html.DisplayNameFor(model => model.Usuario.CreatedAt)
                                 </dt>
-                                <dd class="col-sm-10">
+                                <dd class="col-sm-8">
                                     @Html.DisplayFor(model => model.Usuario.CreatedAt)
                                 </dd>
-                                <dt class="col-sm-2">
+                                <dt class="col-sm-4">
                                     @Html.DisplayNameFor(model => model.Usuario.UpdatedAt)
                                 </dt>
-                                <dd class="col-sm-10">
+                                <dd class="col-sm-8">
                                     @Html.DisplayFor(model => model.Usuario.UpdatedAt)
                                 </dd>
-                                <dt class="col-sm-2">
+                                <dt class="col-sm-4">
                                     @Html.DisplayNameFor(model => model.Usuario.TipoUsuario)
                                 </dt>
-                                <dd class="col-sm-10">
+                                <dd class="col-sm-8">
                                     @Html.DisplayFor(model => model.Usuario.TipoUsuario)
                                 </dd>
                             </dl>
@@ -126,12 +129,12 @@
                                 <tbody>
 
                                     @if (Model != null)
-                                        foreach (var item in Model.ListaPet)
+                                        foreach (var item in Model.ListaPets)
                                         {
                                             <tr>
                                                 <td>
                                                     <div class="custom-control custom-checkbox">
-                                                        @Html.Label("false", Model.ListaPet.IndexOf(item).ToString(), new { @class = "custom-control-label", @for = $"customCheck{Model.ListaPet.IndexOf(item).ToString()}" })
+                                                        @Html.Label("false", Model.ListaPets.IndexOf(item).ToString(), new { @class = "custom-control-label", @for = $"customCheck{Model.ListaPets.IndexOf(item).ToString()}" })
                                                     </div>
                                                 </td>
                                                 <td>@Html.DisplayFor(modelItem => item.Nome)</td>
@@ -190,12 +193,12 @@
                                                 <td>@Html.DisplayFor(modelItem => item.Data)</td>
                                                 <td> @Html.DisplayFor(modelItem => item.Status)</td>
                                                 <td> @Html.DisplayFor(modelItem => item.Comentario)</td>
-                                                <td> @Html.DisplayFor(modelItem => Model.ListaPet.Where(x => x.Id.Equals(item.Pet.PetId)).First().Nome)</td>
+                                                <td> @Html.DisplayFor(modelItem => Model.ListaPets.Where(x => x.Id.Equals(item.Pet.PetId)).First().Nome)</td>
                                                 <td>
-                                                    @Html.ActionLink("", "Editar", "Prontuario", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-pen yellow", data_toggle = "tooltip", title = "Editar" }) |
-                                                    @Html.ActionLink("", "Deletar", "Prontuario", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-trash yellow", data_toggle = "tooltip", title = "Deletar" })
-                                                    @Html.ActionLink("", "Detalhes", "Prontuario", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-inbox yellow", data_toggle = "tooltip", title = "Detalhes" })
-                                                    @Html.ActionLink("", "Criar", "Prontuario", "", new { @class = "bi-sharp bi-solid bi-plus yellow", data_toggle = "tooltip", title = "Criar" })
+                                                    @Html.ActionLink("", "Editar", "Agendamento", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-pen yellow", data_toggle = "tooltip", title = "Editar" }) |
+                                                    @Html.ActionLink("", "Deletar", "Agendamento", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-trash yellow", data_toggle = "tooltip", title = "Deletar" }) |
+                                                    @Html.ActionLink("", "Detalhes", "Agendamento", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-inbox yellow", data_toggle = "tooltip", title = "Detalhes" }) |
+                                                    @Html.ActionLink("", "Medicos", "Perfil", "", new { @class = "bi-sharp bi-solid bi-plus yellow", data_toggle = "tooltip", title = "Criar" })
                                                 </td>
                                             </tr>
                                         }
@@ -240,7 +243,7 @@
                                                 <td>@Html.DisplayFor(modelItem => item.Resumo)</td>
                                                 <td> @Html.DisplayFor(modelItem => item.Descricao)</td>
                                                 <td> @Html.DisplayFor(modelItem => item.Data)</td>
-                                                <td> @Html.DisplayFor(modelItem => Model.ListaPet.Where(x => x.Id.Equals(item.Pet.PetId)).First().Nome)</td>
+                                                <td> @Html.DisplayFor(modelItem => Model.ListaPets.Where(x => x.Id.Equals(item.Pet.PetId)).First().Nome)</td>
 
                                                 <td>
                                                     @Html.ActionLink("", "Editar", "Prontuario", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-pen yellow", data_toggle = "tooltip", title = "Editar" }) |
@@ -299,12 +302,11 @@
                                                 <td> @Html.DisplayFor(modelItem => item.Anexo)</td>
                                                 <td> @Html.DisplayFor(modelItem => item.DataFim)</td>
                                                 <td> @Html.DisplayFor(modelItem => item.DataInicio)</td>
-                                                <td> @Html.DisplayFor(modelItem => Model.ListaPet.Where(x => x.Id.Equals(item.Pet.PetId)).First().Nome)</td>
+                                                <td> @Html.DisplayFor(modelItem => Model.ListaPets.Where(x => x.Id.Equals(item.Pet.PetId)).First().Nome)</td>
                                                 <td>
                                                     @Html.ActionLink("", "Editar", "Documento", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-pen yellow", data_toggle = "tooltip", title = "Editar" }) |
-                                                    @Html.ActionLink("", "Deletar", "Documento", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-trash yellow", data_toggle = "tooltip", title = "Deletar" })
-                                                    @Html.ActionLink("", "Detalhes", "Documento", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-inbox yellow", data_toggle = "tooltip", title = "Detalhes" })
-                                                    @Html.ActionLink("", "Criar", "Documento", "", new { @class = "bi-sharp bi-solid bi-plus yellow", data_toggle = "tooltip", title = "Criar" })
+                                                    @Html.ActionLink("", "Deletar", "Documento", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-trash yellow", data_toggle = "tooltip", title = "Deletar" }) |
+                                                    @Html.ActionLink("", "Detalhes", "Documento", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-inbox yellow", data_toggle = "tooltip", title = "Detalhes" }) |
                                                 </td>
                                             </tr>
                                         }
@@ -345,30 +347,37 @@
                                     @if (Model != null)
                                         foreach (var item in Model.Documentos.Where(x => x.TipoDocumento.Equals(ETipoDocumento.Documento)))
                                         {
-                                    <tr>
-                                        <td>
-                                            <div class="custom-control custom-checkbox">
-                                                @Html.Label("false", Model.Documentos.IndexOf(item).ToString(), new { @class = "custom-control-label", @for = $"customCheck{Model.Documentos.IndexOf(item).ToString()}" })
-                                            </div>
-                                        </td>
-                                        <td>@Html.DisplayFor(modelItem => item.Nome)</td>
-                                        <td> @Html.DisplayFor(modelItem => item.Descricao)</td>
-                                        <td> @Html.DisplayFor(modelItem => item.Quantidade)</td>
-                                        <td> @Html.DisplayFor(modelItem => item.TipoAnexo)</td>
-                                        <td> @Html.DisplayFor(modelItem => item.Anexo)</td>
-                                        <td> @Html.DisplayFor(modelItem => item.DataFim)</td>
-                                        <td> @Html.DisplayFor(modelItem => item.DataInicio)</td>
-                                        <td> @Html.DisplayFor(modelItem => Model.ListaPet.Where(x => x.Id.Equals(item.Pet.PetId)).First().Nome)</td>
-                                        <td>
-                                            @Html.ActionLink("", "Editar", "Documento", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-pen yellow", data_toggle = "tooltip", title = "Editar" }) |
-                                            @Html.ActionLink("", "Deletar", "Documento", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-trash yellow", data_toggle = "tooltip", title = "Deletar" })
-                                            @Html.ActionLink("", "Detalhes", "Documento", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-inbox yellow", data_toggle = "tooltip", title = "Detalhes" })
-                                            @Html.ActionLink("", "Criar", "Documento", "", new { @class = "bi-sharp bi-solid bi-plus yellow", data_toggle = "tooltip", title = "Criar" })
-                                        </td>
-                                    </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="custom-control custom-checkbox">
+                                                        @Html.Label("false", Model.Documentos.IndexOf(item).ToString(), new { @class = "custom-control-label", @for = $"customCheck{Model.Documentos.IndexOf(item).ToString()}" })
+                                                    </div>
+                                                </td>
+                                                <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                                                <td> @Html.DisplayFor(modelItem => item.Descricao)</td>
+                                                <td> @Html.DisplayFor(modelItem => item.Quantidade)</td>
+                                                <td> @Html.DisplayFor(modelItem => item.TipoAnexo)</td>
+                                                <td> @Html.DisplayFor(modelItem => item.Anexo)</td>
+                                                <td> @Html.DisplayFor(modelItem => item.DataFim)</td>
+                                                <td> @Html.DisplayFor(modelItem => item.DataInicio)</td>
+                                                <td> @Html.DisplayFor(modelItem => Model.ListaPets.Where(x => x.Id.Equals(item.Pet.PetId)).First().Nome)</td>
+                                                <td>
+                                                    @Html.ActionLink("", "Editar", "Documento", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-pen yellow", data_toggle = "tooltip", title = "Editar" }) |
+                                                    @Html.ActionLink("", "Deletar", "Documento", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-trash yellow", data_toggle = "tooltip", title = "Deletar" }) |
+                                                    @Html.ActionLink("", "Detalhes", "Documento", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-inbox yellow", data_toggle = "tooltip", title = "Detalhes" }) |
+                                                    @Html.ActionLink("", "Criar", "Documento", "", new { @class = "bi-sharp bi-solid bi-plus yellow", data_toggle = "tooltip", title = "Criar" })
+                                                </td>
+                                            </tr>
                                         }
                                 </tbody>
                             </table>
+                            <div class="col-10 col-lg-9 col-xl-9 col-xxl-9 d-flex justify-content-between">
+                                <a asp-controller="Documento" asp-action="Criar" asp-route-id="@Model.Usuario.Id">
+                                    <div>
+                                        <p class="border radius-10 p-2 primary-dc"><i class="bi bi-plus primary-dc"></i>Novo Documento</p>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -404,27 +413,27 @@
                                     @if (Model != null)
                                         foreach (var item in Model.Documentos.Where(x => x.TipoDocumento.Equals(ETipoDocumento.Alimentacao)))
                                         {
-                                    <tr>
-                                        <td>
-                                            <div class="custom-control custom-checkbox">
-                                                @Html.Label("false", Model.Documentos.IndexOf(item).ToString(), new { @class = "custom-control-label", @for = $"customCheck{Model.Documentos.IndexOf(item).ToString()}" })
-                                            </div>
-                                        </td>
-                                        <td>@Html.DisplayFor(modelItem => item.Nome)</td>
-                                        <td> @Html.DisplayFor(modelItem => item.Descricao)</td>
-                                        <td> @Html.DisplayFor(modelItem => item.Quantidade)</td>
-                                        <td> @Html.DisplayFor(modelItem => item.TipoAnexo)</td>
-                                        <td> @Html.DisplayFor(modelItem => item.Anexo)</td>
-                                        <td> @Html.DisplayFor(modelItem => item.DataFim)</td>
-                                        <td> @Html.DisplayFor(modelItem => item.DataInicio)</td>
-                                        <td> @Html.DisplayFor(modelItem => Model.ListaPet.Where(x => x.Id.Equals(item.Pet.PetId)).First().Nome)</td>
-                                        <td>
-                                            @Html.ActionLink("", "Editar", "Documento", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-pen yellow", data_toggle = "tooltip", title = "Editar" }) |
-                                            @Html.ActionLink("", "Deletar", "Documento", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-trash yellow", data_toggle = "tooltip", title = "Deletar" })
-                                            @Html.ActionLink("", "Detalhes", "Documento", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-inbox yellow", data_toggle = "tooltip", title = "Detalhes" })
-                                            @Html.ActionLink("", "Criar", "Documento", "", new { @class = "bi-sharp bi-solid bi-plus yellow", data_toggle = "tooltip", title = "Criar" })
-                                        </td>
-                                    </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="custom-control custom-checkbox">
+                                                        @Html.Label("false", Model.Documentos.IndexOf(item).ToString(), new { @class = "custom-control-label", @for = $"customCheck{Model.Documentos.IndexOf(item).ToString()}" })
+                                                    </div>
+                                                </td>
+                                                <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                                                <td> @Html.DisplayFor(modelItem => item.Descricao)</td>
+                                                <td> @Html.DisplayFor(modelItem => item.Quantidade)</td>
+                                                <td> @Html.DisplayFor(modelItem => item.TipoAnexo)</td>
+                                                <td> @Html.DisplayFor(modelItem => item.Anexo)</td>
+                                                <td> @Html.DisplayFor(modelItem => item.DataFim)</td>
+                                                <td> @Html.DisplayFor(modelItem => item.DataInicio)</td>
+                                                <td> @Html.DisplayFor(modelItem => Model.ListaPets.Where(x => x.Id.Equals(item.Pet.PetId)).First().Nome)</td>
+                                                <td>
+                                                    @Html.ActionLink("", "Editar", "Documento", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-pen yellow", data_toggle = "tooltip", title = "Editar" }) |
+                                                    @Html.ActionLink("", "Deletar", "Documento", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-trash yellow", data_toggle = "tooltip", title = "Deletar" }) |
+                                                    @Html.ActionLink("", "Detalhes", "Documento", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-inbox yellow", data_toggle = "tooltip", title = "Detalhes" }) |
+                                                    @Html.ActionLink("", "Criar", "Documento", "", new { @class = "bi-sharp bi-solid bi-plus yellow", data_toggle = "tooltip", title = "Criar" })
+                                                </td>
+                                            </tr>
                                         }
                                 </tbody>
                             </table>
@@ -438,3 +447,14 @@
     <!--fim row-->
 </main>
 <!--fim main-->
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+}

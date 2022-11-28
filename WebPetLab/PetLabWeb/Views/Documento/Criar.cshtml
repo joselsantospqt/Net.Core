@@ -1,0 +1,127 @@
+﻿@model Domain.Entidade.Request.CreateDocumento
+@using EnumsNET;
+@using Domain.Entidade;
+@{
+    ViewData["Title"] = "Criar Documento";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<SelectListItem> listItemsDocumentos = new List<SelectListItem>();
+    foreach (ETipoDocumento item in (ETipoDocumento[])Enum.GetValues(typeof(ETipoDocumento)))
+    {
+        listItemsDocumentos.Add(new SelectListItem
+        {
+            Text = item.GetDescription(),
+            Value = item.ToString()
+        });
+    }
+
+    List<SelectListItem> listItemsPets = new List<SelectListItem>();
+    foreach (Pet item in Model.Pets)
+    {
+        listItemsPets.Add(new SelectListItem
+        {
+            Text = item.Nome,
+            Value = item.Id.ToString()
+        });
+    }
+
+    List<SelectListItem> listItemsProntuarios = new List<SelectListItem>();
+    foreach (Prontuario item in Model.Prontuarios)
+    {
+        listItemsProntuarios.Add(new SelectListItem
+        {
+            Text = item.Descricao,
+            Value = item.Id.ToString()
+        });
+    }
+}
+
+<main class="page-content">
+
+    <div class="profile-cover bg-dark"></div>
+
+    <div class="row">
+        <div class="col-6 col-sm-12">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <div class="card shadow-none border">
+                        <div class="card-header">
+                            <h6 class="mb-0">@ViewData["Title"]</h6>
+                        </div>
+                        <div class="card-body">
+                            <form asp-action="Criar" method="post" enctype="multipart/form-data" class="row g-3">
+                                <div class="col-md-6 col-sm-12">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="form-group">
+                                        <label asp-for="Nome" class="control-label"></label>
+                                        <input asp-for="Nome" name="Nome" class="form-control" />
+                                        <span asp-validation-for="Nome" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Descricao" class="control-label"></label>
+                                        <input asp-for="Descricao" name="Descricao" class="form-control" />
+                                        <span asp-validation-for="Descricao" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Quantidade" class="control-label"></label>
+                                        <input asp-for="Quantidade" name="Quantidade" class="form-control" />
+                                        <span asp-validation-for="Quantidade" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="TipoDocumento" class="control-label"></label>
+                                        @Html.DropDownListFor(model => model.TipoDocumento, listItemsDocumentos, new { @class = "form-control", data_toggle = "tooltip", title = "Tipo Documento", name = "TipoDocumento" })
+                                        <span asp-validation-for="TipoDocumento" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Pets" class="control-label"></label>
+                                        @Html.DropDownListFor(model => model.Pets, listItemsPets, new { @class = "form-control", data_toggle = "tooltip", title = "Pets", name = "Pets" })
+                                        <span asp-validation-for="Pets" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Prontuarios" class="control-label"></label>
+                                        @Html.DropDownListFor(model => model.Prontuarios, listItemsProntuarios, new { @class = "form-control", data_toggle = "tooltip", title = "Prontuários", name = "Prontuarios" })
+                                        <span asp-validation-for="Prontuarios" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="DataInicio" class="control-label"></label>
+                                        <input asp-for="DataInicio" name="DataInicio" class="form-control" />
+                                        <span asp-validation-for="DataInicio" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="DataFim" class="control-label"></label>
+                                        <input asp-for="DataFim" name="DataFim" class="form-control" />
+                                        <span asp-validation-for="DataFim" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="url_documento" class="col-sm-12 col-form-label">Foto do Pet:</label>
+                                        <div class="col-sm-12">
+                                            <input type="file" asp-for="url_documento" name="url_documento" class="form-control">
+                                        </div>
+                                        <br />
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" value="Create" class="btn btn-primary" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--fim row-->
+
+</main>
+<!--fim main-->
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+}

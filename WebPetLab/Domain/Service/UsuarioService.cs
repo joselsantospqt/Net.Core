@@ -53,7 +53,8 @@ namespace Domain.Service
             DateTime dataDeNascimento,
             string email,
             string senha,
-            ETipoUsuario tipoUsuario
+            ETipoUsuario tipoUsuario,
+            string ImagemUrlusuario
            )
         {
 
@@ -69,7 +70,7 @@ namespace Domain.Service
             usuario.Email = email;
             usuario.Senha = senha;
             usuario.ImagemUrlusuario = "Perfil_default.png";
-            usuario.CreatedAt = DateTime.UtcNow;
+            usuario.CreatedAt = new DateTime();
             usuario.UpdatedAt = new DateTime();
 
             RepositorioUsuario.SaveUpdate(usuario);

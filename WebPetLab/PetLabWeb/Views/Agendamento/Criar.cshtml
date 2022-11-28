@@ -1,8 +1,21 @@
 ﻿@model Domain.Entidade.Request.CreateAgendamento
+@using EnumsNET;
+@using Domain.Entidade;
 
 @{
-    ViewData["Title"] = "Criar";
+    ViewData["Title"] = "Criar Agendamento";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<SelectListItem> listItems = new List<SelectListItem>();
+    foreach (Pet item in Model.Pets)
+    {
+        listItems.Add(new SelectListItem
+        {
+            Text = item.Nome,
+            Value = item.Id.ToString()
+        });
+
+    }
 }
 
 <main class="page-content">
@@ -10,7 +23,7 @@
     <div class="profile-cover bg-dark"></div>
 
     <div class="row">
-        <div class="col-12 col-lg-12">
+        <div class="col-6 col-sm-12">
             <div class="card shadow-sm border-0">
                 <div class="card-body">
                     <div class="card shadow-none border">
@@ -21,23 +34,39 @@
                             <form asp-action="Criar" method="post" enctype="multipart/form-data" class="row g-3">
                                 <div class="col-md-6 col-sm-12">
                                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                    <div class="form-group">
-                                        <label asp-for="Data" class="control-label"></label>
-                                        <input asp-for="Data" name="Data" class="form-control datepicker" />
-                                        <span asp-validation-for="Data" class="text-danger"></span>
+                                    <div class="form-group d-none">
+                                        <label asp-for="Tutor" class="form-label"></label>
+                                        <input asp-for="Tutor" name="Tutor" class="form-control" value="@Model.Tutor">
+                                        <span asp-validation-for="Tutor" class="text-danger"></span>
                                     </div>
                                     <div class="form-group">
-                                        <label asp-for="Status" class="control-label"></label>
-                                        <input asp-for="Status" class="form-control" />
-                                        <span asp-validation-for="Status" class="text-danger"></span>
+                                        <label asp-for="Pets" class="form-label"></label>
+                                        @Html.DropDownListFor(model => model.Pets, listItems, new { @class = "form-control", data_toggle = "tooltip", title = "Pets", name = "Pets" })
+                                        <span asp-validation-for="Pets" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="MedicoResponsavel.Nome" class="form-label">Médico</label>
+                                        <input asp-for="MedicoResponsavel.Nome" name="MedicoResponsavel.Nome" class="form-control" value="@Model.MedicoResponsavel.Nome" readonly>
+                                        <span asp-validation-for="MedicoResponsavel.Nome" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group d-none">
+                                        <label asp-for="MedicoResponsavel.Id" class="form-label">Data Nascimento</label>
+                                        <input asp-for="MedicoResponsavel.Id" name="MedicoResponsavel.Id" class="form-control" value="@Model.MedicoResponsavel.Id">
+                                        <span asp-validation-for="MedicoResponsavel.Id" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Data" class="form-label">Data Agendamento</label>
+                                        <input asp-for="Data" name="Data" class="form-control">
+                                        <span asp-validation-for="Data" class="text-danger"></span>
                                     </div>
                                     <div class="form-group">
                                         <label asp-for="Comentario" class="control-label"></label>
                                         <input asp-for="Comentario" class="form-control" />
                                         <span asp-validation-for="Comentario" class="text-danger"></span>
                                     </div>
-                                    <div class="form-group">
-                                        <input type="submit" value="Create" class="btn btn-primary" />
+                                    <div class="form-group d-flex justify-content-between">
+                                        <input type="submit" value="Create" class="btn btn-primary" /> |
+                                        <a asp-controller="Perfil" asp-action="Medicos" class="btn btn-primary"><i class="bi-sharp bi-solid bi-arrow-bar-left"></i></a>
                                     </div>
                                 </div>
                             </form>
@@ -57,10 +86,9 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
     <script type="text/javascript">
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
 
-        $(".datepicker").datepicker({
-            format: "dd/mm/yyyy",
-            language: "pt-BR"
-        });
     </script>
 }

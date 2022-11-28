@@ -1,8 +1,7 @@
-﻿@model Domain.Entidade.Pet
-@using EnumsNET
-@using Domain.Entidade
+﻿@model Domain.Entidade.Documento
+
 @{
-    ViewData["Title"] = "Deletar Pet";
+    ViewData["Title"] = "Deletar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -18,7 +17,7 @@
                     <hr>
                     <div class="card shadow-none border">
                         <div class="card-header">
-                            <h6 class="mb-0">INFORMAÇÃO DO PET</h6>
+                            <h6 class="mb-0">INFORMAÇÃO DO DOCUMENTO</h6>
                         </div>
                         <div class="card-body">
                             <dl class="row">
@@ -35,40 +34,58 @@
                                     @Html.DisplayFor(model => model.Nome)
                                 </dd>
                                 <dt class="col-sm-2">
-                                    @Html.DisplayNameFor(model => model.DataNascimento)
+                                    @Html.DisplayNameFor(model => model.Descricao)
                                 </dt>
                                 <dd class="col-sm-10">
-                                    @Html.DisplayFor(model => model.DataNascimento)
+                                    @Html.DisplayFor(model => model.Descricao)
                                 </dd>
                                 <dt class="col-sm-2">
-                                    @Html.DisplayNameFor(model => Model.Especie)
+                                    @Html.DisplayNameFor(model => model.Quantidade)
                                 </dt>
                                 <dd class="col-sm-10">
-                                    @Html.DisplayFor(model => model.Especie)
+                                    @Html.DisplayFor(model => model.Quantidade)
                                 </dd>
                                 <dt class="col-sm-2">
-                                    @Html.DisplayNameFor(model => model.ImagemUrlPet)
+                                    @Html.DisplayNameFor(model => model.TipoDocumento)
                                 </dt>
                                 <dd class="col-sm-10">
-                                    @Html.DisplayFor(model => model.ImagemUrlPet)
+                                    @Html.DisplayFor(model => model.TipoDocumento)
+                                </dd>
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.Anexo)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.Anexo)
+                                </dd>
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.TipoAnexo)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.TipoAnexo)
+                                </dd>
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.DataInicio)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.DataInicio)
+                                </dd>
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.DataFim)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.DataFim)
                                 </dd>
                             </dl>
-
                             <form asp-action="Deletar" enctype="multipart/form-data" method="post">
                                 <label asp-for="Id" class="control-label d-none"></label>
                                 <input asp-for="Id" name="Id" value="@Model.Id" class="form-control d-none" readonly />
-                                <span asp-validation-for="Id" class="text-danger d-none"></span> 
-                                <div class="form-group d-flex justify-content-between">
-                                    <input type="submit" value="Deletar" class="btn btn-danger" /> |
-                                    <button asp-action="Listar" asp-route-id="@Model.Tutor.UsuarioId" class=" btn btn-primary"><i class="bi-sharp bi-solid bi-arrow-bar-left"></i></button>
-                                </div>
+                                <span asp-validation-for="Id" class="text-danger d-none"></span>
+                                <input type="submit" value="Deletar" class="btn btn-danger" />
                             </form>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 </main>
-

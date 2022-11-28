@@ -1,4 +1,6 @@
 ﻿using Domain.Entidade;
+using Domain.Entidade.Request;
+using Domain.Entidade.View;
 using Domain.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,10 +15,18 @@ namespace PetLabAPI.Controllers
     [ApiController]
     public class AgendamentoController : ControllerBase
     {
+        private PetService _ServicePet;
+        private UsuarioService _ServiceUsuario;
         private AgendamentoService _ServiceAgendamento;
+        private ProntuarioService _ServiceProntuario;
+        private DocumentoService _ServiceDocumento;
 
-        public AgendamentoController(AgendamentoService serviceAgendamento)
+        public AgendamentoController(PetService servicePet, UsuarioService serviceUsuario, AgendamentoService serviceAgendamento, ProntuarioService serviceProntuario, DocumentoService serviceDocumento)
         {
+            _ServicePet = servicePet;
+            _ServiceUsuario = serviceUsuario;
+            _ServiceDocumento = serviceDocumento;
+            _ServiceProntuario = serviceProntuario;
             _ServiceAgendamento = serviceAgendamento;
         }
 
@@ -24,9 +34,9 @@ namespace PetLabAPI.Controllers
         [Authorize]
         public ActionResult GetAll()
         {
-            var getAllPet = _ServiceAgendamento.GetAll();
+            var getAllAgendamento = _ServiceAgendamento.GetAll();
 
-            return Ok(getAllPet);
+            return Ok(getAllAgendamento);
         }
 
         [HttpGet("{id:Guid}")]
@@ -42,24 +52,55 @@ namespace PetLabAPI.Controllers
             return Ok(agendamento);
         }
 
+        [HttpGet("GetAllAgendamentoById/{id:Guid}")]
         [Authorize]
-        [HttpGet("{email}")]
-        public ActionResult GetAgendamentoByPet([FromRoute] Guid id)
+        public ActionResult GetAllAgendamentoById([FromRoute] Guid id)
         {
-            var agendamentos = _ServiceAgendamento.GetAll().Where(x => x.Pet.PetId == id);
+            var usuario = _ServiceUsuario.GetUsuarioById(id);
+            var Detalhes = new ViewModel()
+            {
+                Usuario = usuario
+            };
+            if (usuario.TipoUsuario == ETipoUsuario.Tutor)
+            {
+                foreach (var itemPet in usuario.Pets)
+                {
+                    var pet = _ServicePet.GetPetById(itemPet.PetId);
+                    Detalhes.ListaPets.Add(pet);
+                    Detalhes.ListaPets.First(x => x.Id == itemPet.PetId).Tutor = itemPet;
 
-            if (agendamentos == null)
+                    foreach (var item in pet.Agendamentos)
+                    {
+                        Detalhes.Agendamentos.Add(_ServiceAgendamento.GetAgendamentoById(item.AgendamentoId));
+                        Detalhes.Agendamentos.First(x => x.Id == item.AgendamentoId).Pet = item;
+                    }
+
+                    foreach (var item in pet.Prontuarios)
+                    {
+                        Detalhes.Prontuarios.Add(_ServiceProntuario.GetProntuarioById(item.ProntuarioId));
+                        Detalhes.Prontuarios.First(x => x.Id == item.ProntuarioId).Pet = item;
+                    }
+                }
+
+                foreach (var item in Detalhes.Agendamentos)
+                {
+                    if (Detalhes.ListaMedicos.Where(x => x.Id == item.MedicoResponsavel.UsuarioId).Count() == 0)
+                        Detalhes.ListaMedicos.Add(_ServiceUsuario.GetUsuarioById(item.MedicoResponsavel.UsuarioId));
+                }
+            }
+
+            if (Detalhes == null)
                 return NoContent();
 
-            return Ok(agendamentos);
+            return Ok(Detalhes);
         }
 
-        [HttpPost("{idMedico:Guid}/{idPet:Guid}/{data}")]
+        [HttpPost("{idMedico:Guid}/{idPet:Guid}")]
         [Authorize]
-        public ActionResult Agendamento([FromRoute] Guid idMedico, [FromRoute] Guid idPet, [FromRoute] string data)
+        public ActionResult Agendamento([FromRoute] Guid idMedico, [FromRoute] Guid idPet, [FromBody] CreateAgendamento create)
         {
 
-            var agendamento = _ServiceAgendamento.CreateAgendamento(idMedico, idPet, Convert.ToDateTime(data));
+            var agendamento = _ServiceAgendamento.CreateAgendamento(idMedico, idPet, create.Data);
 
             return Created("api/[controller]", agendamento);
         }
@@ -85,5 +126,44 @@ namespace PetLabAPI.Controllers
             return Ok(updateAgendamento);
 
         }
+
+        [HttpGet("GetAgendamentoDetalhes/{id:Guid}")]
+        [Authorize]
+        public ActionResult GetAgendamentoDetalhes([FromRoute] Guid id)
+        {
+            var agendamento = _ServiceAgendamento.GetAgendamentoById(id);
+            var Detalhes = new ViewModel()
+            {
+                Pet = _ServicePet.GetPetById(agendamento.Pet.PetId),
+                Usuario = _ServiceUsuario.GetUsuarioById(agendamento.MedicoResponsavel.UsuarioId)
+
+            };
+            Detalhes.Agendamentos.Add(agendamento);
+
+
+            //foreach (var item in agendamento)
+            //{
+            //    Detalhes.Agendamentos.Add(_ServiceUsuario.GetUsuarioById(item.AgendamentoId));
+            //    Detalhes.Agendamentos.First(x => x.Id == item.AgendamentoId).Pet = item;
+            //}
+
+            //foreach (var item in pet.Prontuarios)
+            //{
+            //    Detalhes.Prontuarios.Add(_ServiceProntuario.GetProntuarioById(item.ProntuarioId));
+            //    Detalhes.Prontuarios.First(x => x.Id == item.ProntuarioId).Pet = item;
+            //}
+
+            //foreach (var item in pet.Documentos)
+            //{
+            //    Detalhes.Documentos.Add(_ServiceDocumento.GetDocumentoById(item.DocumentoId));
+            //    Detalhes.Documentos.First(x => x.Id == item.DocumentoId).Pet = item;
+            //}
+
+            if (Detalhes == null)
+                return NoContent();
+
+            return Ok(Detalhes);
+        }
+
     }
 }

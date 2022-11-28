@@ -1,0 +1,106 @@
+﻿@model Domain.Entidade.View.ViewModel
+
+@{
+    ViewData["Title"] = "Detalhes Medico";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main class="page-content">
+
+    <div class="profile-cover bg-dark"></div>
+
+    <div class="row">
+        <div class="col-12 col-lg-12">
+            @*PERFIL*@
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="mb-0">Perfil</h5>
+                    <hr>
+                    <div class="card shadow-none border">
+                        <div class="card-header">
+                            <h6 class="mb-0">Informação</h6>
+                        </div>
+                        <div class="card-body">
+                            <dl class="row">
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.Usuario.Nome)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.Usuario.Nome)
+                                </dd>
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.Usuario.Sobrenome)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.Usuario.Sobrenome)
+                                </dd>
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.Usuario.Telefone)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.Usuario.Telefone)
+                                </dd>
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.Usuario.Cpf)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.Usuario.Cpf)
+                                </dd>
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.Usuario.Cnpj)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.Usuario.Cnpj)
+                                </dd>
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.Usuario.Crm)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.Usuario.Crm)
+                                </dd>
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.Usuario.DataNascimento)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.Usuario.DataNascimento)
+                                </dd>
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.Usuario.Email)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.Usuario.Email)
+                                </dd>
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.Usuario.ImagemUrlusuario)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    <img src="@Model.Usuario.ImagemUrlusuario" width="320px" height="320px" />
+                                </dd>
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.Usuario.CreatedAt)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.Usuario.CreatedAt)
+                                </dd>
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.Usuario.UpdatedAt)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.Usuario.UpdatedAt)
+                                </dd>
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.Usuario.TipoUsuario)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.Usuario.TipoUsuario)
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--fim row-->
+</main>
+<!--fim main-->

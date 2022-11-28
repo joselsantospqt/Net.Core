@@ -1,0 +1,116 @@
+﻿@model Domain.Entidade.Request.CreateDocumento
+@using EnumsNET;
+@using Domain.Entidade;
+@{
+    ViewData["Title"] = "Editar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<SelectListItem> listItems = new List<SelectListItem>();
+    foreach (ETipoDocumento item in (ETipoDocumento[])Enum.GetValues(typeof(ETipoEspecie)))
+    {
+        listItems.Add(new SelectListItem
+        {
+            Text = item.GetDescription(),
+            Value = item.ToString()
+        });
+    }
+}
+
+<main class="page-content">
+
+    <div class="profile-cover bg-dark"></div>
+
+    <div class="row">
+        <div class="col-12 col-lg-8 d-flex justify-content-center mx-auto">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="mb-0">@ViewData["Title"]</h5>
+                    <hr>
+                    <div class="card shadow-none border">
+                        <div class="card-header">
+                            <h6 class="mb-0">INFORMAÇÃO DO PET</h6>
+                        </div>
+                        <div class="card-body">
+                            <form asp-action="Editar" method="post" enctype="multipart/form-data" class="row g-3">
+                                <div class="col-6">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="form-group">
+                                        <label asp-for="Nome" class="control-label"></label>
+                                        <input asp-for="Nome" name="Id" value="Id" class="form-control" />
+                                        <span asp-validation-for="Nome" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Descricao" class="control-label"></label>
+                                        <input asp-for="Descricao" name="Descricao" value="Descricao" class="form-control" />
+                                        <span asp-validation-for="Descricao" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Quantidade" class="control-label"></label>
+                                        <input asp-for="Quantidade" name="Quantidade" value="Quantidade" class="form-control" />
+                                        <span asp-validation-for="Quantidade" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="TipoDocumento" class="control-label"></label>
+                                        @Html.DropDownListFor(model => model.TipoDocumento, listItems, new { @class = "form-control", data_toggle = "tooltip", title = "Tipo Documento", name = "TipoDocumento" })
+                                        <span asp-validation-for="TipoDocumento" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Anexo" class="control-label"></label>
+                                        <input asp-for="Anexo" name="Anexo" value="Anexo" class="form-control" />
+                                        <span asp-validation-for="Anexo" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="TipoAnexo" class="control-label"></label>
+                                        <input asp-for="TipoAnexo" name="TipoAnexo" value="TipoAnexo" class="form-control" />
+                                        <span asp-validation-for="TipoAnexo" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="DataInicio" class="control-label"></label>
+                                        @Html.EditorFor(model => model.DataInicio, "DataInicio", "DataInicio")
+                                        <span asp-validation-for="DataInicio" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="DataFim" class="control-label"></label>
+                                        @Html.EditorFor(model => model.DataFim, "DataFim", "DataFim")
+                                        <span asp-validation-for="DataFim" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label asp-for="url_documento" class="col-sm-12 col-form-label">Foto do Pet:</label>
+                                        <img src="~/assets/img/Image_not_available.png" width="320px" height="320px" />
+
+                                        <br />
+                                        <div class="col-sm-12">
+                                            <input type="file" asp-for="url_documento" name="url_documento" class="form-control">
+                                            <span asp-validation-for="url_documento" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="col-sm-12">
+                                        <a asp-controller="Pet" asp-action="ExcluirImagem" asp-route-id="@Model.Id" class="btn btn-sm btn-danger px-5">Excluir Foto</a>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <input type="submit" value="Save" class="btn btn-primary" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script type="text/javascript">
+        var DataInicio = document.getElementById("DataInicio");
+        var DataFim = document.getElementById("DataFim");
+        DataInicio.classList.add("form-control");
+        DataFim.classList.add("form-control");
+    </script>
+}
