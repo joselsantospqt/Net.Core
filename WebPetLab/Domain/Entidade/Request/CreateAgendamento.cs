@@ -9,7 +9,6 @@ namespace Domain.Entidade.Request
 {
     public class CreateAgendamento
     {
-        public CreateAgendamento() { Pets = new List<Pet>(); }
         public Guid Id { get; set; }
         [Required]
         [DataType(DataType.DateTime)]
@@ -21,8 +20,5 @@ namespace Domain.Entidade.Request
         public EStatus Status { get; set; }
         [Display(Name = "Comentários")]
         public string Comentario { get; set; }
-        public IList<Pet> Pets { get; set; }
-        public Usuario MedicoResponsavel { get; set; }
-        public Guid Tutor { get; set; }
     }
 }

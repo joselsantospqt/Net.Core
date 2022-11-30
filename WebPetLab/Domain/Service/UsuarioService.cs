@@ -54,7 +54,8 @@ namespace Domain.Service
             string email,
             string senha,
             ETipoUsuario tipoUsuario,
-            string ImagemUrlusuario
+            byte[] anexo,
+            string tipoAnexo
            )
         {
 
@@ -69,7 +70,9 @@ namespace Domain.Service
             usuario.DataNascimento = dataDeNascimento;
             usuario.Email = email;
             usuario.Senha = senha;
-            usuario.ImagemUrlusuario = "Perfil_default.png";
+            usuario.TipoUsuario = tipoUsuario;
+            usuario.TipoAnexo = tipoAnexo;
+            usuario.Anexo = anexo;
             usuario.CreatedAt = new DateTime();
             usuario.UpdatedAt = new DateTime();
 
@@ -98,10 +101,13 @@ namespace Domain.Service
                 usuario.DataNascimento = UsuarioUpdate.DataNascimento;
             if (UsuarioUpdate.TipoUsuario != usuario.TipoUsuario)
                 usuario.TipoUsuario = UsuarioUpdate.TipoUsuario;
-            if (UsuarioUpdate.ImagemUrlusuario != null && UsuarioUpdate.ImagemUrlusuario.Length == 0)
-                usuario.ImagemUrlusuario = UsuarioUpdate.ImagemUrlusuario;
             if (UsuarioUpdate.Pets.Count() > 0)
                 usuario.Pets = UsuarioUpdate.Pets;
+            if (UsuarioUpdate.TipoAnexo != usuario.TipoAnexo)
+                usuario.TipoAnexo = UsuarioUpdate.TipoAnexo;
+            if (UsuarioUpdate.Anexo != usuario.Anexo)
+                usuario.Anexo = UsuarioUpdate.Anexo;
+
             usuario.UpdatedAt = DateTime.UtcNow;
 
             RepositorioUsuario.SaveUpdate(usuario);

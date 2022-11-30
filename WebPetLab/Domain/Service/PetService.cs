@@ -31,7 +31,9 @@ namespace Domain.Service
             Guid idTutor,
             string nome,
             DateTime dataDeNascimento,
-            ETipoEspecie especie
+            ETipoEspecie especie,
+            byte[] anexo,
+            string tipoAnexo
            )
         {
 
@@ -40,7 +42,8 @@ namespace Domain.Service
             pet.DataNascimento = dataDeNascimento;
             pet.Especie = especie;
             pet.AddTutor(idTutor);
-            pet.ImagemUrlPet = "Perfil_default.png";
+            pet.TipoAnexo = tipoAnexo;
+            pet.Anexo = anexo;
             pet.CreatedAt = DateTime.UtcNow;
             pet.UpdatedAt = new DateTime();
 
@@ -59,12 +62,15 @@ namespace Domain.Service
                 pet.DataNascimento = PetUpdate.DataNascimento;
             if (PetUpdate.Especie != pet.Especie)
                 pet.Especie = PetUpdate.Especie;
-            if (PetUpdate.ImagemUrlPet != null && PetUpdate.ImagemUrlPet.Length == 0)
-                pet.ImagemUrlPet = PetUpdate.ImagemUrlPet;
             if (PetUpdate.Agendamentos.Count() > 0)
                 pet.Agendamentos = PetUpdate.Agendamentos;
             if (PetUpdate.Prontuarios.Count() > 0)
                 pet.Prontuarios = PetUpdate.Prontuarios;
+            if (PetUpdate.TipoAnexo != pet.TipoAnexo)
+                pet.TipoAnexo = PetUpdate.TipoAnexo;
+            if (PetUpdate.Anexo != pet.Anexo)
+                pet.Anexo = PetUpdate.Anexo;
+
             pet.UpdatedAt = DateTime.UtcNow;
 
             RepositorioPet.SaveUpdate(pet);

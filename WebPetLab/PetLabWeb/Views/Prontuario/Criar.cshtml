@@ -1,0 +1,83 @@
+﻿@model Domain.Entidade.View.ViewModel
+@using EnumsNET;
+@using Domain.Entidade;
+@{
+    ViewData["Title"] = "Criar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<SelectListItem> listItems = new List<SelectListItem>();
+    foreach (Pet item in Model.ListaPets)
+    {
+        listItems.Add(new SelectListItem
+        {
+            Text = item.Nome,
+            Value = item.Id.ToString()
+        });
+
+    }
+}
+
+<main class="page-content">
+
+    <div class="profile-cover bg-dark"></div>
+
+    <div class="row">
+        <div class="col-6 col-sm-12">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <div class="card shadow-none border">
+                        <div class="card-header">
+                            <h6 class="mb-0">@ViewData["Title"]</h6>
+                        </div>
+                        <div class="card-body">
+                            <form asp-action="Criar" method="post" enctype="multipart/form-data" class="row g-3">
+                                <div class="col-md-6 col-sm-12">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="form-group">
+                                        <label asp-for="Prontuario.Resumo" class="control-label"></label>
+                                        <input asp-for="Prontuario.Resumo" name="Resumo" class="form-control" />
+                                        <span asp-validation-for="Prontuario.Resumo" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Prontuario.Descricao" class="control-label"></label>
+                                        <input asp-for="Prontuario.Descricao" name="Descricao" class="form-control" />
+                                        <span asp-validation-for="Prontuario.Descricao" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Prontuario.Data" class="control-label"></label>
+                                        <input asp-for="Prontuario.Data" name="Data" class="form-control" />
+                                        <span asp-validation-for="Prontuario.Data" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="ListaPets" class="form-label"></label>
+                                        @Html.DropDownListFor(model => model.Pet, listItems, new { @class = "form-control", data_toggle = "tooltip", title = "Pets", name = "ListaPets" })
+                                        <span asp-validation-for="ListaPets" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group d-flex justify-content-between">
+                                        <input type="submit" value="Create" class="btn btn-primary" /> |
+                                        @*<a asp-controller="Perfil" asp-action="Medicos" class="btn btn-primary"><i class="bi-sharp bi-solid bi-arrow-bar-left"></i></a>*@
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--fim row-->
+
+</main>
+<!--fim main-->
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+
+    </script>
+}

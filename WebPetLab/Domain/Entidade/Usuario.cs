@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ namespace Domain.Entidade
 {
     public class Usuario
     {
-        public Usuario() { Pets = new List<UsuarioPet>(); }
+        public Usuario() { Pets = new List<UsuarioPet>(); Prontuarios = new List<ProntuarioUsuario>(); Agendamentos = new List<AgendamentoUsuario>(); }
         [Key]
         public Guid Id { get; set; }
         [Required]
@@ -41,19 +42,32 @@ namespace Domain.Entidade
         [DataType(DataType.DateTime)]
         [Display(Name = "Data Nascimento")]
         public DateTime DataNascimento { get; set; }
-
         [DataType(DataType.Text)]
-        [Display(Name = "Imagem do Usuario")]
-        public string ImagemUrlusuario { get; set; }
+        [Display(Name = "Anexo")]
+        public byte[] Anexo { get; set; }
+        [DataType(DataType.Text)]
+        [Display(Name = "Tipo Anexo")]
+        public string TipoAnexo { get; set; }
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Tipo Usuário")]
         public ETipoUsuario TipoUsuario { get; set; }
+
+        [Display(Name = "Email")]
         public string Email { get; set; }
+
+        [Display(Name = "Senha")]
         public string Senha { get; set; }
+        [Display(Name = "Imagem do Usuario")]
+        public string url_documento { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+        [Display(Name = "Pets")]
         public IList<UsuarioPet> Pets { get; set; }
+        [Display(Name = "Prontuários")]
+        public IList<ProntuarioUsuario> Prontuarios { get; set; }
+        [Display(Name = "Agendamentos")]
+        public IList<AgendamentoUsuario> Agendamentos { get; set; }
 
     }
 }

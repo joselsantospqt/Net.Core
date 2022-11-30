@@ -26,6 +26,10 @@ namespace Domain.Service
         {
             return RepositorioAgendamento.GetAll();
         }
+        public IEnumerable<Agendamento> GetAllByIdMedico(Guid id)
+        {
+            return RepositorioAgendamento.GetAllByIdMedico(id);
+        }
 
         public Agendamento CreateAgendamento(
             Guid idMedico,
@@ -54,8 +58,10 @@ namespace Domain.Service
                 agendamento.Data = AgendamentoUpdate.Data;
             if (AgendamentoUpdate.Status != agendamento.Status)
                 agendamento.Status = AgendamentoUpdate.Status;
-            if (AgendamentoUpdate.Comentario.Length > 0)
+            if (AgendamentoUpdate.Comentario != agendamento.Comentario)
                 agendamento.Comentario = AgendamentoUpdate.Comentario;
+            if (AgendamentoUpdate.Pet.PetId != agendamento.Pet.PetId)
+                agendamento.Pet.PetId = AgendamentoUpdate.Pet.PetId;
 
             RepositorioAgendamento.SaveUpdate(agendamento);
 

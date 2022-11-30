@@ -1,4 +1,4 @@
-﻿@model Domain.Entidade.Documento
+﻿@model Domain.Entidade.View.ViewModel
 
 @{
     ViewData["Title"] = "Detalhes Documento";
@@ -20,59 +20,76 @@
                         </div>
                         <div class="card-body">
                             <dl class="row">
-                                <dt class="col-sm-2">
-                                    @Html.DisplayNameFor(model => model.Id)
+                                <dt class="col-sm-4">
+                                    @Html.DisplayNameFor(model => model.Documento.Nome)
                                 </dt>
-                                <dd class="col-sm-10">
-                                    @Html.DisplayFor(model => model.Id)
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(model => model.Documento.Nome)
                                 </dd>
-                                <dt class="col-sm-2">
-                                    @Html.DisplayNameFor(model => model.Nome)
+                                <dt class="col-sm-4">
+                                    @Html.DisplayNameFor(model => model.Documento.Descricao)
                                 </dt>
-                                <dd class="col-sm-10">
-                                    @Html.DisplayFor(model => model.Nome)
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(model => model.Documento.Descricao)
                                 </dd>
-                                <dt class="col-sm-2">
-                                    @Html.DisplayNameFor(model => model.Descricao)
+                                <dt class="col-sm-4">
+                                    @Html.DisplayNameFor(model => model.Documento.Quantidade)
                                 </dt>
-                                <dd class="col-sm-10">
-                                    @Html.DisplayFor(model => model.Descricao)
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(model => model.Documento.Quantidade)
                                 </dd>
-                                <dt class="col-sm-2">
-                                    @Html.DisplayNameFor(model => model.Quantidade)
+                                @if (Model.Documento.Prontuario != null && Model.Documento.Prontuario.ProntuarioId != new Guid("{00000000-0000-0000-0000-000000000000}"))
+                                {
+                                    <dt class="col-sm-4">
+                                        @Html.DisplayNameFor(model => model.Documento.Prontuario)
+                                    </dt>
+                                    <dd class="col-sm-8">
+                                        @Html.DisplayFor(model => model.Prontuario.Descricao)
+                                    </dd>
+                                }
+                                <dt class="col-sm-4">
+                                    @Html.DisplayNameFor(model => model.Documento.Pet)
                                 </dt>
-                                <dd class="col-sm-10">
-                                    @Html.DisplayFor(model => model.Quantidade)
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(model => model.Pet.Nome)
                                 </dd>
-                                <dt class="col-sm-2">
-                                    @Html.DisplayNameFor(model => model.TipoDocumento)
+                                <dt class="col-sm-4">
+                                    @Html.DisplayNameFor(model => model.Documento.TipoDocumento)
                                 </dt>
-                                <dd class="col-sm-10">
-                                    @Html.DisplayFor(model => model.TipoDocumento)
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(model => model.Documento.TipoDocumento)
                                 </dd>
-                                <dt class="col-sm-2">
-                                    @Html.DisplayNameFor(model => model.Anexo)
+                                <dt class="col-sm-4">
+                                    @Html.DisplayNameFor(model => model.Documento.Anexo)
                                 </dt>
-                                <dd class="col-sm-10">
-                                    @Html.DisplayFor(model => model.Anexo)
+                                <dd class="col-sm-8">
+                                    <div class="card card-image">
+                                        <div class="text-white text-center d-flex align-items-center py-5 px-4 h-100" style="background-color:#e7e7e7 !important; padding-bottom:2.7em !important;">
+                                            <div>
+                                                @if (Model.Documento.Anexo != null && Model.Documento.TipoAnexo != null)
+                                                {
+                                                    <img src="data:image;base64,@System.Convert.ToBase64String(Model.Documento.Anexo)" class="img-fluid w-100 image-rotate" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/assets/img/Image_not_available.png" class="img-fluid w-100 image-rotate" />
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </dd>
-                                <dt class="col-sm-2">
-                                    @Html.DisplayNameFor(model => model.TipoAnexo)
+                                <dt class="col-sm-4">
+                                    @Html.DisplayNameFor(model => model.Documento.DataInicio)
                                 </dt>
-                                <dd class="col-sm-10">
-                                    @Html.DisplayFor(model => model.TipoAnexo)
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(model => model.Documento.DataInicio)
                                 </dd>
-                                <dt class="col-sm-2">
-                                    @Html.DisplayNameFor(model => model.DataInicio)
+                                <dt class="col-sm-4">
+                                    @Html.DisplayNameFor(model => model.Documento.DataFim)
                                 </dt>
-                                <dd class="col-sm-10">
-                                    @Html.DisplayFor(model => model.DataInicio)
-                                </dd>
-                                <dt class="col-sm-2">
-                                    @Html.DisplayNameFor(model => model.DataFim)
-                                </dt>
-                                <dd class="col-sm-10">
-                                    @Html.DisplayFor(model => model.DataFim)
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(model => model.Documento.DataFim)
                                 </dd>
                             </dl>
                         </div>

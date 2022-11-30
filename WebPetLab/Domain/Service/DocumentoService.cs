@@ -47,12 +47,14 @@ namespace Domain.Service
             documento.Quantidade = quantidade;
             documento.DataInicio = dataInicio;
             documento.DataFim = dataFim;
-            documento.TipoAnexo = tipoAnexo;
             documento.TipoDocumento = tipoDocumento;
+            documento.TipoAnexo = tipoAnexo;
             documento.Anexo = anexo;
             documento.AddPet(idPet);
             if (!idProntuario.Equals(new Guid("{00000000-0000-0000-0000-000000000000}")))
                 documento.AddProntuario(idProntuario);
+            else
+                documento.Prontuario = null;
 
             RepositorioDocumento.SaveUpdate(documento);
 
@@ -78,14 +80,20 @@ namespace Domain.Service
             if (DocumentoUpdate.DataFim != documento.DataFim)
                 documento.DataFim = DocumentoUpdate.DataFim;
 
-            if (DocumentoUpdate.TipoAnexo != documento.TipoAnexo)
-                documento.TipoAnexo = DocumentoUpdate.TipoAnexo;
-
             if (DocumentoUpdate.TipoDocumento != documento.TipoDocumento)
                 documento.TipoDocumento = DocumentoUpdate.TipoDocumento;
 
+            if (DocumentoUpdate.TipoAnexo != documento.TipoAnexo)
+                documento.TipoAnexo = DocumentoUpdate.TipoAnexo;
+
             if (DocumentoUpdate.Anexo != documento.Anexo)
                 documento.Anexo = DocumentoUpdate.Anexo;
+
+            if (DocumentoUpdate.Prontuario.ProntuarioId != documento.Prontuario.ProntuarioId)
+                documento.Prontuario.ProntuarioId = DocumentoUpdate.Prontuario.ProntuarioId;
+
+            if (DocumentoUpdate.Pet.PetId != documento.Pet.PetId)
+                documento.Pet.PetId = DocumentoUpdate.Pet.PetId;
 
             RepositorioDocumento.SaveUpdate(documento);
 

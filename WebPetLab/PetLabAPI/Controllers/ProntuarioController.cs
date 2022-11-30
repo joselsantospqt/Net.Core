@@ -1,5 +1,6 @@
 ﻿using Domain.Entidade;
 using Domain.Entidade.Request;
+using Domain.Entidade.View;
 using Domain.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,12 +15,17 @@ namespace PetLabAPI.Controllers
     [ApiController]
     public class ProntuarioController : ControllerBase
     {
-        private ProntuarioService _ServiceProntuario;
         private PetService _ServicePet;
-        public ProntuarioController(ProntuarioService serviceProntuario, PetService servicePet)
+        private UsuarioService _ServiceUsuario;
+        private ProntuarioService _ServiceProntuario;
+        private DocumentoService _ServiceDocumento;
+
+        public ProntuarioController(PetService servicePet, UsuarioService serviceUsuario, ProntuarioService serviceProntuario, DocumentoService serviceDocumento)
         {
-            _ServiceProntuario = serviceProntuario;
             _ServicePet = servicePet;
+            _ServiceUsuario = serviceUsuario;
+            _ServiceDocumento = serviceDocumento;
+            _ServiceProntuario = serviceProntuario;
         }
 
 
@@ -47,22 +53,44 @@ namespace PetLabAPI.Controllers
             return Ok(prontuario);
         }
 
-
-        [HttpGet("GetProntuariosByPetId/{idPet:Guid}")]
+        [HttpGet("GetAllProntuariosById/{Id:Guid}")]
         [Authorize]
-        public ActionResult GetProntuariosByPetId([FromRoute] Guid idPet)
+        public ActionResult GetAllProntuariosById([FromRoute] Guid id)
         {
-            var pet = _ServicePet.GetPetById(idPet);
-            IList<Prontuario> prontuarios = new List<Prontuario>();
-            foreach (var prontuario in pet.Prontuarios)
+            var usuario = _ServiceUsuario.GetUsuarioById(id);
+            var Detalhes = new ViewModel()
             {
-                prontuarios.Add(_ServiceProntuario.GetProntuarioById(prontuario.ProntuarioId));
+                Usuario = usuario
+            };
+            if (usuario.TipoUsuario == ETipoUsuario.Tutor)
+            {
+                foreach (var itemPet in usuario.Pets)
+                {
+                    Detalhes.ListaPets.Add(_ServicePet.GetPetById(itemPet.PetId));
+                    Detalhes.ListaPets.First(x => x.Id == itemPet.PetId).Tutor = itemPet;
+                }
+
+                foreach (var itemPet in Detalhes.ListaPets)
+                {
+                    foreach (var item in itemPet.Prontuarios)
+                    {
+                        Detalhes.Prontuarios.Add(_ServiceProntuario.GetProntuarioById(item.ProntuarioId));
+                        Detalhes.Prontuarios.First(x => x.Id == item.ProntuarioId).Pet = item;
+
+                    }
+                }
+
+                foreach (var item in Detalhes.Prontuarios)
+                {
+                    if (Detalhes.ListaMedicos.Where(x => x.Id == item.Medico.UsuarioId).Count() == 0)
+                        Detalhes.ListaMedicos.Add(_ServiceUsuario.GetUsuarioById(item.Medico.UsuarioId));
+                }
             }
 
-            if (prontuarios == null)
+            if (Detalhes == null)
                 return NoContent();
 
-            return Ok(prontuarios);
+            return Ok(Detalhes);
         }
 
 
@@ -100,5 +128,36 @@ namespace PetLabAPI.Controllers
             return Ok(updateProntuario);
 
         }
+
+        [HttpGet("GetProntuarioDetalhesById/{Id:Guid}")]
+        [Authorize]
+        public ActionResult GetProntuarioDetalhesById([FromRoute] Guid id)
+        {
+            var prontuario = _ServiceProntuario.GetProntuarioById(id);
+
+            var Detalhes = new ViewModel()
+            {
+                Prontuario = prontuario,
+                Pet = _ServicePet.GetPetById(prontuario.Pet.PetId)
+            };
+
+            Detalhes.Usuario = _ServiceUsuario.GetUsuarioById(Detalhes.Pet.Tutor.UsuarioId);
+            Detalhes.ListaMedicos.Add(_ServiceUsuario.GetUsuarioById(prontuario.Medico.UsuarioId));
+
+            if (Detalhes.Usuario.TipoUsuario == ETipoUsuario.Tutor)
+            {
+                foreach (var itemPet in Detalhes.Usuario.Pets)
+                {
+                    Detalhes.ListaPets.Add(_ServicePet.GetPetById(itemPet.PetId));
+                    Detalhes.ListaPets.First(x => x.Id == itemPet.PetId).Tutor = itemPet;
+                }
+            }
+
+            if (Detalhes == null)
+                return NoContent();
+
+            return Ok(Detalhes);
+        }
+
     }
 }

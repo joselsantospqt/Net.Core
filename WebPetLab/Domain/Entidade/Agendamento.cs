@@ -23,6 +23,7 @@ namespace Domain.Entidade
         [Display(Name = "Comentário")]
         public string Comentario { get; set; }
         public AgendamentoPet Pet { get; set; }
+        [Display(Name = "Médico Responsavel")]
         public AgendamentoUsuario MedicoResponsavel { get; set; }
 
 

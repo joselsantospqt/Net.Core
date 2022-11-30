@@ -23,7 +23,6 @@ namespace PetLabWeb.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IHttpContextAccessor _HttpContextAccessor;
         private IdentityUser _sessionExtensions;
-        private string textoVazio = "-----------------------";
 
         public HomeController(IHttpContextAccessor httpContextAccessor, IConfiguration configuration, ILogger<HomeController> logger) : base(configuration)
         {
@@ -57,21 +56,21 @@ namespace PetLabWeb.Controllers
                     Nome = _sessionExtensions.UserName.Substring(0, _sessionExtensions.UserName.IndexOf('@')),
                     Senha = _sessionExtensions.PasswordHash,
                     Telefone = _sessionExtensions.PhoneNumber,
-                    Sobrenome = textoVazio,
-                    Cpf = textoVazio,
-                    Cnpj = textoVazio,
-                    Crm = textoVazio,
-                    ImagemUrlusuario = textoVazio,
                     DataNascimento = DateTime.UtcNow,
                     TipoUsuario = ETipoUsuario.Tutor
                 };
-
+                createUsuario.Sobrenome = createUsuario.Nao_Preenchido;
+                createUsuario.Cpf = createUsuario.Nao_Preenchido;
+                createUsuario.Cnpj = createUsuario.Nao_Preenchido;
+                createUsuario.Crm = createUsuario.Nao_Preenchido;
+                createUsuario.url_documento = createUsuario.Nao_Preenchido;
 
                 var retorno = await ApiSave(createUsuario, "Usuario");
                 if (retorno.StatusCode != HttpStatusCode.OK)
                 {
                     SessionExtensionsHelp.RemoveObject(_HttpContextAccessor.HttpContext.Session, "UserSign");
                     SessionExtensionsHelp.RemoveObject(_HttpContextAccessor.HttpContext.Session, "Token");
+                    SessionExtensionsHelp.RemoveObject(_HttpContextAccessor.HttpContext.Session, "UsuarioPerfil");
 
                     ViewData["Status"] = retorno.Content.ToString();
                     return RedirectToAction("Login", "Autenticacao");
@@ -85,6 +84,8 @@ namespace PetLabWeb.Controllers
             {
 
                 var pessoa = await ApiFindById<Usuario>(value.Token, _sessionExtensions.Email, "Usuario");
+
+                SessionExtensionsHelp.SetObject(this.HttpContext.Session, "UsuarioPerfil", pessoa.TipoUsuario);
 
                 if (value.Token != null && pessoa != null)
                     SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Token", value);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,8 +10,8 @@ namespace Domain.Entidade.Request
 {
     public class CreateUsuario
     {
+        public CreateUsuario() { Nao_Preenchido = "---"; }
         public Guid Id { get; set; }
-
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Nome")]
@@ -40,9 +41,6 @@ namespace Domain.Entidade.Request
         [DataType(DataType.DateTime)]
         [Display(Name = "Data Nascimento")]
         public DateTime DataNascimento { get; set; }
-
-        [Display(Name = "Imagem do Usuário")]
-        public string ImagemUrlusuario { get; set; }
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Tipo Usuário")]
@@ -55,8 +53,17 @@ namespace Domain.Entidade.Request
         [DataType(DataType.Password)]
         [Display(Name = "Senha")]
         public string Senha { get; set; }
-
+        [DataType(DataType.Text)]
+        [Display(Name = "Anexo")]
+        public byte[] Anexo { get; set; }
+        [DataType(DataType.Text)]
+        [Display(Name = "Tipo Anexo")]
+        public string TipoAnexo { get; set; }
+        [NotMapped]
+        [Display(Name = "Imagem Usuário")]
+        public string url_documento { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+        public string Nao_Preenchido { get; set; }
     }
 }

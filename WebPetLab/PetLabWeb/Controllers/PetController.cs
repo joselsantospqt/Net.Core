@@ -64,32 +64,25 @@ namespace PetLabWeb.Controllers
             try
             {
                 var existeImagem = false;
-
+                CreatePet pet = new CreatePet();
                 MemoryStream ms = new MemoryStream();
-                var fileName = $"Perfil_{_sessionUserSign.Id}{RandomNumber()}_.png";
-
-
                 foreach (var item in this.Request.Form.Files)
                 {
                     existeImagem = true;
-
                     item.CopyTo(ms);
-
                     ms.Position = 0;
+                    pet.TipoAnexo = item.ContentType;
                 }
 
-                CreatePet pet = new CreatePet();
+                if (existeImagem)
+                    pet.Anexo = ms.ToArray();
 
-                //if (existeImagem)
                 pet.Nome = collection["Nome"];
                 pet.DataNascimento = Convert.ToDateTime(collection["DataNascimento"]);
                 pet.Especie = EnumDescriptionHelp.ParseEnum<ETipoEspecie>(collection["Especie"]);
 
 
                 var retorno = await ApiSaveAutorize<Pet>(_sessionToken.Token, pet, $"Pet/{_sessionUserSign.Id}");
-                //else
-                //    await _blobstorage.SaveUpdate(fileName, ms);
-
                 return RedirectToAction("Listar", new { id = _sessionUserSign.Id });
             }
             catch (Exception ex)
@@ -100,11 +93,6 @@ namespace PetLabWeb.Controllers
 
         }
 
-        private string RandomNumber()
-        {
-            Random generator = new Random();
-            return generator.Next(0, 1000000).ToString("D6");
-        }
 
         [HttpGet]
         [Route("Pet/Deletar/{Id:guid}")]
@@ -118,6 +106,11 @@ namespace PetLabWeb.Controllers
         [Route("Pet/Deletar/{Id:guid}")]
         public async Task<IActionResult> Deletar(Guid id, IFormCollection collection)
         {
+            if (new Guid(collection["Id"]) != id)
+            {
+                ViewData["messenger"] = "Houve Um erro durante a exclusão !";
+                return View(new Guid(collection["Id"]));
+            }
             var pet = await ApiRemove(_sessionToken.Token, id, "Pet");
             return RedirectToAction("Listar", new { id = _sessionUserSign.Id });
         }
@@ -143,21 +136,18 @@ namespace PetLabWeb.Controllers
         public async Task<IActionResult> Editar(Guid id, IFormCollection collection)
         {
             var existeImagem = false;
-
+            Pet pet = await ApiFindById<Pet>(_sessionToken.Token, id, "Pet");
             MemoryStream ms = new MemoryStream();
-            var fileName = $"Perfil_{id}{RandomNumber()}_.png";
-
-
             foreach (var item in this.Request.Form.Files)
             {
                 existeImagem = true;
-
                 item.CopyTo(ms);
-
                 ms.Position = 0;
+                pet.TipoAnexo = item.ContentType;
             }
 
-            Pet pet = await ApiFindById<Pet>(_sessionToken.Token, id, "Pet");
+            if (existeImagem)
+                pet.Anexo = ms.ToArray();
 
             pet.Nome = collection["Nome"];
             pet.DataNascimento = Convert.ToDateTime(collection["DataNascimento"]);
@@ -170,12 +160,22 @@ namespace PetLabWeb.Controllers
                 ViewData["messenger"] = "Houve Um erro durante o update !";
             }
             ViewData["messenger"] = "Alterado com Sucesso !";
-            //else
-            //    await _blobstorage.SaveUpdate(fileName, ms);
 
             return View("Editar", retorno);
 
         }
 
+        [HttpGet]
+        [Route("Pet/ExcluirImagem/{Id:guid}")]
+        public async Task<IActionResult> ExcluirImagem(Guid id)
+        {
+            Pet pet = await ApiFindById<Pet>(_sessionToken.Token, id, "Pet");
+            pet.Anexo = null;
+            pet.TipoAnexo = null;
+
+            var retorno = await ApiUpdate<Pet>(_sessionToken.Token, pet.Id, pet, "Pet");
+
+            return RedirectToAction("Editar", new { Id = pet.Id });
+        }
     }
 }

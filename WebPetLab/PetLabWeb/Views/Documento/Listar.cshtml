@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Domain.Entidade.Documento>
+﻿@model Domain.Entidade.View.ViewModel
 @using Microsoft.AspNetCore.Identity;
 @{
     var UserSign = SessionExtensionsHelp.GetObject<IdentityUser>(this.Context.Session, "UserSign");
@@ -53,39 +53,42 @@
                                                     <tr>
                                                         <th> #</th>
                                                         <th>
-                                                            @Html.DisplayNameFor(model => model.Nome)
+                                                            @Html.DisplayNameFor(model => model.Documentos.First().Nome)
                                                         </th>
                                                         <th>
-                                                            @Html.DisplayNameFor(model => model.Descricao)
+                                                            @Html.DisplayNameFor(model => model.Documentos.First().Descricao)
                                                         </th>
                                                         <th>
-                                                            @Html.DisplayNameFor(model => model.Quantidade)
+                                                            @Html.DisplayNameFor(model => model.Documentos.First().Quantidade)
                                                         </th>
                                                         <th>
-                                                            @Html.DisplayNameFor(model => model.TipoDocumento)
+                                                            @Html.DisplayNameFor(model => model.Documentos.First().TipoDocumento)
                                                         </th>
                                                         <th>
-                                                            @Html.DisplayNameFor(model => model.Anexo)
+                                                            @Html.DisplayNameFor(model => model.Documentos.First().TipoAnexo)
                                                         </th>
                                                         <th>
-                                                            @Html.DisplayNameFor(model => model.TipoAnexo)
+                                                            @Html.DisplayNameFor(model => model.Documentos.First().Prontuario)
                                                         </th>
                                                         <th>
-                                                            @Html.DisplayNameFor(model => model.DataInicio)
+                                                            @Html.DisplayNameFor(model => model.Documentos.First().Pet)
                                                         </th>
                                                         <th>
-                                                            @Html.DisplayNameFor(model => model.DataFim)
+                                                            @Html.DisplayNameFor(model => model.Documentos.First().DataInicio)
+                                                        </th>
+                                                        <th>
+                                                            @Html.DisplayNameFor(model => model.Documentos.First().DataFim)
                                                         </th>
                                                         <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     @if (Model != null)
-                                                        @foreach (var item in Model)
+                                                        @foreach (var item in Model.Documentos)
                                                         {
                                                             <tr>
                                                                 <td>
-                                                                    @Html.Label("false", Model.ToList().IndexOf(item).ToString(), new { @class = "custom-control-label", @for = $"customCheck{Model.ToList().IndexOf(item).ToString()}" })
+                                                                    @Html.Label("false", Model.Documentos.ToList().IndexOf(item).ToString(), new { @class = "custom-control-label", @for = $"customCheck{Model.Documentos.ToList().IndexOf(item).ToString()}" })
                                                                 </td>
                                                                 <td>
                                                                     @Html.DisplayFor(modelItem => item.Nome)
@@ -100,10 +103,14 @@
                                                                     @Html.DisplayFor(modelItem => item.TipoDocumento)
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.Anexo)
+                                                                    @Html.DisplayFor(modelItem => item.TipoAnexo)
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(modelItem => item.TipoAnexo)
+                                                                    @if (item.Prontuario != null && item.Prontuario.ProntuarioId != new Guid("{00000000-0000-0000-0000-000000000000}"))
+                                                                        @Html.DisplayFor(modelItem => Model.Prontuarios.Where(x => x.Id == item.Prontuario.ProntuarioId).First().Descricao)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => Model.ListaPets.Where(x => x.Id == item.Pet.PetId).First().Nome)
                                                                 </td>
                                                                 <td>
                                                                     @Html.DisplayFor(modelItem => item.DataInicio)

@@ -28,11 +28,9 @@ namespace Domain.Entidade
         [DataType(DataType.Text)]
         [Display(Name = "Tipo do Documento")]
         public ETipoDocumento TipoDocumento { get; set; }
-        [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Anexo")]
         public byte[] Anexo { get; set; }
-        [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Tipo Anexo")]
         public string TipoAnexo { get; set; }
@@ -44,9 +42,10 @@ namespace Domain.Entidade
         [DataType(DataType.DateTime)]
         [Display(Name = "Data Fim")]
         public DateTime DataFim { get; set; }
+        [Display(Name = "Imagem do Documento")]
+        public string url_documento { get; set; }
         public ProntuarioDocumento Prontuario { get; set; }
         public DocumentoPet Pet { get; set; }
-
 
         internal void AddProntuario(Guid prontuarioId)
         {
@@ -56,6 +55,5 @@ namespace Domain.Entidade
         {
             Pet = new DocumentoPet() { PetId = petId,  DocumentoId = this.Id };
         }
-
     }
 }

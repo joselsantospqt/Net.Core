@@ -1,4 +1,4 @@
-﻿@model Domain.Entidade.Agendamento
+﻿@model Domain.Entidade.View.ViewModel
 @using EnumsNET;
 @using Domain.Entidade;
 @using Microsoft.AspNetCore.Identity;
@@ -8,7 +8,18 @@
 
     var UserSign = SessionExtensionsHelp.GetObject<IdentityUser>(this.Context.Session, "UserSign");
     var pessoaId = UserSign.Id;
+    var UsuarioPerfil = SessionExtensionsHelp.GetObject<ETipoUsuario>(this.Context.Session, "UsuarioPerfil");
 
+    List<SelectListItem> listItemsPets = new List<SelectListItem>();
+    foreach (Pet item in Model.ListaPets)
+    {
+        listItemsPets.Add(new SelectListItem
+        {
+            Text = item.Nome,
+            Value = item.Id.ToString()
+        });
+
+    }
 
     List<SelectListItem> listItems = new List<SelectListItem>();
     foreach (EStatus item in (EStatus[])Enum.GetValues(typeof(ETipoEspecie)))
@@ -47,26 +58,39 @@
                             <form asp-action="Editar" method="post" enctype="multipart/form-data" class="row g-3">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <div class="form-group">
-                                    <label asp-for="Data" class="control-label"></label>
-                                    @Html.EditorFor(model => model.Data, "Data", "Data")
-                                    <span asp-validation-for="Data" class="text-danger"></span>
+                                    <label asp-for="ListaMedicos.First().Nome" class="form-label">Médico</label>
+                                    <input asp-for="ListaMedicos.First().Nome" name="Nome" class="form-control" value="@Model.ListaMedicos.First(x => x.Id == Model.Agendamento.MedicoResponsavel.UsuarioId).Nome" readonly>
+                                    <span asp-validation-for="ListaMedicos.First().Nome" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label asp-for="Status" class="control-label"></label>
-                                    @Html.DropDownListFor(model => model.Status, listItems, new { @class = "form-control", data_toggle = "tooltip", title = "Status", name = "Status" })
-                                    <span asp-validation-for="Status" class="text-danger"></span>
+                                    <label asp-for="Agendamento.Data" class="control-label"></label>
+                                    @Html.EditorFor(model => model.Agendamento.Data, "Data", "Data")
+                                    <span asp-validation-for="Agendamento.Data" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label asp-for="Comentario" class="control-label"></label>
-                                    <input asp-for="Comentario" name="Comentario" class="form-control" />
-                                    <span asp-validation-for="Comentario" class="text-danger"></span>
+                                    <label asp-for="Pet" class="form-label"></label>
+                                    @Html.DropDownListFor(model => model.Pet, listItemsPets, new { @class = "form-control", data_toggle = "tooltip", title = "Pets", name = "Pet" })
+                                    <span asp-validation-for="ListaPets" class="text-danger"></span>
                                 </div>
+                                @if (UsuarioPerfil == ETipoUsuario.Medico)
+                                {
+                                    <div class="form-group">
+                                        <label asp-for="Agendamento.Status" class="control-label"></label>
+                                        @Html.DropDownListFor(model => model.Agendamento.Status, listItems, new { @class = "form-control", data_toggle = "tooltip", title = "Status", name = "Status" })
+                                        <span asp-validation-for="Agendamento.Status" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Agendamento.Comentario" class="control-label"></label>
+                                        <input asp-for="Agendamento.Comentario" name="Comentario" class="form-control" />
+                                        <span asp-validation-for="Agendamento.Comentario" class="text-danger"></span>
+                                    </div>
+                                }
                                 <div class="form-group d-flex justify-content-between">
                                     <input type="submit" value="Salvar" class="btn btn-primary" /> |
                                     <a asp-action="Listar" asp-route-id="@pessoaId" class="btn btn-primary"><i class="bi-sharp bi-solid bi-arrow-bar-left"></i></a>
                                 </div>
                             </form>
-                        
+
                         </div>
                     </div>
                 </div>

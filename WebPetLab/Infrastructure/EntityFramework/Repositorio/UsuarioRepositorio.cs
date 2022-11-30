@@ -20,12 +20,12 @@ namespace Infrastructure.EntityFramework.Repositorio
 
         public IEnumerable<Usuario> GetAll()
         {
-            return _db.Usuario.Include(x => x.Pets).AsNoTracking().ToList();
+            return _db.Usuario.Include(x => x.Pets).Include(x => x.Prontuarios).Include(x => x.Agendamentos).AsNoTracking().ToList();
         }
 
         public Usuario GetById(Guid id)
         {
-            return _db.Usuario.Include(x => x.Pets).Where(x => x.Id == id).FirstOrDefault();
+            return _db.Usuario.Include(x => x.Pets).Include(x => x.Prontuarios).Include(x => x.Agendamentos).Where(x => x.Id == id).FirstOrDefault();
         }
 
         public void Remove(Guid id)
@@ -53,7 +53,7 @@ namespace Infrastructure.EntityFramework.Repositorio
 
         public Usuario GetByEmail(string email)
         {
-            return _db.Usuario.Include(x => x.Pets).Where(x => x.Email == email).FirstOrDefault();
+            return _db.Usuario.Include(x => x.Pets).Include(x => x.Prontuarios).Include(x => x.Agendamentos).Where(x => x.Email == email).FirstOrDefault();
         }
     }
 }

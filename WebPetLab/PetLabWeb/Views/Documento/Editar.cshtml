@@ -1,19 +1,61 @@
-﻿@model Domain.Entidade.Request.CreateDocumento
+﻿@model Domain.Entidade.View.ViewModel
 @using EnumsNET;
 @using Domain.Entidade;
 @{
     ViewData["Title"] = "Editar";
     Layout = "~/Views/Shared/_Layout.cshtml";
     List<SelectListItem> listItems = new List<SelectListItem>();
+
+    listItems.Add(new SelectListItem
+    {
+        Text = "-- Selecione --",
+        Value = new Guid("{00000000-0000-0000-0000-000000000000}").ToString()
+    });
+
     foreach (ETipoDocumento item in (ETipoDocumento[])Enum.GetValues(typeof(ETipoEspecie)))
     {
-        listItems.Add(new SelectListItem
+        int n;
+        var status = item.GetDescription();
+
+        var result = Int32.TryParse(status, out n);
+        if (!result)
         {
-            Text = item.GetDescription(),
-            Value = item.ToString()
+            listItems.Add(new SelectListItem
+            {
+                Text = item.GetDescription(),
+                Value = item.ToString()
+            });
+        }
+    }
+
+    List<SelectListItem> listItemsPets = new List<SelectListItem>();
+    foreach (Pet item in Model.ListaPets)
+    {
+        listItemsPets.Add(new SelectListItem
+        {
+            Text = item.Nome,
+            Value = item.Id.ToString()
+        });
+    }
+
+    List<SelectListItem> listItemsProntuarios = new List<SelectListItem>();
+
+    listItemsProntuarios.Add(new SelectListItem
+    {
+        Text = "-- Selecione --",
+        Value = new Guid("{00000000-0000-0000-0000-000000000000}").ToString()
+    });
+
+    foreach (Prontuario item in Model.Prontuarios)
+    {
+        listItemsProntuarios.Add(new SelectListItem
+        {
+            Text = item.Descricao,
+            Value = item.Id.ToString()
         });
     }
 }
+
 
 <main class="page-content">
 
@@ -27,67 +69,81 @@
                     <hr>
                     <div class="card shadow-none border">
                         <div class="card-header">
-                            <h6 class="mb-0">INFORMAÇÃO DO PET</h6>
+                            <h6 class="mb-0">INFORMAÇÃO DO DOCUMENTO</h6>
                         </div>
                         <div class="card-body">
                             <form asp-action="Editar" method="post" enctype="multipart/form-data" class="row g-3">
                                 <div class="col-6">
                                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                     <div class="form-group">
-                                        <label asp-for="Nome" class="control-label"></label>
-                                        <input asp-for="Nome" name="Id" value="Id" class="form-control" />
-                                        <span asp-validation-for="Nome" class="text-danger"></span>
+                                        <label asp-for="Documento.Nome" class="control-label"></label>
+                                        <input asp-for="Documento.Nome" name="Nome" value="@Model.Documento.Nome" class="form-control" />
+                                        <span asp-validation-for="Documento.Nome" class="text-danger"></span>
                                     </div>
                                     <div class="form-group">
-                                        <label asp-for="Descricao" class="control-label"></label>
-                                        <input asp-for="Descricao" name="Descricao" value="Descricao" class="form-control" />
-                                        <span asp-validation-for="Descricao" class="text-danger"></span>
+                                        <label asp-for="Documento.Descricao" class="control-label"></label>
+                                        <input asp-for="Documento.Descricao" name="Descricao" value="@Model.Documento.Descricao" class="form-control" />
+                                        <span asp-validation-for="Documento.Descricao" class="text-danger"></span>
                                     </div>
                                     <div class="form-group">
-                                        <label asp-for="Quantidade" class="control-label"></label>
-                                        <input asp-for="Quantidade" name="Quantidade" value="Quantidade" class="form-control" />
-                                        <span asp-validation-for="Quantidade" class="text-danger"></span>
+                                        <label asp-for="Documento.Quantidade" class="control-label"></label>
+                                        <input type="number" asp-for="Documento.Quantidade" name="Quantidade" value="@Model.Documento.Quantidade" class="form-control" />
+                                        <span asp-validation-for="Documento.Quantidade" class="text-danger"></span>
                                     </div>
                                     <div class="form-group">
-                                        <label asp-for="TipoDocumento" class="control-label"></label>
-                                        @Html.DropDownListFor(model => model.TipoDocumento, listItems, new { @class = "form-control", data_toggle = "tooltip", title = "Tipo Documento", name = "TipoDocumento" })
-                                        <span asp-validation-for="TipoDocumento" class="text-danger"></span>
+                                        <label asp-for="Documento.TipoDocumento" class="control-label"></label>
+                                        @Html.DropDownListFor(model => model.Documento.TipoDocumento, listItems, new { @class = "form-control", data_toggle = "tooltip", title = "Tipo Documento", name = "TipoDocumento" })
+                                        <span asp-validation-for="Documento.TipoDocumento" class="text-danger"></span>
                                     </div>
                                     <div class="form-group">
-                                        <label asp-for="Anexo" class="control-label"></label>
-                                        <input asp-for="Anexo" name="Anexo" value="Anexo" class="form-control" />
-                                        <span asp-validation-for="Anexo" class="text-danger"></span>
+                                        <label asp-for="Prontuario" class="control-label"></label>
+                                        @Html.DropDownListFor(model => model.Prontuario, listItemsProntuarios, new { @class = "form-control", data_toggle = "tooltip", title = "Prontuários", name = "Prontuario" })
+                                        <span asp-validation-for="Prontuario" class="text-danger"></span>
                                     </div>
                                     <div class="form-group">
-                                        <label asp-for="TipoAnexo" class="control-label"></label>
-                                        <input asp-for="TipoAnexo" name="TipoAnexo" value="TipoAnexo" class="form-control" />
-                                        <span asp-validation-for="TipoAnexo" class="text-danger"></span>
+                                        <label asp-for="Pet" class="control-label"></label>
+                                        @Html.DropDownListFor(model => model.Pet, listItemsPets, new { @class = "form-control", data_toggle = "tooltip", title = "Pets", name = "Pet" })
+                                        <span asp-validation-for="Pet" class="text-danger"></span>
                                     </div>
                                     <div class="form-group">
-                                        <label asp-for="DataInicio" class="control-label"></label>
-                                        @Html.EditorFor(model => model.DataInicio, "DataInicio", "DataInicio")
-                                        <span asp-validation-for="DataInicio" class="text-danger"></span>
+                                        <label asp-for="Documento.DataInicio" class="control-label"></label>
+                                        @Html.EditorFor(model => model.Documento.DataInicio, "DataInicio", "DataInicio")
+                                        <span asp-validation-for="Documento.DataInicio" class="text-danger"></span>
                                     </div>
                                     <div class="form-group">
-                                        <label asp-for="DataFim" class="control-label"></label>
-                                        @Html.EditorFor(model => model.DataFim, "DataFim", "DataFim")
-                                        <span asp-validation-for="DataFim" class="text-danger"></span>
+                                        <label asp-for="Documento.DataFim" class="control-label"></label>
+                                        @Html.EditorFor(model => model.Documento.DataFim, "DataFim", "DataFim")
+                                        <span asp-validation-for="Documento.DataFim" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label asp-for="url_documento" class="col-sm-12 col-form-label">Foto do Pet:</label>
-                                        <img src="~/assets/img/Image_not_available.png" width="320px" height="320px" />
+                                        <label asp-for="Documento.url_documento" class="col-sm-12 col-form-label">Foto do Pet:</label>
+                                        <div class="card card-image">
+                                            <div class="text-white text-center d-flex align-items-center py-5 px-4 h-100" style="background-color:#e7e7e7 !important; padding-bottom:2.7em !important;">
+                                                <div>
+                                                    @if (Model.Documento.Anexo != null && Model.Documento.TipoAnexo != null)
+                                                    {
+                                                        <img src="data:image;base64,@System.Convert.ToBase64String(Model.Documento.Anexo)" class="img-fluid w-100 image-rotate" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <img src="~/assets/img/Image_not_available.png" class="img-fluid w-100 image-rotate" />
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+
 
                                         <br />
                                         <div class="col-sm-12">
-                                            <input type="file" asp-for="url_documento" name="url_documento" class="form-control">
-                                            <span asp-validation-for="url_documento" class="text-danger"></span>
+                                            <input type="file" asp-for="Documento.url_documento" name="url_documento" class="form-control">
+                                            <span asp-validation-for="Documento.url_documento" class="text-danger"></span>
                                         </div>
                                     </div>
                                     <br />
                                     <div class="col-sm-12">
-                                        <a asp-controller="Pet" asp-action="ExcluirImagem" asp-route-id="@Model.Id" class="btn btn-sm btn-danger px-5">Excluir Foto</a>
+                                        <a asp-controller="Documento" asp-action="ExcluirDocumento" asp-route-id="@Model.Documento.Id" class="btn btn-sm btn-danger px-5">Excluir Foto</a>
                                     </div>
                                 </div>
                                 <div class="col-6">

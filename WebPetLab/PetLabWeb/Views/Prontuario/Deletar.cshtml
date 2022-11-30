@@ -1,7 +1,7 @@
 ﻿@model Domain.Entidade.View.ViewModel
 @using Microsoft.AspNetCore.Identity;
 @{
-    ViewData["Title"] = "Deletar Agendamento";
+    ViewData["Title"] = "Deletar Prontuário";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var UserSign = SessionExtensionsHelp.GetObject<IdentityUser>(this.Context.Session, "UserSign");
     var pessoaId = UserSign.Id;
@@ -19,45 +19,52 @@
                     <hr>
                     <div class="card shadow-none border">
                         <div class="card-header">
-                            <h6 class="mb-0">INFORMAÇÃO DO AGENDAMENTO</h6>
+                            <h6 class="mb-0">INFORMAÇÃO DO PRONTUÁRIO</h6>
                         </div>
                         <div class="card-body">
                             <dl class="row">
                                 <dt class="col-sm-4">
-                                    @Html.DisplayNameFor(model => model.Agendamento.Pet)
+                                    @Html.DisplayNameFor(model => model.Prontuario.Id)
+                                </dt>
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(model => model.Prontuario.Id)
+                                </dd>
+                                <dt class="col-sm-4">
+                                    @Html.DisplayNameFor(model => model.Prontuario.Resumo)
+                                </dt>
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(model => model.Prontuario.Resumo)
+                                </dd>
+                                <dt class="col-sm-4">
+                                    @Html.DisplayNameFor(model => model.Prontuario.Descricao)
+                                </dt>
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(model => model.Prontuario.Descricao)
+                                </dd>
+                                <dt class="col-sm-4">
+                                    @Html.DisplayNameFor(model => model.Prontuario.Data)
+                                </dt>
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(model => model.Prontuario.Data)
+                                </dd>
+                                <dt class="col-sm-4">
+                                    @Html.DisplayNameFor(model => model.Prontuario.Pet)
                                 </dt>
                                 <dd class="col-sm-8">
                                     @Html.DisplayFor(model => model.Pet.Nome)
                                 </dd>
                                 <dt class="col-sm-4">
-                                    @Html.DisplayNameFor(model => model.Agendamento.MedicoResponsavel)
+                                    @Html.DisplayNameFor(model => model.Prontuario.Medico)
                                 </dt>
                                 <dd class="col-sm-8">
-                                    @Html.DisplayFor(model => model.ListaMedicos.First(x => x.Id == Model.Agendamento.MedicoResponsavel.UsuarioId).Nome)
-                                </dd>
-                                <dt class="col-sm-4">
-                                    @Html.DisplayNameFor(model => model.Agendamento.Data)
-                                </dt>
-                                <dd class="col-sm-8">
-                                    @Html.DisplayFor(model => model.Agendamento.Data)
-                                </dd>
-                                <dt class="col-sm-4">
-                                    @Html.DisplayNameFor(model => model.Agendamento.Status)
-                                </dt>
-                                <dd class="col-sm-8">
-                                    @Html.DisplayFor(model => model.Agendamento.Status)
-                                </dd>
-                                <dt class="col-sm-4">
-                                    @Html.DisplayNameFor(model => model.Agendamento.Comentario)
-                                </dt>
-                                <dd class="col-sm-8">
-                                    @Html.DisplayFor(model => model.Agendamento.Comentario)
+                                    @Html.DisplayFor(model => model.ListaMedicos.First(x => x.Id == Model.Prontuario.Medico.UsuarioId).Nome)
                                 </dd>
                             </dl>
+
                             <form asp-action="Deletar" method="post">
-                                <label asp-for="Agendamento.Id" class="control-label d-none"></label>
-                                <input asp-for="Agendamento.Id" name="Id" value="@Model.Agendamento.Id" class="form-control d-none" readonly />
-                                <span asp-validation-for="Agendamento.Id" class="text-danger d-none"></span>
+                                <label asp-for="Prontuario.Id" class="control-label d-none"></label>
+                                <input asp-for="Prontuario.Id" name="Id" value="@Model.Prontuario.Id" class="form-control d-none" readonly />
+                                <span asp-validation-for="Prontuario.Id" class="text-danger d-none"></span>
                                 <div class="form-group d-flex justify-content-between">
                                     <input type="submit" value="Deletar" class="btn btn-danger" /> |
                                     <a asp-action="Listar" asp-route-id="@pessoaId" class="btn btn-primary"><i class="bi-sharp bi-solid bi-arrow-bar-left"></i></a>
@@ -71,4 +78,3 @@
         </div>
     </div>
 </main>
-

@@ -1,5 +1,6 @@
 ﻿using Domain.Entidade;
 using Domain.Entidade.Request;
+using Domain.Entidade.View;
 using Domain.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,17 +18,15 @@ namespace PetLabAPI.Controllers
     {
         private PetService _ServicePet;
         private UsuarioService _ServiceUsuario;
-        private AgendamentoService _ServiceAgendamento;
         private ProntuarioService _ServiceProntuario;
         private DocumentoService _ServiceDocumento;
 
-        public DocumentoController(PetService servicePet, UsuarioService serviceUsuario, AgendamentoService serviceAgendamento, ProntuarioService serviceProntuario, DocumentoService serviceDocumento)
+        public DocumentoController(PetService servicePet, UsuarioService serviceUsuario, ProntuarioService serviceProntuario, DocumentoService serviceDocumento)
         {
             _ServicePet = servicePet;
             _ServiceUsuario = serviceUsuario;
             _ServiceDocumento = serviceDocumento;
             _ServiceProntuario = serviceProntuario;
-            _ServiceAgendamento = serviceAgendamento;
         }
 
 
@@ -73,41 +72,42 @@ namespace PetLabAPI.Controllers
         public ActionResult GetDocumentosAllById([FromRoute] Guid id)
         {
             var usuario = _ServiceUsuario.GetUsuarioById(id);
-
-
-            IList<Documento> Documentos = new List<Documento>();
-            foreach (var item in usuario.Pets)
+            var Detalhes = new ViewModel()
             {
-                var pet = _ServicePet.GetPetById(item.PetId);
+                Usuario = _ServiceUsuario.GetUsuarioById(id)
+            };
+
+            foreach (var itemPet in usuario.Pets)
+            {
+                var pet = _ServicePet.GetPetById(itemPet.PetId);
+                Detalhes.ListaPets.Add(pet);
                 foreach (var doc in pet.Documentos)
                 {
-                    Documentos.Add(_ServiceDocumento.GetDocumentoById(doc.DocumentoId));
-                    Documentos.First(x => x.Id == doc.DocumentoId).Pet = doc;
+                    Detalhes.Documentos.Add(_ServiceDocumento.GetDocumentoById(doc.DocumentoId));
+                    Detalhes.Documentos.First(x => x.Id == doc.DocumentoId).Pet = doc;
+                }
+
+                foreach (var item in pet.Prontuarios)
+                {
+                    Detalhes.Prontuarios.Add(_ServiceProntuario.GetProntuarioById(item.ProntuarioId));
+                    Detalhes.Prontuarios.First(x => x.Id == item.ProntuarioId).Pet = item;
                 }
             }
 
-            if (Documentos == null)
+            if (Detalhes == null)
                 return NoContent();
 
-            return Ok(Documentos);
+            return Ok(Detalhes);
         }
 
 
 
         [HttpPost("{idProntuario:Guid}/{idPet:Guid}")]
+        [Authorize]
         public ActionResult Documento([FromRoute] Guid idProntuario, [FromRoute] Guid idPet, [FromBody] CreateDocumento documentoCreate)
         {
 
-            FileStream stream = new FileStream(
-                documentoCreate.url_documento, FileMode.Open, FileAccess.Read);
-            BinaryReader reader = new BinaryReader(stream);
-
-            byte[] photo = reader.ReadBytes((int)stream.Length);
-
-            reader.Close();
-            stream.Close();
-
-            var documento = _ServiceDocumento.CreateDocumento(idProntuario, idPet, documentoCreate.Descricao, documentoCreate.Quantidade, documentoCreate.Nome, documentoCreate.TipoAnexo, photo, documentoCreate.TipoDocumento, documentoCreate.DataInicio, documentoCreate.DataFim);
+            var documento = _ServiceDocumento.CreateDocumento(idProntuario, idPet, documentoCreate.Descricao, documentoCreate.Quantidade, documentoCreate.Nome, documentoCreate.TipoAnexo, documentoCreate.Anexo, documentoCreate.TipoDocumento, documentoCreate.DataInicio, documentoCreate.DataFim);
 
             return Created("api/[controller]", documento);
         }
@@ -132,8 +132,45 @@ namespace PetLabAPI.Controllers
             documentoUpdate.Id = id;
             var updateDocumento = _ServiceDocumento.UpdateDocumento(documentoUpdate);
 
-            return Ok(updateDocumento);
+            if (updateDocumento != null)
+                return Ok(updateDocumento);
 
+            return NoContent();
         }
+
+        [HttpGet("GetDocumentoDetalhesById/{id:Guid}")]
+        [Authorize]
+        public ActionResult GetDocumentoDetalhesById([FromRoute] Guid id)
+        {
+            var documento = _ServiceDocumento.GetDocumentoById(id);
+            var Detalhes = new ViewModel() { Pet = _ServicePet.GetPetById(documento.Pet.PetId), Documento = documento };
+
+            Detalhes.Usuario = _ServiceUsuario.GetUsuarioById(Detalhes.Pet.Tutor.UsuarioId);
+
+            foreach (var itemPet in Detalhes.Usuario.Pets)
+            {
+                var pet = _ServicePet.GetPetById(itemPet.PetId);
+                Detalhes.ListaPets.Add(pet);
+
+                foreach (var item in pet.Prontuarios)
+                {
+                    Detalhes.Prontuarios.Add(_ServiceProntuario.GetProntuarioById(item.ProntuarioId));
+                    Detalhes.Prontuarios.First(x => x.Id == item.ProntuarioId).Pet = item;
+                }
+            }
+
+            if (documento.Prontuario != null && documento.Prontuario.ProntuarioId != new Guid("{00000000-0000-0000-0000-000000000000}"))
+            {
+                Detalhes.Prontuario = _ServiceProntuario.GetProntuarioById(documento.Prontuario.ProntuarioId);
+            }
+
+
+            if (Detalhes == null)
+                return NoContent();
+
+            return Ok(Detalhes);
+        }
+
+
     }
 }

@@ -59,49 +59,46 @@ namespace PetLabWeb.Controllers
         public async Task<IActionResult> Editar(Guid id, IFormCollection collection)
         {
             var existeImagem = false;
-
+            Usuario usuario = await ApiFindById<Usuario>(_sessionToken.Token, _sessionUserSign.Id, "Usuario");
             MemoryStream ms = new MemoryStream();
-            var fileName = $"Perfil_{id}{RandomNumber()}_.png";
-
-
             foreach (var item in this.Request.Form.Files)
             {
                 existeImagem = true;
-
                 item.CopyTo(ms);
-
                 ms.Position = 0;
+                usuario.TipoAnexo = item.ContentType;
             }
 
-            Usuario usuario = await ApiFindById<Usuario>(_sessionToken.Token, _sessionUserSign.Id, "Usuario");
+            if (existeImagem)
+                usuario.Anexo = ms.ToArray();
 
-            //if (existeImagem)
             usuario.Nome = collection["Nome"];
             usuario.Sobrenome = collection["Sobrenome"];
             usuario.Telefone = collection["Telefone"];
             usuario.Cpf = collection["Cpf"];
-            usuario.Crm = collection["Crm"];
-            usuario.Cnpj = collection["Cnpj"];
             usuario.DataNascimento = Convert.ToDateTime(collection["DataNascimento"]);
-            usuario.TipoUsuario = EnumDescriptionHelp.ParseEnum<ETipoUsuario>(collection["TipoUsuario"]);
+            if (usuario.TipoUsuario == ETipoUsuario.Medico)
+            {
+                usuario.Crm = collection["Crm"];
+                usuario.Cnpj = collection["Cnpj"];
+            }
+            else
+                usuario.TipoUsuario = EnumDescriptionHelp.ParseEnum<ETipoUsuario>(collection["TipoUsuario"]);
 
             var retorno = await ApiUpdate<Usuario>(_sessionToken.Token, _sessionUserSign.Id, usuario, "Usuario");
+
 
             if (retorno == null)
             {
                 ViewData["messenger"] = "Houve Um erro durante o update !";
             }
+
+            SessionExtensionsHelp.SetObject(this.HttpContext.Session, "UsuarioPerfil", retorno.TipoUsuario);
+
             ViewData["messenger"] = "Alterado com Sucesso !";
-            //else
-            //    await _blobstorage.SaveUpdate(fileName, ms);
 
             return View("Editar", retorno);
 
-        }
-        private string RandomNumber()
-        {
-            Random generator = new Random();
-            return generator.Next(0, 1000000).ToString("D6");
         }
 
         [HttpGet]
@@ -127,11 +124,13 @@ namespace PetLabWeb.Controllers
         [Route("Perfil/ExcluirImagem/{Id:guid}")]
         public async Task<IActionResult> ExcluirImagem(Guid id)
         {
-            Usuario usuario = await ApiFindById<Usuario>(_sessionToken.Token, _sessionUserSign.Id, "Usuario");
-            usuario.ImagemUrlusuario = "Perfil_default.png";
-            var retorno = await ApiUpdate<Usuario>(_sessionToken.Token, _sessionUserSign.Id, usuario, "Usuario");
+            Usuario usuario = await ApiFindById<Usuario>(_sessionToken.Token, id, "Usuario");
+            usuario.Anexo = null;
+            usuario.TipoAnexo = null;
 
-            return RedirectToAction("Home", "Home");
+            var retorno = await ApiUpdate<Usuario>(_sessionToken.Token, usuario.Id, usuario, "Usuario");
+
+            return RedirectToAction("Editar", new { Id = usuario.Id });
         }
 
         [HttpGet]
@@ -152,5 +151,6 @@ namespace PetLabWeb.Controllers
 
             return View(usuario);
         }
+
     }
 }

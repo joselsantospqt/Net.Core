@@ -43,10 +43,24 @@
                                     @Html.DisplayFor(model => model.Pet.Especie)
                                 </dd>
                                 <dt class="col-sm-4">
-                                    @Html.DisplayNameFor(model => model.Pet.ImagemUrlPet)
+                                    @Html.DisplayNameFor(model => model.Pet.url_documento)
                                 </dt>
                                 <dd class="col-sm-8">
-                                    @Html.DisplayFor(model => model.Pet.ImagemUrlPet)
+                                    <div class="card card-image">
+                                        <div class="text-white text-center d-flex align-items-center py-5 px-4 h-100" style="background-color:#e7e7e7 !important; padding-bottom:2.7em !important;">
+                                            <div>
+                                                @if (Model.Pet.Anexo != null && Model.Pet.TipoAnexo != null)
+                                                {
+                                                    <img src="data:image;base64,@System.Convert.ToBase64String(Model.Pet.Anexo)" class="img-fluid w-100 image-rotate" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/assets/img/Image_not_available.png" class="img-fluid w-100 image-rotate" />
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </dd>
                                 <dt class="col-sm-4">
                                     @Html.DisplayNameFor(model => model.Pet.CreatedAt)
@@ -80,7 +94,7 @@
                         <div class="card-header">
                             <h6 class="mb-0">Informação</h6>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body table-responsive">
                             <table class="table table-striped table-hover">
                                 <thead class="table-warning">
                                     <tr>
@@ -132,7 +146,7 @@
                         <div class="card-header">
                             <h6 class="mb-0">Informação</h6>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body table-responsive">
                             <table class="table table-striped table-hover">
                                 <thead class="table-warning">
                                     <tr>
@@ -182,7 +196,7 @@
                         <div class="card-header">
                             <h6 class="mb-0">Informação</h6>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body table-responsive">
                             <table class="table table-striped table-hover">
                                 <thead class="table-warning">
                                     <tr>
@@ -191,7 +205,6 @@
                                         <th>@Html.DisplayNameFor(model => model.Documentos.First().Descricao)</th>
                                         <th>@Html.DisplayNameFor(model => model.Documentos.First().Quantidade)</th>
                                         <th>@Html.DisplayNameFor(model => model.Documentos.First().TipoAnexo)</th>
-                                        <th>@Html.DisplayNameFor(model => model.Documentos.First().Anexo)</th>
                                         <th>@Html.DisplayNameFor(model => model.Documentos.First().DataFim)</th>
                                         <th>@Html.DisplayNameFor(model => model.Documentos.First().DataInicio)</th>
                                         <th>@Html.DisplayNameFor(model => model.Documentos.First().Pet)</th>
@@ -212,7 +225,6 @@
                                                 <td> @Html.DisplayFor(modelItem => item.Descricao)</td>
                                                 <td> @Html.DisplayFor(modelItem => item.Quantidade)</td>
                                                 <td> @Html.DisplayFor(modelItem => item.TipoAnexo)</td>
-                                                <td> @Html.DisplayFor(modelItem => item.Anexo)</td>
                                                 <td> @Html.DisplayFor(modelItem => item.DataFim)</td>
                                                 <td> @Html.DisplayFor(modelItem => item.DataInicio)</td>
                                                 <td> @Html.DisplayFor(modelItem => Model.ListaPets.Where(x => x.Id.Equals(item.Pet.PetId)).First().Nome)</td>
@@ -220,12 +232,19 @@
                                                     @Html.ActionLink("", "Editar", "Documento", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-pen yellow", data_toggle = "tooltip", title = "Editar" }) |
                                                     @Html.ActionLink("", "Deletar", "Documento", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-trash yellow", data_toggle = "tooltip", title = "Deletar" }) |
                                                     @Html.ActionLink("", "Detalhes", "Documento", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-inbox yellow", data_toggle = "tooltip", title = "Detalhes" }) |
-                                                    @Html.ActionLink("", "Criar", "Documento", "", new { @class = "bi-sharp bi-solid bi-plus yellow", data_toggle = "tooltip", title = "Criar" }) |
+                                                    @*@Html.ActionLink("", "Criar", "Documento", "", new { @class = "bi-sharp bi-solid bi-plus yellow", data_toggle = "tooltip", title = "Criar" }) |*@
                                                 </td>
                                             </tr>
                                         }
                                 </tbody>
                             </table>
+                            <div class="col-10 col-lg-9 col-xl-9 col-xxl-9 d-flex justify-content-between">
+                                <a asp-controller="Documento" asp-action="Criar" asp-route-id="@Model.Usuario.Id">
+                                    <div>
+                                        <p class="border radius-10 p-2 primary-dc"><i class="bi bi-plus primary-dc"></i>Novo Documento</p>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -240,7 +259,7 @@
                         <div class="card-header">
                             <h6 class="mb-0">Informação</h6>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body table-responsive">
                             <table class="table table-striped table-hover">
                                 <thead class="table-warning">
                                     <tr>
@@ -249,7 +268,6 @@
                                         <th>@Html.DisplayNameFor(model => model.Documentos.First().Descricao)</th>
                                         <th>@Html.DisplayNameFor(model => model.Documentos.First().Quantidade)</th>
                                         <th>@Html.DisplayNameFor(model => model.Documentos.First().TipoAnexo)</th>
-                                        <th>@Html.DisplayNameFor(model => model.Documentos.First().Anexo)</th>
                                         <th>@Html.DisplayNameFor(model => model.Documentos.First().DataFim)</th>
                                         <th>@Html.DisplayNameFor(model => model.Documentos.First().DataInicio)</th>
                                         <th>@Html.DisplayNameFor(model => model.Documentos.First().Pet)</th>
@@ -271,7 +289,6 @@
                                                 <td> @Html.DisplayFor(modelItem => item.Descricao)</td>
                                                 <td> @Html.DisplayFor(modelItem => item.Quantidade)</td>
                                                 <td> @Html.DisplayFor(modelItem => item.TipoAnexo)</td>
-                                                <td> @Html.DisplayFor(modelItem => item.Anexo)</td>
                                                 <td> @Html.DisplayFor(modelItem => item.DataFim)</td>
                                                 <td> @Html.DisplayFor(modelItem => item.DataInicio)</td>
                                                 <td> @Html.DisplayFor(modelItem => Model.ListaPets.Where(x => x.Id.Equals(item.Pet.PetId)).First().Nome)</td>
@@ -279,12 +296,19 @@
                                                     @Html.ActionLink("", "Editar", "Documento", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-pen yellow", data_toggle = "tooltip", title = "Editar" }) |
                                                     @Html.ActionLink("", "Deletar", "Documento", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-trash yellow", data_toggle = "tooltip", title = "Deletar" }) |
                                                     @Html.ActionLink("", "Detalhes", "Documento", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-inbox yellow", data_toggle = "tooltip", title = "Detalhes" }) |
-                                                    @Html.ActionLink("", "Criar", "Documento", "", new { @class = "bi-sharp bi-solid bi-plus yellow", data_toggle = "tooltip", title = "Criar" }) |
+                                                    @*@Html.ActionLink("", "Criar", "Documento", "", new { @class = "bi-sharp bi-solid bi-plus yellow", data_toggle = "tooltip", title = "Criar" }) |*@
                                                 </td>
                                             </tr>
                                         }
                                 </tbody>
                             </table>
+                            <div class="col-10 col-lg-9 col-xl-9 col-xxl-9 d-flex justify-content-between">
+                                <a asp-controller="Documento" asp-action="Criar" asp-route-id="@Model.Usuario.Id">
+                                    <div>
+                                        <p class="border radius-10 p-2 primary-dc"><i class="bi bi-plus primary-dc"></i>Novo Documento</p>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -299,7 +323,7 @@
                         <div class="card-header">
                             <h6 class="mb-0">Informação</h6>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body table-responsive">
                             <table class="table table-striped table-hover">
                                 <thead class="table-warning">
                                     <tr>
@@ -308,7 +332,6 @@
                                         <th>@Html.DisplayNameFor(model => model.Documentos.First().Descricao)</th>
                                         <th>@Html.DisplayNameFor(model => model.Documentos.First().Quantidade)</th>
                                         <th>@Html.DisplayNameFor(model => model.Documentos.First().TipoAnexo)</th>
-                                        <th>@Html.DisplayNameFor(model => model.Documentos.First().Anexo)</th>
                                         <th>@Html.DisplayNameFor(model => model.Documentos.First().DataFim)</th>
                                         <th>@Html.DisplayNameFor(model => model.Documentos.First().DataInicio)</th>
                                         <th>@Html.DisplayNameFor(model => model.Documentos.First().Pet)</th>
@@ -330,7 +353,6 @@
                                                 <td> @Html.DisplayFor(modelItem => item.Descricao)</td>
                                                 <td> @Html.DisplayFor(modelItem => item.Quantidade)</td>
                                                 <td> @Html.DisplayFor(modelItem => item.TipoAnexo)</td>
-                                                <td> @Html.DisplayFor(modelItem => item.Anexo)</td>
                                                 <td> @Html.DisplayFor(modelItem => item.DataFim)</td>
                                                 <td> @Html.DisplayFor(modelItem => item.DataInicio)</td>
                                                 <td> @Html.DisplayFor(modelItem => Model.ListaPets.Where(x => x.Id.Equals(item.Pet.PetId)).First().Nome)</td>
@@ -338,12 +360,19 @@
                                                     @Html.ActionLink("", "Editar", "Documento", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-pen yellow", data_toggle = "tooltip", title = "Editar" }) |
                                                     @Html.ActionLink("", "Deletar", "Documento", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-trash yellow", data_toggle = "tooltip", title = "Deletar" }) |
                                                     @Html.ActionLink("", "Detalhes", "Documento", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-inbox yellow", data_toggle = "tooltip", title = "Detalhes" }) |
-                                                    @Html.ActionLink("", "Criar", "Documento", "", new { @class = "bi-sharp bi-solid bi-plus yellow", data_toggle = "tooltip", title = "Criar" }) |
+                                                    @*@Html.ActionLink("", "Criar", "Documento", "", new { @class = "bi-sharp bi-solid bi-plus yellow", data_toggle = "tooltip", title = "Criar" }) |*@
                                                 </td>
                                             </tr>
                                         }
                                 </tbody>
                             </table>
+                            <div class="col-10 col-lg-9 col-xl-9 col-xxl-9 d-flex justify-content-between">
+                                <a asp-controller="Documento" asp-action="Criar" asp-route-id="@Model.Usuario.Id">
+                                    <div>
+                                        <p class="border radius-10 p-2 primary-dc"><i class="bi bi-plus primary-dc"></i>Novo Documento</p>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>

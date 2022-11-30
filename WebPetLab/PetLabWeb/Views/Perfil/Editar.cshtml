@@ -5,6 +5,7 @@
     ViewData["Title"] = "Editar Usuário";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var mensagem = ViewBag.messenger;
+    var UsuarioPerfil = SessionExtensionsHelp.GetObject<ETipoUsuario>(this.Context.Session, "UsuarioPerfil");
 }
 
 <main class="page-content">
@@ -48,41 +49,63 @@
                                         <span asp-validation-for="Cpf" class="text-danger"></span>
                                     </div>
                                     <br />
-                                    <div class="form-group">
-                                        <label asp-for="Cnpj" class="form-label">Cnpj</label>
-                                        <input type="text" asp-for="Cnpj" name="Cnpj" class="form-control" value="@Model.Cnpj">
-                                        <span asp-validation-for="Cnpj" class="text-danger"></span>
-                                    </div>
-                                    <br />
-                                    <div class="form-group">
-                                        <label asp-for="Crm" class="form-label">Crm</label>
-                                        <input type="text" asp-for="Crm" name="Crm" class="form-control" value="@Model.Crm">
-                                        <span asp-validation-for="Crm" class="text-danger"></span>
-                                    </div>
-                                    <br />
+                                    @if (UsuarioPerfil == ETipoUsuario.Medico)
+                                    {
+                                        <div class="form-group">
+                                            <label asp-for="Cnpj" class="form-label">Cnpj</label>
+                                            <input type="text" asp-for="Cnpj" name="Cnpj" class="form-control" value="@Model.Cnpj">
+                                            <span asp-validation-for="Cnpj" class="text-danger"></span>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            <label asp-for="Crm" class="form-label">Crm</label>
+                                            <input type="text" asp-for="Crm" name="Crm" class="form-control" value="@Model.Crm">
+                                            <span asp-validation-for="Crm" class="text-danger"></span>
+                                        </div>
+                                        <br />
+                                    }
                                     <div class="form-group">
                                         <label asp-for="DataNascimento" class="form-label">Data Nascimento</label>
                                         @Html.EditorFor(model => model.DataNascimento, "DataNascimento", "DataNascimento")
                                         <span asp-validation-for="DataNascimento" class="text-danger"></span>
                                     </div>
                                     <br />
-                                    <div class="form-group">
-                                        <p class="form-label">Selecione o tipo de Perfil:</p>
-                                        <label asp-for="TipoUsuario" class="form-label p-2">Tutor:</label>
-                                        @Html.RadioButton("TipoUsuario", ETipoUsuario.Tutor, @Model.TipoUsuario == ETipoUsuario.Tutor ? true : false)
-                                        <label asp-for="TipoUsuario" class="form-label p-2">Médico:</label>
-                                        @Html.RadioButton("TipoUsuario", ETipoUsuario.Medico, @Model.TipoUsuario == ETipoUsuario.Medico ? true : false)
-                                        <span asp-validation-for="TipoUsuario" class="text-danger"></span>
-                                    </div>
+                                    @if (UsuarioPerfil != ETipoUsuario.Medico)
+                                    {
+                                        <div class="form-group">
+                                            <p class="form-label">Selecione o tipo de Perfil:</p>
+                                            <label asp-for="TipoUsuario" class="form-label p-2">Tutor:</label>
+                                            @Html.RadioButton("TipoUsuario", ETipoUsuario.Tutor, @Model.TipoUsuario == ETipoUsuario.Tutor ? true : false)
+                                            <label asp-for="TipoUsuario" class="form-label p-2">Médico:</label>
+                                            @Html.RadioButton("TipoUsuario", ETipoUsuario.Medico, @Model.TipoUsuario == ETipoUsuario.Medico ? true : false)
+                                            <span asp-validation-for="TipoUsuario" class="text-danger"></span>
+                                        </div>
+                                    }
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label asp-for="ImagemUrlusuario" class="col-sm-12 col-form-label">Foto do perfil:</label>
-                                        <img src="~/assets/img/Image_not_available.png" width="320px" height="320px" />
+                                        <label asp-for="url_documento" class="col-sm-12 col-form-label">Foto do perfil:</label>
+
+                                        <div class="card card-image">
+                                            <div class="text-white text-center d-flex align-items-center py-5 px-4 h-100" style="background-color:#e7e7e7 !important; padding-bottom:2.7em !important;">
+                                                <div>
+                                                    @if (Model.Anexo != null && Model.TipoAnexo != null)
+                                                    {
+                                                        <img src="data:image;base64,@System.Convert.ToBase64String(Model.Anexo)" class="img-fluid w-100 image-rotate" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <img src="~/assets/img/Image_not_available.png" class="img-fluid w-100 image-rotate" />
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+
+
                                         <br />
                                         <div class="col-sm-12">
-                                            <input type="file" asp-for="ImagemUrlusuario" name="ImagemUrlPessoa" class="form-control">
-                                            <span asp-validation-for="ImagemUrlusuario" class="text-danger"></span>
+                                            <input type="file" asp-for="url_documento" name="url_documento" class="form-control">
+                                            <span asp-validation-for="url_documento" class="text-danger"></span>
                                         </div>
                                     </div>
                                     <br />

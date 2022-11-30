@@ -74,12 +74,6 @@ namespace PetLabAPI.Controllers
                         Detalhes.Agendamentos.Add(_ServiceAgendamento.GetAgendamentoById(item.AgendamentoId));
                         Detalhes.Agendamentos.First(x => x.Id == item.AgendamentoId).Pet = item;
                     }
-
-                    foreach (var item in pet.Prontuarios)
-                    {
-                        Detalhes.Prontuarios.Add(_ServiceProntuario.GetProntuarioById(item.ProntuarioId));
-                        Detalhes.Prontuarios.First(x => x.Id == item.ProntuarioId).Pet = item;
-                    }
                 }
 
                 foreach (var item in Detalhes.Agendamentos)
@@ -88,6 +82,22 @@ namespace PetLabAPI.Controllers
                         Detalhes.ListaMedicos.Add(_ServiceUsuario.GetUsuarioById(item.MedicoResponsavel.UsuarioId));
                 }
             }
+            else
+            {
+                Detalhes.ListaMedicos.Add(usuario);
+
+                foreach (var item in Detalhes.Usuario.Agendamentos)
+                {
+                    Detalhes.Agendamentos.Add(_ServiceAgendamento.GetAgendamentoById(item.AgendamentoId));
+                    Detalhes.Agendamentos.First(x => x.Id == item.AgendamentoId).MedicoResponsavel = item;
+                }
+
+                foreach (var item in Detalhes.Agendamentos)
+                {
+                    Detalhes.ListaPets.Add(_ServicePet.GetPetById(item.Pet.PetId));
+                }
+            }
+
 
             if (Detalhes == null)
                 return NoContent();
@@ -99,7 +109,6 @@ namespace PetLabAPI.Controllers
         [Authorize]
         public ActionResult Agendamento([FromRoute] Guid idMedico, [FromRoute] Guid idPet, [FromBody] CreateAgendamento create)
         {
-
             var agendamento = _ServiceAgendamento.CreateAgendamento(idMedico, idPet, create.Data);
 
             return Created("api/[controller]", agendamento);
@@ -120,7 +129,8 @@ namespace PetLabAPI.Controllers
         public ActionResult Put([FromRoute] Guid id, [FromBody] Agendamento update)
         {
             Agendamento agendamentoUpdate = update;
-            agendamentoUpdate.Id = id;
+            if (agendamentoUpdate.Id != id)
+                return NoContent();
             var updateAgendamento = _ServiceAgendamento.UpdateAgendamento(agendamentoUpdate);
 
             return Ok(updateAgendamento);
@@ -135,29 +145,18 @@ namespace PetLabAPI.Controllers
             var Detalhes = new ViewModel()
             {
                 Pet = _ServicePet.GetPetById(agendamento.Pet.PetId),
-                Usuario = _ServiceUsuario.GetUsuarioById(agendamento.MedicoResponsavel.UsuarioId)
-
+                Agendamento = agendamento,
             };
-            Detalhes.Agendamentos.Add(agendamento);
 
+            Detalhes.Usuario = _ServiceUsuario.GetUsuarioById(Detalhes.Pet.Tutor.UsuarioId);
 
-            //foreach (var item in agendamento)
-            //{
-            //    Detalhes.Agendamentos.Add(_ServiceUsuario.GetUsuarioById(item.AgendamentoId));
-            //    Detalhes.Agendamentos.First(x => x.Id == item.AgendamentoId).Pet = item;
-            //}
+            foreach (var itemPet in Detalhes.Usuario.Pets)
+            {
+                Detalhes.ListaPets.Add(_ServicePet.GetPetById(itemPet.PetId));
+                Detalhes.ListaPets.First(x => x.Id == itemPet.PetId).Tutor = itemPet;
+            }
 
-            //foreach (var item in pet.Prontuarios)
-            //{
-            //    Detalhes.Prontuarios.Add(_ServiceProntuario.GetProntuarioById(item.ProntuarioId));
-            //    Detalhes.Prontuarios.First(x => x.Id == item.ProntuarioId).Pet = item;
-            //}
-
-            //foreach (var item in pet.Documentos)
-            //{
-            //    Detalhes.Documentos.Add(_ServiceDocumento.GetDocumentoById(item.DocumentoId));
-            //    Detalhes.Documentos.First(x => x.Id == item.DocumentoId).Pet = item;
-            //}
+            Detalhes.ListaMedicos = _ServiceUsuario.GetAll().Where(x => x.TipoUsuario == ETipoUsuario.Medico).ToList();
 
             if (Detalhes == null)
                 return NoContent();

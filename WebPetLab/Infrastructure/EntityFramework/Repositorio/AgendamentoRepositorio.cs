@@ -47,5 +47,10 @@ namespace Infrastructure.EntityFramework.Repositorio
             _db.SaveChanges();
 
         }
+
+        public IEnumerable<Agendamento> GetAllByIdMedico(Guid id)
+        {
+            return _db.Agendamento.Include(x => x.Pet).Include(x => x.MedicoResponsavel).Where(x => x.MedicoResponsavel.UsuarioId == id).ToList();
+        }
     }
 }

@@ -56,7 +56,7 @@ namespace PetLabAPI.Controllers
         [Authorize]
         public ActionResult Pet([FromRoute] Guid id, [FromBody] CreatePet create)
         {
-            var pet = _ServicePet.CreatePet(id, create.Nome, create.DataNascimento, create.Especie);
+            var pet = _ServicePet.CreatePet(id, create.Nome, create.DataNascimento, create.Especie, create.Anexo, create.TipoAnexo);
             return Created("api/[controller]", pet);
         }
 

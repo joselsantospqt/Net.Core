@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +23,14 @@ namespace Domain.Entidade.Request
         [DataType(DataType.Text)]
         [Display(Name = "Espécie")]
         public ETipoEspecie Especie { get; set; }
-        public string ImagemUrlPet { get; set; }
+        [DataType(DataType.Text)]
+        [Display(Name = "Anexo")]
+        public byte[] Anexo { get; set; }
+        [DataType(DataType.Text)]
+        [Display(Name = "Tipo Anexo")]
+        public string TipoAnexo { get; set; }
+        [NotMapped]
+        [Display(Name = "Imagem do Pet")]
+        public string url_documento { get; set; }
     }
 }

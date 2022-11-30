@@ -23,6 +23,12 @@ namespace Infrastructure.EntityFramework
             modelBuilder.Entity<Usuario>()
                 .HasMany(p => p.Pets).WithOne();
 
+            modelBuilder.Entity<Usuario>()
+                .HasMany(p => p.Prontuarios).WithOne();
+
+            modelBuilder.Entity<Usuario>()
+                .HasMany(p => p.Agendamentos).WithOne();
+
             modelBuilder.Entity<Pet>()
                 .HasMany(p => p.Agendamentos).WithOne();
 
@@ -30,7 +36,7 @@ namespace Infrastructure.EntityFramework
                 .HasMany(p => p.Prontuarios).WithOne();
 
             modelBuilder.Entity<Pet>()
-             .HasMany(p => p.Documentos).WithOne();
+                .HasMany(p => p.Documentos).WithOne();
 
             modelBuilder.Entity<Pet>()
                 .HasOne(b => b.Tutor).WithOne();
@@ -48,13 +54,13 @@ namespace Infrastructure.EntityFramework
                 .HasOne(b => b.Medico).WithOne();
 
             modelBuilder.Entity<Prontuario>()
-               .HasMany(p => p.Documentos).WithOne();
+                .HasMany(p => p.Documentos).WithOne();
 
             modelBuilder.Entity<Documento>()
-              .HasOne(p => p.Prontuario).WithOne();    
-            
+                .HasOne(p => p.Prontuario).WithOne();
+
             modelBuilder.Entity<Documento>()
-              .HasOne(p => p.Pet).WithOne();
+                .HasOne(p => p.Pet).WithOne();
 
         }
     }

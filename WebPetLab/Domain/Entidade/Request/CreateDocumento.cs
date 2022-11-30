@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,6 @@ namespace Domain.Entidade.Request
 {
     public class CreateDocumento
     {
-        public CreateDocumento() { Pets = new List<Pet>(); Prontuarios = new List<Prontuario>(); }
         public Guid Id { get; set; }
         [Required]
         [DataType(DataType.Text)]
@@ -27,11 +27,9 @@ namespace Domain.Entidade.Request
         [DataType(DataType.Text)]
         [Display(Name = "Tipo Documento")]
         public ETipoDocumento TipoDocumento { get; set; }
-        [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Anexo")]
         public byte[] Anexo { get; set; }
-        [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Tipo Anexo")]
         public string TipoAnexo { get; set; }
@@ -46,8 +44,5 @@ namespace Domain.Entidade.Request
         [DataType(DataType.Text)]
         [Display(Name = "Anexo Documento")]
         public string url_documento { get; set; }
-        public IList<Prontuario> Prontuarios { get; set; }
-        public IList<Pet> Pets { get; set; }
-        public Guid Tutor { get; set; }
     }
 }

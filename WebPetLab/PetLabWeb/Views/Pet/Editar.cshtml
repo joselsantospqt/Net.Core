@@ -52,13 +52,26 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label asp-for="ImagemUrlPet" class="col-sm-12 col-form-label">Foto do Pet:</label>
-                                        <img src="~/assets/img/Image_not_available.png" width="320px" height="320px" />
+                                        <label asp-for="url_documento" class="col-sm-12 col-form-label">Foto do Pet:</label>
+                                        <div class="card card-image">
+                                            <div class="text-white text-center d-flex align-items-center py-5 px-4 h-100" style="background-color:#e7e7e7 !important; padding-bottom:2.7em !important;">
+                                                <div>
+                                                    @if (Model.Anexo != null && Model.TipoAnexo != null)
+                                                    {
+                                                        <img src="data:image;base64,@System.Convert.ToBase64String(Model.Anexo)" class="img-fluid w-100 image-rotate" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <img src="~/assets/img/Image_not_available.png" class="img-fluid w-100 image-rotate" />
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
 
                                         <br />
                                         <div class="col-sm-12">
-                                            <input type="file" asp-for="ImagemUrlPet" name="ImagemUrlPet" class="form-control">
-                                            <span asp-validation-for="ImagemUrlPet" class="text-danger"></span>
+                                            <input type="file" asp-for="url_documento" name="ImagemUrlPet" class="form-control">
+                                            <span asp-validation-for="url_documento" class="text-danger"></span>
                                         </div>
                                     </div>
                                     <br />
