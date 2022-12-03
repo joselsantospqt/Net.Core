@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using PetLabWeb.Models;
 
 namespace PetLabWeb.Areas.Identity.Pages.Account.Manage
 {
@@ -33,6 +34,9 @@ namespace PetLabWeb.Areas.Identity.Pages.Account.Manage
 
         public async Task<IActionResult> OnGetAsync()
         {
+            SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "O administrador bloqueou está funcionalidade !");
+            return RedirectToAction("AccessDenied", "Autenticacao");
+
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {

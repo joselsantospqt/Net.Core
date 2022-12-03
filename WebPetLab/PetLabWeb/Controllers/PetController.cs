@@ -43,11 +43,17 @@ namespace PetLabWeb.Controllers
         public async Task<IActionResult> BuscarEmail(string Id)
         {
             var pessoa = await ApiFindById<Usuario>(_sessionToken.Token, _sessionUserSign.Email, "Usuario");
+            if (pessoa == null)
+            {
+                SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "Participante não encontrado !");
+                return RedirectToAction("Listar", "Agendamento", new { id = _sessionUserSign.Id });
+            }
             if (pessoa.TipoUsuario == ETipoUsuario.Medico)
             {
                 var pets = await ApiFindAllById<Pet>(_sessionToken.Token, Id, "Pet/GetAllPetsByEmail");
                 return RedirectToAction("Listar", "Pet", _sessionUserSign.Id);
             }
+
             return RedirectToAction("Autenticacao", "AccessDenied");
 
         }
@@ -83,12 +89,18 @@ namespace PetLabWeb.Controllers
 
 
                 var retorno = await ApiSaveAutorize<Pet>(_sessionToken.Token, pet, $"Pet/{_sessionUserSign.Id}");
+
+                if (retorno != null)
+                    SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "Pet Criado com sucesso !");
+                else
+                    SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "Houve uma falhar ao criar Pet !");
+
                 return RedirectToAction("Listar", new { id = _sessionUserSign.Id });
             }
             catch (Exception ex)
             {
-                ViewData["MensagemRetorno"] = ex.ToString();
-                return View();
+                SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", ex.ToString());
+                return View("Home", "Home");
             }
 
         }
@@ -106,13 +118,42 @@ namespace PetLabWeb.Controllers
         [Route("Pet/Deletar/{Id:guid}")]
         public async Task<IActionResult> Deletar(Guid id, IFormCollection collection)
         {
-            if (new Guid(collection["Id"]) != id)
+            try
             {
-                ViewData["messenger"] = "Houve Um erro durante a exclusão !";
-                return View(new Guid(collection["Id"]));
+                if (new Guid(collection["Id"]) != id)
+                {
+                    SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "Houve Um erro durante a exclusão !");
+                    return View(new Guid(collection["Id"]));
+                }
+                var detalhes = await ApiFindById<ViewModel>(_sessionToken.Token, id, "Pet/GetPetsDetalhes");
+
+                foreach (var item in detalhes.Agendamentos)
+                {
+                    await ApiRemove(_sessionToken.Token, item.Id, "Agendamento");
+                }
+                foreach (var item in detalhes.Documentos)
+                {
+                    await ApiRemove(_sessionToken.Token, item.Id, "Documentos");
+                }
+                foreach (var item in detalhes.Prontuarios)
+                {
+                    await ApiRemove(_sessionToken.Token, item.Id, "Prontuario");
+                }
+
+                var pet = await ApiRemove(_sessionToken.Token, id, "Pet");
+
+                if (pet != null)
+                    SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "Pet excluido com sucesso !");
+                else
+                    SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "Houve uma falhar ao deletar Pet !");
+
+                return RedirectToAction("Listar", new { id = _sessionUserSign.Id });
             }
-            var pet = await ApiRemove(_sessionToken.Token, id, "Pet");
-            return RedirectToAction("Listar", new { id = _sessionUserSign.Id });
+            catch (Exception ex)
+            {
+                SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", ex.ToString());
+                return View("Home", "Home");
+            }
         }
 
         [HttpGet]
@@ -135,47 +176,68 @@ namespace PetLabWeb.Controllers
         [Route("Pet/Editar/{Id:guid}")]
         public async Task<IActionResult> Editar(Guid id, IFormCollection collection)
         {
-            var existeImagem = false;
-            Pet pet = await ApiFindById<Pet>(_sessionToken.Token, id, "Pet");
-            MemoryStream ms = new MemoryStream();
-            foreach (var item in this.Request.Form.Files)
+            try
             {
-                existeImagem = true;
-                item.CopyTo(ms);
-                ms.Position = 0;
-                pet.TipoAnexo = item.ContentType;
+                var existeImagem = false;
+                Pet pet = await ApiFindById<Pet>(_sessionToken.Token, id, "Pet");
+                MemoryStream ms = new MemoryStream();
+                foreach (var item in this.Request.Form.Files)
+                {
+                    existeImagem = true;
+                    item.CopyTo(ms);
+                    ms.Position = 0;
+                    pet.TipoAnexo = item.ContentType;
+                }
+
+                if (existeImagem)
+                    pet.Anexo = ms.ToArray();
+
+                pet.Nome = collection["Nome"];
+                pet.DataNascimento = Convert.ToDateTime(collection["DataNascimento"]);
+                pet.Especie = EnumDescriptionHelp.ParseEnum<ETipoEspecie>(collection["Especie"]);
+
+                var retorno = await ApiUpdate<Pet>(_sessionToken.Token, pet.Id, pet, "Pet");
+
+                if (retorno == null)
+                {
+                    SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "Houve Um erro durante o update !");
+                }
+                SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "Alterado com Sucesso !");
+
+                return View("Editar", retorno);
+
             }
-
-            if (existeImagem)
-                pet.Anexo = ms.ToArray();
-
-            pet.Nome = collection["Nome"];
-            pet.DataNascimento = Convert.ToDateTime(collection["DataNascimento"]);
-            pet.Especie = EnumDescriptionHelp.ParseEnum<ETipoEspecie>(collection["Especie"]);
-
-            var retorno = await ApiUpdate<Pet>(_sessionToken.Token, pet.Id, pet, "Pet");
-
-            if (retorno == null)
+            catch (Exception ex)
             {
-                ViewData["messenger"] = "Houve Um erro durante o update !";
+                SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", ex.ToString());
+                return View("Home", "Home");
             }
-            ViewData["messenger"] = "Alterado com Sucesso !";
-
-            return View("Editar", retorno);
-
         }
 
         [HttpGet]
         [Route("Pet/ExcluirImagem/{Id:guid}")]
         public async Task<IActionResult> ExcluirImagem(Guid id)
         {
-            Pet pet = await ApiFindById<Pet>(_sessionToken.Token, id, "Pet");
-            pet.Anexo = null;
-            pet.TipoAnexo = null;
+            try
+            {
+                Pet pet = await ApiFindById<Pet>(_sessionToken.Token, id, "Pet");
+                pet.Anexo = null;
+                pet.TipoAnexo = null;
 
-            var retorno = await ApiUpdate<Pet>(_sessionToken.Token, pet.Id, pet, "Pet");
+                var retorno = await ApiUpdate<Pet>(_sessionToken.Token, pet.Id, pet, "Pet");
 
-            return RedirectToAction("Editar", new { Id = pet.Id });
+                if (retorno != null)
+                    SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "Foto excluida com sucesso !");
+                else
+                    SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "Houve uma falhar ao excluir a foto do Pet !");
+
+                return RedirectToAction("Editar", new { Id = pet.Id });
+            }
+            catch (Exception ex)
+            {
+                SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", ex.ToString());
+                return View("Home", "Home");
+            }
         }
     }
 }

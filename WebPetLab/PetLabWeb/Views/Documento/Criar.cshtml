@@ -6,6 +6,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     List<SelectListItem> listItemsDocumentos = new List<SelectListItem>();
+    listItemsDocumentos.Add(new SelectListItem
+    {
+        Text = "-- Selecione --",
+        Value = new Guid("{00000000-0000-0000-0000-000000000000}").ToString()
+    });
     foreach (ETipoDocumento item in (ETipoDocumento[])Enum.GetValues(typeof(ETipoDocumento)))
     {
         int n;
@@ -23,6 +28,11 @@
     }
 
     List<SelectListItem> listItemsPets = new List<SelectListItem>();
+    listItemsPets.Add(new SelectListItem
+    {
+        Text = "-- Selecione --",
+        Value = new Guid("{00000000-0000-0000-0000-000000000000}").ToString()
+    });
     foreach (Pet item in Model.ListaPets)
     {
         listItemsPets.Add(new SelectListItem
@@ -76,7 +86,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label asp-for="Documento.Quantidade" class="control-label"></label>
-                                        <input asp-for="Documento.Quantidade" name="Quantidade" class="form-control" />
+                                        <input type="number" asp-for="Documento.Quantidade" name="Quantidade" class="form-control" />
                                         <span asp-validation-for="Documento.Quantidade" class="text-danger"></span>
                                     </div>
                                     <div class="form-group">

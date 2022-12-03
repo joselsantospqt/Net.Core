@@ -1,6 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Identity;
+@using Domain.Entidade
 @{
     var UserSign = SessionExtensionsHelp.GetObject<IdentityUser>(this.Context.Session, "UserSign");
+    var UsuarioPerfil = SessionExtensionsHelp.GetObject<ETipoUsuario>(this.Context.Session, "UsuarioPerfil");
+    var Mensagem = SessionExtensionsHelp.GetObject<string>(this.Context.Session, "Mensagem");
     var pessoaId = UserSign.Id;
     var pessoaEmail = UserSign.Email;
 }
@@ -146,22 +149,25 @@
                         <div class="menu-title">Agendamento</div>
                     </a>
                 </li>
-                <li>
-                    <a asp-controller="Pet" asp-action="Listar" asp-route-id="@pessoaId">
-                        <div class="">
-                            <i class="bi bi-heart yellow"></i>
-                        </div>
-                        <div class="menu-title">Pets</div>
-                    </a>
-                </li>
-                <li>
-                    <a asp-controller="Documento" asp-action="Listar" asp-route-id="@pessoaId">
-                        <div class="">
-                            <i class="bi bi-folder yellow"></i>
-                        </div>
-                        <div class="menu-title">Documentos</div>
-                    </a>
-                </li>
+                @if (UsuarioPerfil != ETipoUsuario.Medico)
+                {
+                    <li>
+                        <a asp-controller="Pet" asp-action="Listar" asp-route-id="@pessoaId">
+                            <div class="">
+                                <i class="bi bi-heart yellow"></i>
+                            </div>
+                            <div class="menu-title">Pets</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Documento" asp-action="Listar" asp-route-id="@pessoaId">
+                            <div class="">
+                                <i class="bi bi-folder yellow"></i>
+                            </div>
+                            <div class="menu-title">Documentos</div>
+                        </a>
+                    </li>
+                }
                 <li>
                     <a asp-controller="Prontuario" asp-action="Listar" asp-route-id="@pessoaId">
                         <div class="">
@@ -172,19 +178,19 @@
                 </li>
 
                 @*<li class="menu-label">Sua área</li>
-        <li>
+                    <li>
 
-            <div class="menu-title"> <i class="bi bi-person-lines"></i> Opções de perfil</div>
+                        <div class="menu-title"> <i class="bi bi-person-lines"></i> Opções de perfil</div>
 
-            <ul>
-                <li>
-                    <a class="dropdown-item" asp-controller="Perfil" asp-action="Detalhes" asp-route-id="@pessoaId"><i class="bi bi-person"></i>Ver perfil</a>
-                </li>
-                <li>
-                    <a class="dropdown-item" asp-controller="Perfil" asp-action="Editar" asp-route-id="@pessoaId"><i class="bi bi-gear"></i>Editar perfil</a>
-                </li>
-            </ul>
-        </li>*@
+                        <ul>
+                            <li>
+                                <a class="dropdown-item" asp-controller="Perfil" asp-action="Detalhes" asp-route-id="@pessoaId"><i class="bi bi-person"></i>Ver perfil</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="Perfil" asp-action="Editar" asp-route-id="@pessoaId"><i class="bi bi-gear"></i>Editar perfil</a>
+                            </li>
+                        </ul>
+                    </li>*@
                 <li class="menu-label">Solicite ajuda</li>
                 <li>
                     <a asp-controller="Perfil" asp-action="Medicos">
@@ -205,6 +211,21 @@
             @RenderBody()
         </div>
 
+        <div id="myModal" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Mensagem:</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p class="fw-bold">@Mensagem</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="btnModal" type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!--fim main-->
 
@@ -218,6 +239,22 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.pt-BR.min.js"></script>
 
+        @if (Mensagem != null)
+        {
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $('#myModal').modal('toggle');
+                })
+
+                $("#btnModal").click(function () {
+                    $('#myModal').modal('toggle');
+                });
+
+            </script>
+            SessionExtensionsHelp.RemoveObject(this.Context.Session, "Mensagem");
+        }
+
+
     </environment>
     <environment exclude="Development">
         <script src="~/assets/js/jquery.min.js" asp-fallback-src="~/assets/js/jquery.min.js" asp-fallback-test="window.jQuery"></script>
@@ -226,11 +263,25 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.pt-BR.min.js"></script>
 
+        @if (Mensagem != null)
+        {
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $('#myModal').modal('toggle');
+                })
+
+                $("#btnModal").click(function () {
+                    $('#myModal').modal('toggle');
+                });
+
+            </script>
+            SessionExtensionsHelp.RemoveObject(this.Context.Session, "Mensagem");
+        }
+
     </environment>
 
 
 
     @RenderSection("scripts", required: false)
 </body>
-
 </html>

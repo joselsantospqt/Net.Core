@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using PetLabWeb.Models;
 
 namespace PetLabWeb.Areas.Identity.Pages.Account
 {
@@ -46,6 +47,9 @@ namespace PetLabWeb.Areas.Identity.Pages.Account
 
         public IActionResult OnGet(string code = null)
         {
+            SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "O administrador bloqueou está funcionalidade !");
+            return RedirectToAction("AccessDenied", "Autenticacao");
+
             if (code == null)
             {
                 return BadRequest("A code must be supplied for password reset.");

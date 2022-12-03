@@ -23,10 +23,10 @@
                         </div>
                         <div class="card-body">
                             <dl class="row">
-                                <dt class="col-sm-4">
+                                <dt class="col-sm-4 d-none">
                                     @Html.DisplayNameFor(model => model.Prontuario.Id)
                                 </dt>
-                                <dd class="col-sm-8">
+                                <dd class="col-sm-8 d-none">
                                     @Html.DisplayFor(model => model.Prontuario.Id)
                                 </dd>
                                 <dt class="col-sm-4">
@@ -60,6 +60,7 @@
                                     @Html.DisplayFor(model => model.ListaMedicos.First(x => x.Id == Model.Prontuario.Medico.UsuarioId).Nome)
                                 </dd>
                             </dl>
+                            <h5 class="text-warning">Atenção, ao Excluir o Prontuário você também vai excluir todos os documentos vinculados ao proprio.</h5>
 
                             <form asp-action="Deletar" method="post">
                                 <label asp-for="Prontuario.Id" class="control-label d-none"></label>

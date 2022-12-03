@@ -31,6 +31,7 @@ namespace Domain.Entidade
         [DataType(DataType.Text)]
         [Display(Name = "Tipo Anexo")]
         public string TipoAnexo { get; set; }
+        [NotMapped]
         [Display(Name = "Imagem do Pet")]
         public string url_documento { get; set; }
         public UsuarioPet Tutor { get; set; }

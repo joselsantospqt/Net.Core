@@ -8,6 +8,11 @@
     var UsuarioPerfil = SessionExtensionsHelp.GetObject<ETipoUsuario>(this.Context.Session, "UsuarioPerfil");
 
     List<SelectListItem> listItems = new List<SelectListItem>();
+    listItems.Add(new SelectListItem
+    {
+        Text = "-- Selecione --",
+        Value = new Guid("{00000000-0000-0000-0000-000000000000}").ToString()
+    });
     foreach (Pet item in Model.ListaPets)
     {
         listItems.Add(new SelectListItem

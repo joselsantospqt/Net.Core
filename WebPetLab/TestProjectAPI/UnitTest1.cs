@@ -32,7 +32,7 @@ namespace TestProjectAPI
             usuario.DataNascimento = DateTime.UtcNow;
             usuario.Email = "teste@petshop.com";
             usuario.Senha = "12346477";
-            usuario.ImagemUrlusuario = "Perfil_default.png";
+            //usuario.ImagemUrlusuario = "Perfil_default.png";
             usuario.CreatedAt = DateTime.UtcNow;
             usuario.UpdatedAt = new DateTime();
 
@@ -47,7 +47,7 @@ namespace TestProjectAPI
             Assert.True(usuario.DataNascimento == usuarioCriado.DataNascimento);
             Assert.True(usuario.Email == usuarioCriado.Email);
             Assert.True(usuario.Senha == usuarioCriado.Senha);
-            Assert.True(usuario.ImagemUrlusuario == usuarioCriado.ImagemUrlusuario);
+            //Assert.True(usuario.ImagemUrlusuario == usuarioCriado.ImagemUrlusuario);
         }
 
 

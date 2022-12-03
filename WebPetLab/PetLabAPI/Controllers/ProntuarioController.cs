@@ -86,6 +86,22 @@ namespace PetLabAPI.Controllers
                         Detalhes.ListaMedicos.Add(_ServiceUsuario.GetUsuarioById(item.Medico.UsuarioId));
                 }
             }
+            else
+            {
+                Detalhes.ListaMedicos.Add(usuario);
+
+                foreach (var item in usuario.Prontuarios)
+                {
+                    Detalhes.Prontuarios.Add(_ServiceProntuario.GetProntuarioById(item.ProntuarioId));
+                    Detalhes.Prontuarios.First(x => x.Id == item.ProntuarioId).Medico = item;
+
+                }
+
+                foreach (var itemPet in Detalhes.Prontuarios)
+                {
+                    Detalhes.ListaPets.Add(_ServicePet.GetPetById(itemPet.Pet.PetId));
+                }
+            }
 
             if (Detalhes == null)
                 return NoContent();
@@ -144,14 +160,19 @@ namespace PetLabAPI.Controllers
             Detalhes.Usuario = _ServiceUsuario.GetUsuarioById(Detalhes.Pet.Tutor.UsuarioId);
             Detalhes.ListaMedicos.Add(_ServiceUsuario.GetUsuarioById(prontuario.Medico.UsuarioId));
 
-            if (Detalhes.Usuario.TipoUsuario == ETipoUsuario.Tutor)
+
+            foreach (var itemPet in Detalhes.Usuario.Pets)
             {
-                foreach (var itemPet in Detalhes.Usuario.Pets)
-                {
-                    Detalhes.ListaPets.Add(_ServicePet.GetPetById(itemPet.PetId));
-                    Detalhes.ListaPets.First(x => x.Id == itemPet.PetId).Tutor = itemPet;
-                }
+                Detalhes.ListaPets.Add(_ServicePet.GetPetById(itemPet.PetId));
+                Detalhes.ListaPets.First(x => x.Id == itemPet.PetId).Tutor = itemPet;
             }
+
+            foreach (var item in prontuario.Documentos)
+            {
+                Detalhes.Documentos.Add(_ServiceDocumento.GetDocumentoById(item.DocumentoId));
+                Detalhes.Documentos.First(x => x.Id == item.DocumentoId).Prontuario = item;
+            }
+
 
             if (Detalhes == null)
                 return NoContent();

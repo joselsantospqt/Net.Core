@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using PetLabWeb.Models;
 
 namespace PetLabWeb.Areas.Identity.Pages.Account
 {
@@ -107,6 +108,7 @@ namespace PetLabWeb.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
+                    SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "Conta criada com sucesso.");
                     _logger.LogInformation("Conta criada com sucesso.");
                     return LocalRedirect(returnUrl);
 

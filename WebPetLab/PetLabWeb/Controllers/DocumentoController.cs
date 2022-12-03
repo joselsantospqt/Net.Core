@@ -20,12 +20,14 @@ namespace PetLabWeb.Controllers
         private readonly ILogger<DocumentoController> _logger;
         private IdentityUser _sessionUserSign;
         private TokenCode _sessionToken;
+        private ETipoUsuario _sessionTipoUsuario;
 
         public DocumentoController(IHttpContextAccessor httpContextAccessor, IConfiguration configuration, ILogger<DocumentoController> logger) : base(configuration)
         {
             _logger = logger;
             _sessionUserSign = SessionExtensionsHelp.GetObject<IdentityUser>(httpContextAccessor.HttpContext.Session, "UserSign");
             _sessionToken = SessionExtensionsHelp.GetObject<TokenCode>(httpContextAccessor.HttpContext.Session, "Token");
+            _sessionTipoUsuario = SessionExtensionsHelp.GetObject<ETipoUsuario>(httpContextAccessor.HttpContext.Session, "UsuarioPerfil");
         }
 
         [HttpGet]
@@ -39,26 +41,33 @@ namespace PetLabWeb.Controllers
         [Route("Documento/Criar/{Id:guid}")]
         public async Task<IActionResult> Criar(Guid id)
         {
-            var pets = await ApiFindAllById<Pet>(_sessionToken.Token, id, "Pet/GetAllPetsById");
-            var usuario = await ApiFindById<Usuario>(_sessionToken.Token, id, "Usuario");
-            IList<Prontuario> listaProntuario = new List<Prontuario>();
-
-            foreach (var item in pets)
+            try
             {
-                foreach (var prontuario in item.Prontuarios)
+                var pets = await ApiFindAllById<Pet>(_sessionToken.Token, id, "Pet/GetAllPetsById");
+                var usuario = await ApiFindById<Usuario>(_sessionToken.Token, id, "Usuario");
+                IList<Prontuario> listaProntuario = new List<Prontuario>();
+
+                foreach (var item in pets)
                 {
-                    listaProntuario = await ApiFindAllById<Prontuario>(_sessionToken.Token, prontuario.ProntuarioId, "Prontuario/GetAllProntuariosByPetId");
+                    foreach (var prontuario in item.Prontuarios)
+                    {
+                        listaProntuario.Add(await ApiFindById<Prontuario>(_sessionToken.Token, prontuario.ProntuarioId, "Prontuario"));
+                    }
                 }
+                ViewModel agendamento = new ViewModel()
+                {
+                    ListaPets = pets,
+                    Prontuarios = listaProntuario,
+                    Usuario = usuario
+
+                };
+                return View(agendamento);
             }
-            ViewModel agendamento = new ViewModel()
+            catch (Exception ex)
             {
-                ListaPets = pets,
-                Prontuarios = listaProntuario,
-                Usuario = usuario
-
-            };
-
-            return View(agendamento);
+                SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", ex.ToString());
+                return View("Home", "Home");
+            }
         }
 
 
@@ -66,41 +75,58 @@ namespace PetLabWeb.Controllers
         [Route("Documento/Criar/{Id:guid}")]
         public async Task<IActionResult> Criar(Guid id, IFormCollection collection)
         {
-            var existeImagem = false;
-
-            MemoryStream ms = new MemoryStream();
-            CreateDocumento documento = new CreateDocumento();
-            Guid idProntuario = new Guid();
-
-
-            foreach (var item in this.Request.Form.Files)
+            try
             {
-                existeImagem = true;
-                item.CopyTo(ms);
-                ms.Position = 0;
-                documento.TipoAnexo = item.ContentType;
+                var existeImagem = false;
+
+                MemoryStream ms = new MemoryStream();
+                CreateDocumento documento = new CreateDocumento();
+                Guid idProntuario = new Guid();
+
+
+                foreach (var item in this.Request.Form.Files)
+                {
+                    existeImagem = true;
+                    item.CopyTo(ms);
+                    ms.Position = 0;
+                    documento.TipoAnexo = item.ContentType;
+                }
+
+                if (existeImagem)
+                    documento.Anexo = ms.ToArray();
+
+                if (new Guid(collection["Prontuarios"]) == new Guid("{00000000-0000-0000-0000-000000000000}"))
+                    idProntuario = new Guid(collection["Prontuarios"]);
+
+                if (new Guid(collection["ListaPets"]) == new Guid("{00000000-0000-0000-0000-000000000000}"))
+                {
+                    SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "É preciso associar a pelo menos um pet !");
+                    return RedirectToAction("Listar", new { id = _sessionUserSign.Id });
+                }
+
+                documento.Nome = collection["Nome"];
+                documento.Descricao = collection["Descricao"];
+                documento.Quantidade = Convert.ToInt32(collection["Quantidade"]);
+                documento.TipoDocumento = EnumDescriptionHelp.ParseEnum<ETipoDocumento>(collection["Documento.TipoDocumento"]);
+                documento.DataInicio = Convert.ToDateTime(collection["DataInicio"]);
+                documento.DataInicio = Convert.ToDateTime(collection["DataFim"]);
+                var retorno = await ApiSaveAutorize<Documento>(_sessionToken.Token, documento, $"Documento/{idProntuario}/{collection["ListaPets"]}");
+
+                if (retorno != null)
+                    SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "Documento criado com sucesso !");
+                else
+                    SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "Houve uma falhar ao criar o documento !");
+
+                if (_sessionTipoUsuario == ETipoUsuario.Medico)
+                    return RedirectToAction("Listar", "Agendamento", new { id = _sessionUserSign.Id });
+                else
+                    return RedirectToAction("Listar", new { id = _sessionUserSign.Id });
             }
-
-            if (existeImagem)
-                documento.Anexo = ms.ToArray();
-
-            if (!string.IsNullOrEmpty(collection["Prontuarios"]))
-                idProntuario = new Guid(collection["Prontuarios"]);
-
-            documento.Nome = collection["Nome"];
-            documento.Descricao = collection["Descricao"];
-            documento.Quantidade = Convert.ToInt32(collection["Quantidade"]);
-            documento.TipoDocumento = EnumDescriptionHelp.ParseEnum<ETipoDocumento>(collection["Documento.TipoDocumento"]);
-            documento.DataInicio = Convert.ToDateTime(collection["DataInicio"]);
-            documento.DataInicio = Convert.ToDateTime(collection["DataFim"]);
-            var retorno = await ApiSaveAutorize<Documento>(_sessionToken.Token, documento, $"Documento/{idProntuario}/{collection["ListaPets"]}");
-
-            if (retorno == null)
+            catch (Exception ex)
             {
-                ViewData["MensagemRetorno"] = "Houve Um erro ao criar novo Pet !";
+                SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", ex.ToString());
+                return View("Home", "Home");
             }
-
-            return RedirectToAction("Listar", new { id = _sessionUserSign.Id });
 
         }
 
@@ -116,14 +142,33 @@ namespace PetLabWeb.Controllers
         [Route("Documento/Deletar/{Id:guid}")]
         public async Task<IActionResult> Deletar(Guid id, IFormCollection collection)
         {
-            if (new Guid(collection["Id"]) != id)
+            try
             {
-                ViewData["messenger"] = "Houve Um erro durante a exclusão !";
-                return View(new Guid(collection["Id"]));
-            }
+                if (new Guid(collection["Id"]) != id)
+                {
+                    SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "Houve Um erro durante a exclusão !");
+                    return View(new Guid(collection["Id"]));
+                }
 
-            var documento = await ApiRemove(_sessionToken.Token, id, "Documento");
-            return RedirectToAction("Listar", new { id = _sessionUserSign.Id });
+                Documento documento = await ApiFindById<Documento>(_sessionToken.Token, id, "Documento");
+
+                var retorno = await ApiRemove(_sessionToken.Token, id, "Documento");
+
+                if (retorno != null)
+                    SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "Documento excluido com sucesso !");
+                else
+                    SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "Houve uma falhar ao excluir o documento !");
+
+                if (documento.Prontuario.ProntuarioId != new Guid("{00000000-0000-0000-0000-000000000000}"))
+                    return RedirectToAction("Detalhes", "Prontuario", new { id = documento.Prontuario.ProntuarioId });
+
+                return RedirectToAction("Listar", new { id = _sessionUserSign.Id });
+            }
+            catch (Exception ex)
+            {
+                SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", ex.ToString());
+                return View("Home", "Home");
+            }
         }
 
         [HttpGet]
@@ -146,46 +191,53 @@ namespace PetLabWeb.Controllers
         [Route("Documento/Editar/{Id:guid}")]
         public async Task<IActionResult> Editar(Guid id, IFormCollection collection)
         {
-            var existeImagem = false;
-
-            MemoryStream ms = new MemoryStream();
-            Documento documento = await ApiFindById<Documento>(_sessionToken.Token, id, "Documento");
-
-            foreach (var item in this.Request.Form.Files)
+            try
             {
-                existeImagem = true;
-                item.CopyTo(ms);
-                ms.Position = 0;
-                documento.TipoAnexo = item.ContentType;
+                var existeImagem = false;
+
+                MemoryStream ms = new MemoryStream();
+                Documento documento = await ApiFindById<Documento>(_sessionToken.Token, id, "Documento");
+
+                foreach (var item in this.Request.Form.Files)
+                {
+                    existeImagem = true;
+                    item.CopyTo(ms);
+                    ms.Position = 0;
+                    documento.TipoAnexo = item.ContentType;
+                }
+
+                if (existeImagem)
+                    documento.Anexo = ms.ToArray();
+
+                if (documento.Prontuario != null && new Guid(collection["Prontuario"]) != new Guid("{00000000-0000-0000-0000-000000000000}"))
+                    documento.Prontuario.ProntuarioId = new Guid(collection["Prontuario"]);
+
+                if (documento.Pet != null && new Guid(collection["Pet"]) != new Guid("{00000000-0000-0000-0000-000000000000}"))
+                    documento.Pet.PetId = new Guid(collection["Pet"]);
+
+                documento.Nome = collection["Nome"];
+                documento.Descricao = collection["Descricao"];
+                documento.Quantidade = Convert.ToInt32(collection["Quantidade"]);
+                documento.TipoDocumento = EnumDescriptionHelp.ParseEnum<ETipoDocumento>(collection["Documento.TipoDocumento"]);
+                documento.DataInicio = Convert.ToDateTime(collection["DataInicio"]);
+                documento.DataFim = Convert.ToDateTime(collection["DataFim"]);
+
+                var retorno = await ApiUpdate<Documento>(_sessionToken.Token, documento.Id, documento, "Documento");
+
+                if (retorno == null)
+                {
+                    SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "Houve Um erro durante o update !");
+                    return RedirectToAction("Listar", new { Id = id });
+                }
+
+                SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "Alterado com Sucesso !");
+                return RedirectToAction("Editar", new { Id = id });
             }
-
-            if (existeImagem)
-                documento.Anexo = ms.ToArray();
-
-            if (documento.Prontuario != null && new Guid(collection["Prontuario"]) != new Guid("{00000000-0000-0000-0000-000000000000}"))
-                documento.Prontuario.ProntuarioId = new Guid(collection["Prontuario"]);
-
-            if (documento.Pet != null && new Guid(collection["Pet"]) != new Guid("{00000000-0000-0000-0000-000000000000}"))
-                documento.Pet.PetId = new Guid(collection["Pet"]);
-
-            documento.Nome = collection["Nome"];
-            documento.Descricao = collection["Descricao"];
-            documento.Quantidade = Convert.ToInt32(collection["Quantidade"]);
-            documento.TipoDocumento = EnumDescriptionHelp.ParseEnum<ETipoDocumento>(collection["Documento.TipoDocumento"]);
-            documento.DataInicio = Convert.ToDateTime(collection["DataInicio"]);
-            documento.DataFim = Convert.ToDateTime(collection["DataFim"]);
-
-            var retorno = await ApiUpdate<Documento>(_sessionToken.Token, documento.Id, documento, "Documento");
-
-            if (retorno == null)
+            catch (Exception ex)
             {
-                ViewData["messenger"] = "Houve Um erro durante o update !";
-                return RedirectToAction("Listar", new { Id = id });
+                SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", ex.ToString());
+                return View("Home", "Home");
             }
-            ViewData["messenger"] = "Alterado com Sucesso !";
-
-
-            return RedirectToAction("Editar", new { Id = id });
 
         }
 
@@ -193,13 +245,26 @@ namespace PetLabWeb.Controllers
         [Route("Documento/ExcluirDocumento/{Id:guid}")]
         public async Task<IActionResult> ExcluirDocumento(Guid id)
         {
-            Documento documento = await ApiFindById<Documento>(_sessionToken.Token, id, "Documento");
-            documento.Anexo = null;
-            documento.TipoAnexo = null;
+            try
+            {
+                Documento documento = await ApiFindById<Documento>(_sessionToken.Token, id, "Documento");
+                documento.Anexo = null;
+                documento.TipoAnexo = null;
 
-            var retorno = await ApiUpdate<Documento>(_sessionToken.Token, documento.Id, documento, "Documento");
+                var retorno = await ApiUpdate<Documento>(_sessionToken.Token, documento.Id, documento, "Documento");
 
-            return RedirectToAction("Editar", new { Id = documento.Id });
+                if (retorno != null)
+                    SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "Documento Anexo excluido com sucesso !");
+                else
+                    SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "Houve uma falhar ao excluir o documento anexo !");
+
+                return RedirectToAction("Editar", new { Id = documento.Id });
+            }
+            catch (Exception ex)
+            {
+                SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", ex.ToString());
+                return View("Home", "Home");
+            }
         }
     }
 }

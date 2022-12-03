@@ -1,6 +1,7 @@
 ﻿using Domain.Entidade;
 using Domain.Entidade.Request;
 using Domain.Entidade.View;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -28,8 +29,26 @@ namespace PetLabWeb.Controllers
             _sessionToken = SessionExtensionsHelp.GetObject<TokenCode>(httpContextAccessor.HttpContext.Session, "Token");
         }
 
+
+
+        [HttpPost]
+        [Route("Agendamento/BuscarPerfilTutor")]
+        public async Task<IActionResult> BuscarPerfilTutor(IFormCollection collection)
+        {
+
+            var Perfil = await ApiFindById<Usuario>(_sessionToken.Token, collection["Email"].ToString().Trim(), "Usuario");
+            if (Perfil == null)
+            {
+                SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "Usuário não encontrado !");
+                return RedirectToAction("Listar", new { Id = _sessionUserSign.Id });
+            }
+            else
+                return RedirectToAction("Detalhes", "Perfil", new { Id = Perfil.Id });
+        }
+
         [HttpGet]
         [Route("Agendamento/Listar/{Id:guid}")]
+        [Authorize]
         public async Task<IActionResult> Listar(Guid id)
         {
             var retorno = await ApiFindById<ViewModel>(_sessionToken.Token, id, "Agendamento/GetAllAgendamentoById");
@@ -41,14 +60,14 @@ namespace PetLabWeb.Controllers
         public async Task<IActionResult> Criar(Guid id, Guid idTutor)
         {
             var pets = await ApiFindAllById<Pet>(_sessionToken.Token, idTutor, "Pet/GetAllPetsById");
-            var Medico = await ApiFindById<Usuario>(_sessionToken.Token, id, "Usuario");
-            var Tutor = await ApiFindById<Usuario>(_sessionToken.Token, idTutor, "Usuario");
+            var medico = await ApiFindById<Usuario>(_sessionToken.Token, id, "Usuario");
+            var tutor = await ApiFindById<Usuario>(_sessionToken.Token, idTutor, "Usuario");
             ViewModel agendamento = new ViewModel()
             {
                 ListaPets = pets,
-                Usuario = Tutor
+                Usuario = tutor
             };
-            agendamento.ListaMedicos.Add(Medico);
+            agendamento.ListaMedicos.Add(medico);
 
             return View(agendamento);
         }
@@ -58,30 +77,39 @@ namespace PetLabWeb.Controllers
         [Route("Agendamento/Criar/{Id:guid}/{IdTutor:guid}")]
         public async Task<IActionResult> Criar(Guid id, Guid idTutor, IFormCollection collection)
         {
-
-            var pet = await ApiFindById<Pet>(_sessionToken.Token, collection["ListaPets"], "Pet");
-            var Medico = await ApiFindById<Usuario>(_sessionToken.Token, collection["MedicoResponsavel"], "Usuario");
-
-            if (pet == null)
+            try
             {
-                ViewData["MensagemRetorno"] = "Pet não encontrado";
-                return RedirectToAction("Criar", new { id = Medico.Id, idTutor });
+                var pet = await ApiFindById<Pet>(_sessionToken.Token, collection["ListaPets"], "Pet");
+                var Medico = await ApiFindById<Usuario>(_sessionToken.Token, collection["MedicoResponsavel"], "Usuario");
+
+                if (pet == null)
+                {
+                    SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "Pet não encontrado");
+                    return RedirectToAction("Criar", new { id = Medico.Id, idTutor });
+                }
+
+                CreateAgendamento agendamento = new CreateAgendamento()
+                {
+                    Data = Convert.ToDateTime(collection["Data"])
+                };
+
+                var retorno = await ApiSaveAutorize<Agendamento>(_sessionToken.Token, agendamento, $"Agendamento/{Medico.Id}/{pet.Id}");
+
+                if (retorno == null)
+                {
+                    SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "Houve Um erro ao criar o agendamento !");
+                    return RedirectToAction("Criar", new { id = Medico.Id, idTutor });
+                }
+
+                SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "Agendamento Criado com Sucesso!");
+
+                return RedirectToAction("Listar", new { id = _sessionUserSign.Id });
             }
-
-            CreateAgendamento agendamento = new CreateAgendamento()
+            catch (Exception ex)
             {
-                Data = Convert.ToDateTime(collection["Data"])
-            };
-
-            var retorno = await ApiSaveAutorize<Agendamento>(_sessionToken.Token, agendamento, $"Agendamento/{Medico.Id}/{pet.Id}");
-
-            if (retorno == null)
-            {
-                ViewData["MensagemRetorno"] = "Houve Um erro ao criar o agendamento !";
-                return RedirectToAction("Criar", new { id = Medico.Id, idTutor });
+                SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", ex.ToString());
+                return View("Home", "Home");
             }
-
-            return RedirectToAction("Listar", new { id = _sessionUserSign.Id });
 
         }
 
@@ -98,13 +126,27 @@ namespace PetLabWeb.Controllers
         [Route("Agendamento/Deletar/{Id:guid}")]
         public async Task<IActionResult> Deletar(Guid id, IFormCollection collection)
         {
-            if (new Guid(collection["Id"]) != id)
+            try
             {
-                ViewData["messenger"] = "Houve Um erro durante a exclusão !";
-                return View(new Guid(collection["Id"]));
+                if (new Guid(collection["Id"]) != id)
+                {
+                    SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "Houve Um erro durante a exclusão !");
+                    return View(new Guid(collection["Id"]));
+                }
+                var agendamento = await ApiRemove(_sessionToken.Token, id, "Agendamento");
+
+                if (agendamento != null)
+                    SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "Agendamento criado com sucesso !");
+                else
+                    SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "Houve uma falhar ao excluir o agendamento !");
+
+                return RedirectToAction("Listar", new { id = _sessionUserSign.Id });
             }
-            var agendamento = await ApiRemove(_sessionToken.Token, id, "Agendamento");
-            return RedirectToAction("Listar", new { id = _sessionUserSign.Id });
+            catch (Exception ex)
+            {
+                SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", ex.ToString());
+                return View("Home", "Home");
+            }
         }
 
         [HttpGet]
@@ -127,30 +169,37 @@ namespace PetLabWeb.Controllers
         [Route("Agendamento/Editar/{Id:guid}")]
         public async Task<IActionResult> Editar(Guid id, IFormCollection collection)
         {
-            var usuario = await ApiFindById<Usuario>(_sessionToken.Token, _sessionUserSign.Id, "Usuario");
-            Agendamento agendamento = await ApiFindById<Agendamento>(_sessionToken.Token, id, "Agendamento");
-
-            agendamento.Data = Convert.ToDateTime(collection["Data"]);
-
-            if (usuario.TipoUsuario == ETipoUsuario.Medico)
+            try
             {
-                agendamento.Comentario = collection["Comentario"];
-                agendamento.Status = EnumDescriptionHelp.ParseEnum<EStatus>(collection["Agendamento.Status"]);
-            }
+                var usuario = await ApiFindById<Usuario>(_sessionToken.Token, _sessionUserSign.Id, "Usuario");
+                Agendamento agendamento = await ApiFindById<Agendamento>(_sessionToken.Token, id, "Agendamento");
 
-            if (agendamento.Pet != null && new Guid(collection["Pet"]) != new Guid("{00000000-0000-0000-0000-000000000000}"))
-                agendamento.Pet.PetId = new Guid(collection["Pet"]);
+                agendamento.Data = Convert.ToDateTime(collection["Data"]);
 
-            var retorno = await ApiUpdate<Agendamento>(_sessionToken.Token, agendamento.Id, agendamento, "Agendamento");
+                if (usuario.TipoUsuario == ETipoUsuario.Medico)
+                {
+                    agendamento.Comentario = collection["Comentario"];
+                    agendamento.Status = EnumDescriptionHelp.ParseEnum<EStatus>(collection["Agendamento.Status"]);
+                }
 
-            if (retorno == null)
-            {
-                ViewData["messenger"] = "Houve Um erro durante o update !";
+                if (agendamento.Pet != null && new Guid(collection["Pet"]) != new Guid("{00000000-0000-0000-0000-000000000000}"))
+                    agendamento.Pet.PetId = new Guid(collection["Pet"]);
+
+                var retorno = await ApiUpdate<Agendamento>(_sessionToken.Token, agendamento.Id, agendamento, "Agendamento");
+
+                if (retorno == null)
+                {
+                    SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "Houve Um erro durante o update !");
+                    return RedirectToAction("Editar", new { Id = agendamento.Id });
+                }
+                SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "Alterado com Sucesso !");
                 return RedirectToAction("Editar", new { Id = agendamento.Id });
             }
-            ViewData["messenger"] = "Alterado com Sucesso !";
-
-            return RedirectToAction("Editar", new { Id = agendamento.Id });
+            catch (Exception ex)
+            {
+                SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", ex.ToString());
+                return View("Home", "Home");
+            }
 
         }
 

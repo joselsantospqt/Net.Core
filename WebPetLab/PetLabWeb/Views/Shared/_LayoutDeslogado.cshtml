@@ -1,4 +1,5 @@
-﻿<!doctype html>
+﻿@{var Mensagem = SessionExtensionsHelp.GetObject<string>(this.Context.Session, "Mensagem");}
+<!doctype html>
 
 <html lang="pt-br" class="light-theme">
 
@@ -52,22 +53,22 @@
                         <div class="collapse navbar-collapse" id="navbarNav">
                             <ul class="navbar-nav">
                                 <li class="nav-item active">
-                                    <a class="nav-link"  asp-controller="Autenticacao" asp-action="Home">Home</a>
+                                    <a class="nav-link" asp-controller="Autenticacao" asp-action="Home">Home</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link"  asp-controller="Autenticacao" asp-action="Sobre">Sobre</a>
+                                    <a class="nav-link" asp-controller="Autenticacao" asp-action="Sobre">Sobre</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link"  asp-controller="Autenticacao" asp-action="Servicos">Serviços</a>
+                                    <a class="nav-link" asp-controller="Autenticacao" asp-action="Servicos">Serviços</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link"  asp-controller="Autenticacao" asp-action="Contatos">Contatos</a>
+                                    <a class="nav-link" asp-controller="Autenticacao" asp-action="Contatos">Contatos</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link"  asp-controller="Autenticacao" asp-action="Parceiros">Parceiros</a>
+                                    <a class="nav-link" asp-controller="Autenticacao" asp-action="Parceiros">Parceiros</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link"  asp-controller="Autenticacao" asp-action="Login">Login</a>
+                                    <a class="nav-link" asp-controller="Autenticacao" asp-action="Login">Login</a>
                                 </li>
                             </ul>
                         </div>
@@ -80,8 +81,20 @@
             <div class="wrapper">
                 @RenderBody()
             </div>
-            <div>
-
+            <div id="myModal" class="modal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Mensagem:</h5>
+                        </div>
+                        <div class="modal-body">
+                            <p class="fw-bold">@Mensagem</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="btnModal" type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <footer class="bg-white border-top p-3 text-center fixed-bottom">
@@ -97,11 +110,40 @@
         <script src="~/assets/js/bootstrap.bundle.min.js" asp-fallback-src="~/assets/js/bootstrap.bundle.min.js" asp-fallback-test="window.jQuery"></script>
         <script src="~/assets/js/app.js" asp-fallback-src="~/assets/js/app.js" asp-fallback-test="window.jQuery"></script>
 
+        @if (Mensagem != null)
+        {
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $('#myModal').modal('toggle');
+                })
+
+                $("#btnModal").click(function () {
+                    $('#myModal').modal('toggle');
+                });
+
+            </script>
+            SessionExtensionsHelp.RemoveObject(this.Context.Session, "Mensagem");
+        }
     </environment>
     <environment exclude="Development">
         <script src="~/assets/js/jquery.min.js" asp-fallback-src="~/assets/js/jquery.min.js" asp-fallback-test="window.jQuery"></script>
         <script src="~/assets/js/bootstrap.bundle.min.js" asp-fallback-src="~/assets/js/bootstrap.bundle.min.js" asp-fallback-test="window.jQuery"></script>
         <script src="~/assets/js/app.js" asp-fallback-src="~/assets/js/app.js" asp-fallback-test="window.jQuery"></script>
+
+        @if (Mensagem != null)
+        {
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $('#myModal').modal('toggle');
+                })
+
+                $("#btnModal").click(function () {
+                    $('#myModal').modal('toggle');
+                });
+
+            </script>
+            SessionExtensionsHelp.RemoveObject(this.Context.Session, "Mensagem");
+        }
     </environment>
 
     @RenderSection("scripts", required: false)

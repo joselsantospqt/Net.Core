@@ -3,6 +3,8 @@
 @{
     ViewData["Title"] = "Listar Agendamento";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var UsuarioPerfil = SessionExtensionsHelp.GetObject<ETipoUsuario>(this.Context.Session, "UsuarioPerfil");
+
 }
 
 
@@ -16,19 +18,33 @@
                 <div class="card-body">
                     <h5 class="mb-0">@ViewData["Title"]</h5>
                     <hr>
-
-                    <div class="col-10 col-lg-9 col-xl-9 col-xxl-9 d-flex justify-content-between mx-auto">
-                        <a asp-controller="Perfil" asp-action="Medicos">
-                            <div>
-                                <h5 class="border radius-10 p-3 primary-dc"><i class="bi bi-people-fill primary-dc"></i>Veterinários</h5>
-                            </div>
-                        </a>
-                        <div>
-                            <a asp-controller="Perfil" asp-action="Medicos">
-                                <h5 class="border radius-10 p-3 primary-dc"><i class="bi bi-plus primary-dc"></i>Novo Agendamento</h5>
-                            </a>
+                    @if (UsuarioPerfil == ETipoUsuario.Medico)
+                    {
+                        <div class="col-10 col-lg-9 col-xl-9 col-xxl-9 justify-content-start mx-auto">
+                            <h5 class="mb-0">Pesquisar Usuário por E-mail:</h5>
+                            <form asp-action="BuscarPerfilTutor" enctype="multipart/form-data" method="post" class="d-flex">
+                                <input asp-for="Usuario.Email" name="Email" value=" " class="form-control" />
+                                <span asp-validation-for="Usuario.Email" class="text-danger"></span>
+                                <input type="submit" value="Pesquisar" class="btn btn-warning" />
+                            </form>
                         </div>
-                    </div>
+                    }
+                    else
+                    {
+
+                        <div class="col-10 col-lg-9 col-xl-9 col-xxl-9 d-flex justify-content-between mx-auto">
+                            <a asp-controller="Perfil" asp-action="Medicos">
+                                <div>
+                                    <h5 class="border radius-10 p-3 primary-dc"><i class="bi bi-people-fill primary-dc"></i>Veterinários</h5>
+                                </div>
+                            </a>
+                            <div>
+                                <a asp-controller="Perfil" asp-action="Medicos">
+                                    <h5 class="border radius-10 p-3 primary-dc"><i class="bi bi-plus primary-dc"></i>Novo Agendamento</h5>
+                                </a>
+                            </div>
+                        </div>
+                    }
 
                     <div class="card shadow-none border">
                         <div class="card-body">
@@ -57,7 +73,7 @@
                                                         </th>
                                                         <th>
                                                             @Html.DisplayNameFor(model => model.Agendamentos.First().Pet)
-                                                        </th>     
+                                                        </th>
                                                         <th>
                                                             @Html.DisplayNameFor(model => model.Agendamentos.First().MedicoResponsavel)
                                                         </th>
@@ -69,29 +85,30 @@
                                                     @if (Model != null)
                                                         @foreach (var item in Model.Agendamentos)
                                                         {
-                                                    <tr>
-                                                        <td>
-                                                            <div class="custom-control">
-                                                                @Html.Label("false", Model.Agendamentos.ToList().IndexOf(item).ToString(), new { @class = "custom-control-label", @for = $"customCheck{Model.Agendamentos.ToList().IndexOf(item).ToString()}" })
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            @Html.DisplayFor(modelItem => item.Data)
-                                                        </td>
-                                                        <td>
-                                                            @Html.DisplayFor(modelItem => item.Status)
-                                                        </td>
-                                                        <td>
-                                                            @Html.DisplayFor(modelItem => item.Comentario)
-                                                        </td>
-                                                        <td> @Html.DisplayFor(modelItem => Model.ListaPets.Where(x => x.Id.Equals(item.Pet.PetId)).First().Nome)</td>
-                                                        <td> @Html.DisplayFor(modelItem => Model.ListaMedicos.Where(x => x.Id.Equals(item.MedicoResponsavel.UsuarioId)).First().Nome)</td>
-                                                        <td>
-                                                            @Html.ActionLink("", "Editar", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-pen yellow", data_toggle = "tooltip", title = "Editar" }) |
-                                                            @Html.ActionLink("", "Deletar", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-trash yellow", data_toggle = "tooltip", title = "Deletar" })|
-                                                            @Html.ActionLink("", "Detalhes", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-inbox yellow", data_toggle = "tooltip", title = "Detalhes" })
-                                                        </td>
-                                                    </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="custom-control">
+                                                                        @Html.Label("false", Model.Agendamentos.ToList().IndexOf(item).ToString(), new { @class = "custom-control-label", @for = $"customCheck{Model.Agendamentos.ToList().IndexOf(item).ToString()}" })
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.Data)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.Status)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.Comentario)
+                                                                </td>
+                                                                <td> @Html.DisplayFor(modelItem => Model.ListaPets.Where(x => x.Id.Equals(item.Pet.PetId)).First().Nome)</td>
+                                                                <td> @Html.DisplayFor(modelItem => Model.ListaMedicos.Where(x => x.Id.Equals(item.MedicoResponsavel.UsuarioId)).First().Nome)</td>
+                                                                <td>
+                                                                    @if (UsuarioPerfil == ETipoUsuario.Medico)
+                                                                    {@Html.ActionLink("", "Editar", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-pen yellow", data_toggle = "tooltip", title = "Editar" }) <span>|</span>}
+                                                                    @Html.ActionLink("", "Deletar", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-trash yellow", data_toggle = "tooltip", title = "Deletar" })|
+                                                                    @Html.ActionLink("", "Detalhes", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-inbox yellow", data_toggle = "tooltip", title = "Detalhes" })
+                                                                </td>
+                                                            </tr>
                                                         }
                                                 </tbody>
                                             </table>

@@ -6,6 +6,7 @@
     ViewData["Title"] = "Listar Prontuários";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var UserSign = SessionExtensionsHelp.GetObject<IdentityUser>(this.Context.Session, "UserSign");
+    var UsuarioPerfil = SessionExtensionsHelp.GetObject<ETipoUsuario>(this.Context.Session, "UsuarioPerfil");
     var pessoaId = UserSign.Id;
 }
 
@@ -20,27 +21,26 @@
                 <div class="card-body">
                     <h5 class="mb-0">@ViewData["Title"]</h5>
                     <hr>
-
-                    <div class="col-10 col-lg-9 col-xl-9 col-xxl-9 d-flex justify-content-between mx-auto">
-                        <a asp-controller="Perfil" asp-action="Medicos">
-                            <div>
-                                <h5 class="border radius-10 p-3 primary-dc"><i class="bi bi-people-fill primary-dc"></i>Veterinários</h5>
-                            </div>
-                        </a>
-                        <div>
-                            <a asp-controller="Agendamento" asp-action="Listar" asp-route-id="@pessoaId">
-                                <h5 class="border radius-10 p-3 primary-dc"><i class="bi bi-plus primary-dc"></i>Novo Agendamento</h5>
+                    @if (UsuarioPerfil != ETipoUsuario.Medico)
+                    {
+                        <div class="col-10 col-lg-9 col-xl-9 col-xxl-9 d-flex justify-content-between mx-auto">
+                            <a asp-controller="Perfil" asp-action="Medicos">
+                                <div>
+                                    <h5 class="border radius-10 p-3 primary-dc"><i class="bi bi-people-fill primary-dc"></i>Veterinários</h5>
+                                </div>
                             </a>
+                            <div>
+                                <a asp-controller="Agendamento" asp-action="Listar" asp-route-id="@pessoaId">
+                                    <h5 class="border radius-10 p-3 primary-dc"><i class="bi bi-plus primary-dc"></i>Novo Agendamento</h5>
+                                </a>
+                            </div>
                         </div>
-                    </div>
+                    }
 
                     <div class="card shadow-none border">
                         <div class="card-body">
-                            @*PETS*@
                             <div class="card shadow-sm border-0 overflow-hidden">
                                 <div class="card-body">
-                                    <h5 class="mb-0">@ViewData["Title"]</h5>
-                                    <hr>
                                     <div class="card shadow-none border">
                                         <div class="card-header">
                                             <h6 class="mb-0">Informação</h6>

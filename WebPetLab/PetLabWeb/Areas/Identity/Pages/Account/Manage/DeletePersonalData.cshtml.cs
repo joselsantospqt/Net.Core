@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using PetLabWeb.Controllers;
 
 namespace PetLabWeb.Areas.Identity.Pages.Account.Manage
 {

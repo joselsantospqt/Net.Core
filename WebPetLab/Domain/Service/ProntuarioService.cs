@@ -28,8 +28,8 @@ namespace Domain.Service
         }
 
         public Prontuario CreateProntuario(
-            Guid idPet,
             Guid idMedico,
+            Guid idPet,
             string resumo,
             string descricao
            )
@@ -58,6 +58,8 @@ namespace Domain.Service
                 prontuario.Data = ProntuarioUpdate.Data;
             if (ProntuarioUpdate.Documentos.Count > 0)
                 prontuario.Documentos = ProntuarioUpdate.Documentos;
+            if (ProntuarioUpdate.Pet.PetId != prontuario.Pet.PetId)
+                prontuario.Pet.PetId = ProntuarioUpdate.Pet.PetId;
 
             RepositorioProntuario.SaveUpdate(prontuario);
 

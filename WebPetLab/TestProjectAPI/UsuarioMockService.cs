@@ -29,7 +29,7 @@ namespace TestProjectAPI
             usuario.DataNascimento = dataDeNascimento;
             usuario.Email = email;
             usuario.Senha = senha;
-            usuario.ImagemUrlusuario = "Perfil_default.png";
+            //usuario.ImagemUrlusuario = "Perfil_default.png";
             usuario.CreatedAt = DateTime.UtcNow;
             usuario.UpdatedAt = new DateTime();
 

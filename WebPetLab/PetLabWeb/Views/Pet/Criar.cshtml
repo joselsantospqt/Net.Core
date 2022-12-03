@@ -5,7 +5,14 @@
 @{
     ViewData["Title"] = "Criar Pet";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var UsuarioPerfil = SessionExtensionsHelp.GetObject<ETipoUsuario>(this.Context.Session, "UsuarioPerfil");
+
     List<SelectListItem> listItems = new List<SelectListItem>();
+    listItems.Add(new SelectListItem
+    {
+        Text = "-- Selecione --",
+        Value = new Guid("{00000000-0000-0000-0000-000000000000}").ToString()
+    });
     foreach (ETipoEspecie item in (ETipoEspecie[])Enum.GetValues(typeof(ETipoEspecie)))
     {
         listItems.Add(new SelectListItem
@@ -54,7 +61,10 @@
                                         </div>
                                         <br />
                                     </div>
-                                    <input type="submit" value="Salvar" class="btn btn-primary" />
+                                    @if (UsuarioPerfil != ETipoUsuario.Medico)
+                                    {
+                                        <input type="submit" value="Salvar" class="btn btn-primary" />
+                                    }
                                 </div>
                             </form>
                         </div>

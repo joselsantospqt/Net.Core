@@ -58,6 +58,7 @@ namespace Domain.Entidade
 
         [Display(Name = "Senha")]
         public string Senha { get; set; }
+        [NotMapped]
         [Display(Name = "Imagem do Usuario")]
         public string url_documento { get; set; }
         public DateTime CreatedAt { get; set; }

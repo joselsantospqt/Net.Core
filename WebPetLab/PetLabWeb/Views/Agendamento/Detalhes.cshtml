@@ -61,7 +61,11 @@
 
                                 @if (UsuarioPerfil == ETipoUsuario.Medico)
                                 {
-                                    <a asp-action="Detalhes" asp-controller="Pet" asp-route-id="@pessoaId" class="btn btn-primary"><i class="bi-sharp bi-solid bi-arrow-bar-left"></i></a>
+                                    <a asp-action="Detalhes" asp-controller="Pet" asp-route-id="@Model.Pet.Id" class="btn btn-warning">Abrir Detalhes do Pet</a>
+                                }
+                                else
+                                {
+                                    <a asp-action="DetalhesMedico" asp-controller="Perfil" asp-route-id="@Model.Agendamento.MedicoResponsavel.UsuarioId" class="btn btn-warning">Abrir Detalhes do Médico</a>
                                 }
                             </div>
                         </div>

@@ -70,7 +70,7 @@
                                 <div class="form-group">
                                     <label asp-for="Pet" class="form-label"></label>
                                     @Html.DropDownListFor(model => model.Pet, listItemsPets, new { @class = "form-control", data_toggle = "tooltip", title = "Pets", name = "Pet" })
-                                    <span asp-validation-for="ListaPets" class="text-danger"></span>
+                                    <span asp-validation-for="Pet" class="text-danger"></span>
                                 </div>
                                 @if (UsuarioPerfil == ETipoUsuario.Medico)
                                 {

@@ -174,17 +174,26 @@ namespace PetLabAPI.Controllers
             {
 
                 Detalhes.ListaMedicos.Add(usuario);
-
+                Detalhes.Agendamentos = _ServiceAgendamento.GetAllByIdMedico(usuario.Id).ToList();
                 foreach (var item in Detalhes.Usuario.Agendamentos)
-                {
-                    Detalhes.Agendamentos.Add(_ServiceAgendamento.GetAgendamentoById(item.AgendamentoId));
                     Detalhes.Agendamentos.First(x => x.Id == item.AgendamentoId).MedicoResponsavel = item;
+
+                foreach (var item in usuario.Prontuarios)
+                {
+                    Detalhes.Prontuarios.Add(_ServiceProntuario.GetProntuarioById(item.ProntuarioId));
+                    Detalhes.Prontuarios.First(x => x.Id == item.ProntuarioId).Medico = item;
+
                 }
+
+                foreach (var item in Detalhes.Prontuarios)
+                    if (Detalhes.ListaPets.Where(x => x.Id == item.Pet.PetId).Count() == 0)
+                        Detalhes.ListaPets.Add(_ServicePet.GetPetById(item.Pet.PetId));
 
                 foreach (var item in Detalhes.Agendamentos)
-                {
-                    Detalhes.ListaPets.Add(_ServicePet.GetPetById(item.Pet.PetId));
-                }
+                    if (Detalhes.ListaPets.Where(x => x.Id == item.Pet.PetId).Count() == 0)
+                        Detalhes.ListaPets.Add(_ServicePet.GetPetById(item.Pet.PetId));
+
+
             }
 
             if (Detalhes == null)

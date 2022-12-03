@@ -13,6 +13,5 @@ namespace Domain.Entidade
         Tutor,
         [Description("Médico")]
         Medico
-    
     }
 }

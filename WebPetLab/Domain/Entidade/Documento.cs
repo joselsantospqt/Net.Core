@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,6 +43,7 @@ namespace Domain.Entidade
         [DataType(DataType.DateTime)]
         [Display(Name = "Data Fim")]
         public DateTime DataFim { get; set; }
+        [NotMapped]
         [Display(Name = "Imagem do Documento")]
         public string url_documento { get; set; }
         public ProntuarioDocumento Prontuario { get; set; }
