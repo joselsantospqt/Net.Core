@@ -1542,6 +1542,19 @@ thead.table-warning th:last-of-type {
     }
 }
 
+@media screen and (max-width:990px) {
+
+    .navbar-mobile {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        flex-direction: column !important;
+    }
+
+    .navbar-toggler {
+        margin: 2em !important;
+    }
+}
+
 @media screen and (max-width:767px) {
     .top-header .navbar .dropdown-menu::after {
         display: none

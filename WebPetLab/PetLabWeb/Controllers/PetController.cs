@@ -78,6 +78,11 @@ namespace PetLabWeb.Controllers
                     item.CopyTo(ms);
                     ms.Position = 0;
                     pet.TipoAnexo = item.ContentType;
+                    if (!item.ContentType.Contains("image"))
+                    {
+                        SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "O perfil pet apenas aceita imagens !");
+                        return View("Criar");
+                    }
                 }
 
                 if (existeImagem)
@@ -187,6 +192,11 @@ namespace PetLabWeb.Controllers
                     item.CopyTo(ms);
                     ms.Position = 0;
                     pet.TipoAnexo = item.ContentType;
+                    if (!item.ContentType.Contains("image"))
+                    {
+                        SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "O perfil pet apenas aceita imagens !");
+                        return View("Editar", new { id = pet.Id });
+                    }
                 }
 
                 if (existeImagem)

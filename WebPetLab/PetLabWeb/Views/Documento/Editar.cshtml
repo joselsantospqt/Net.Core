@@ -121,16 +121,26 @@
                                         <label asp-for="Documento.url_documento" class="col-sm-12 col-form-label">Foto do Pet:</label>
                                         <div class="card card-image">
                                             <div class="text-white text-center d-flex align-items-center py-5 px-4 h-100" style="background-color:#e7e7e7 !important; padding-bottom:2.7em !important;">
-                                                <div>
-                                                    @if (Model.Documento.Anexo != null && Model.Documento.TipoAnexo != null)
+
+                                                @if (Model.Documento.Anexo != null && Model.Documento.TipoAnexo != null)
+                                                {
+                                                    if (Model.Documento.TipoAnexo.Contains("image") == true)
                                                     {
                                                         <img src="data:image;base64,@System.Convert.ToBase64String(Model.Documento.Anexo)" class="img-fluid w-100 image-rotate" />
                                                     }
                                                     else
                                                     {
-                                                        <img src="~/assets/img/Image_not_available.png" class="img-fluid w-100 image-rotate" />
+                                                        <object>
+                                                            <embed id="objID" class="img-fluid" style=" width:100em; height:50em;" type="text/html" src="data:@Model.Documento.TipoAnexo;base64,@System.Convert.ToBase64String(Model.Documento.Anexo)" />
+                                                        </object>
                                                     }
-                                                </div>
+
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/assets/img/Image_not_available.png" class="img-fluid w-100 image-rotate" />
+                                                }
+
                                             </div>
                                         </div>
 

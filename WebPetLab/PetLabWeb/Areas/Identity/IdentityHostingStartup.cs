@@ -17,7 +17,7 @@ namespace PetLabWeb.Areas.Identity
             builder.ConfigureServices((context, services) => {
                 services.AddDbContext<IdentidadeContext>(options =>
                     options.UseSqlServer(
-                        context.Configuration.GetSection("Logging").GetSection("ConnectionStrings")["IdentidadeContextConnection"]));
+                        context.Configuration.GetSection("Logging").GetSection("ConnectionStrings")["dbLocal"]));
 
                 services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
                     .AddEntityFrameworkStores<IdentidadeContext>();

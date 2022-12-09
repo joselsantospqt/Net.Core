@@ -45,7 +45,7 @@
                                         <div class="card-header">
                                             <h6 class="mb-0">Informação</h6>
                                         </div>
-                                        <div class="card-body">
+                                        <div class="card-body table-responsive">
                                             <table class="table table-striped table-hover">
                                                 <thead class="table-warning">
                                                     <tr>
@@ -98,8 +98,13 @@
 </main>
 
 
-<script type="text/javascript">
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    })
-</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+}

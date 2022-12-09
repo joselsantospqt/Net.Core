@@ -71,6 +71,11 @@ namespace PetLabWeb.Controllers
                     item.CopyTo(ms);
                     ms.Position = 0;
                     usuario.TipoAnexo = item.ContentType;
+                    if (!item.ContentType.Contains("image"))
+                    {
+                        SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "O perfil usuário apenas aceita imagens !");
+                        return View("Editar", new { id = usuario.Id });
+                    }
                 }
 
                 if (existeImagem)
