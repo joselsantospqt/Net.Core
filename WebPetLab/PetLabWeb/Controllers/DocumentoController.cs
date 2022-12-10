@@ -95,7 +95,7 @@ namespace PetLabWeb.Controllers
                 if (existeImagem)
                     documento.Anexo = ms.ToArray();
 
-                if (new Guid(collection["Prontuarios"]) == new Guid("{00000000-0000-0000-0000-000000000000}"))
+                if (new Guid(collection["Prontuarios"]) != new Guid("{00000000-0000-0000-0000-000000000000}"))
                     idProntuario = new Guid(collection["Prontuarios"]);
 
                 if (new Guid(collection["ListaPets"]) == new Guid("{00000000-0000-0000-0000-000000000000}"))

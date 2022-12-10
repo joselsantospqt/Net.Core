@@ -89,8 +89,15 @@ namespace Domain.Service
             if (DocumentoUpdate.Anexo != documento.Anexo)
                 documento.Anexo = DocumentoUpdate.Anexo;
 
-            if (DocumentoUpdate.Prontuario.ProntuarioId != documento.Prontuario.ProntuarioId)
+            if (DocumentoUpdate.Prontuario.ProntuarioId != documento.Prontuario.ProntuarioId && documento.Prontuario.Id == 0)
+            {
+                documento.AddProntuario(DocumentoUpdate.Prontuario.ProntuarioId);
+            }
+
+            if (DocumentoUpdate.Prontuario.ProntuarioId != documento.Prontuario.ProntuarioId && documento.Prontuario.Id != 0)
+            {
                 documento.Prontuario.ProntuarioId = DocumentoUpdate.Prontuario.ProntuarioId;
+            }
 
             if (DocumentoUpdate.Pet.PetId != documento.Pet.PetId)
                 documento.Pet.PetId = DocumentoUpdate.Pet.PetId;

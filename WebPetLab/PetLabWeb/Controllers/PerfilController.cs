@@ -121,29 +121,40 @@ namespace PetLabWeb.Controllers
             {
                 if (_sessionPerfilUsuario != ETipoUsuario.Medico)
                 {
+                    try
+                    {
 
-                    ViewModel usuario = await ApiFindById<ViewModel>(_sessionToken.Token, _sessionUserSign.Id, "Usuario/GetUsuarioDetalhes");
+                        ViewModel usuario = await ApiFindById<ViewModel>(_sessionToken.Token, _sessionUserSign.Id, "Usuario/GetUsuarioDetalhes");
 
-                    foreach (var item in usuario.Agendamentos)
-                    {
-                        await ApiRemove(_sessionToken.Token, item.Id, "Agendamento");
+                        foreach (var item in usuario.Agendamentos)
+                        {
+                            await ApiRemove(_sessionToken.Token, item.Id, "Agendamento");
+                        }
+                        foreach (var item in usuario.Documentos)
+                        {
+                            await ApiRemove(_sessionToken.Token, item.Id, "Documentos");
+                        }
+                        foreach (var item in usuario.Prontuarios)
+                        {
+                            await ApiRemove(_sessionToken.Token, item.Id, "Prontuario");
+                        }
+                        foreach (var item in usuario.ListaPets)
+                        {
+                            await ApiRemove(_sessionToken.Token, item.Id, "Pet");
+                        }
+
+                        var retorno = await ApiRemove(_sessionToken.Token, _sessionUserSign.Id, "Usuario");
+                        if (retorno.IsSuccessStatusCode)
+                        {
+                            SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "Usuário Excluido com sucesso !");
+                            return RedirectToAction("Delete", "Autenticacao");
+                        }
                     }
-                    foreach (var item in usuario.Documentos)
+                    catch (Exception ex)
                     {
-                        await ApiRemove(_sessionToken.Token, item.Id, "Documentos");
-                    }
-                    foreach (var item in usuario.Prontuarios)
-                    {
-                        await ApiRemove(_sessionToken.Token, item.Id, "Prontuario");
-                    }
-                    foreach (var item in usuario.ListaPets)
-                    {
-                        await ApiRemove(_sessionToken.Token, item.Id, "Pet");
+                        SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", ex.ToString());
                     }
 
-                    var retorno = await ApiRemove(_sessionToken.Token, _sessionUserSign.Id, "Usuario");
-                    if (retorno.IsSuccessStatusCode)
-                        return RedirectToAction("Delete", "Autenticacao");
                 }
                 else
                 {

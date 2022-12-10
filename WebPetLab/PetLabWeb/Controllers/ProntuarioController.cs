@@ -190,9 +190,21 @@ namespace PetLabWeb.Controllers
                 var retorno = await ApiUpdate<Prontuario>(_sessionToken.Token, prontuario.Id, prontuario, "Prontuario");
 
                 if (retorno == null)
-                    SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "Houve Um erro durante a exclusão !");
+                    SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "Houve Um erro durante a Edição !");
                 else
+                {
+                    List<Documento> documentos = new List<Documento>();
+                    if (prontuario.Pet != null && new Guid(collection["Pet"]) != new Guid("{00000000-0000-0000-0000-000000000000}"))
+                        foreach (var item in retorno.Documentos)
+                        {
+                            var documento = await ApiFindById<Documento>(_sessionToken.Token, item.DocumentoId, "Documento");
+                            documento.Pet.PetId = new Guid(collection["Pet"]);
+
+                            var retornoDocumento = await ApiUpdate<Documento>(_sessionToken.Token, documento.Id, documento, "Documento");
+                        }
+
                     SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "Alterado com Sucesso !");
+                }
 
                 return RedirectToAction("Detalhes", "Pet", new { id = retorno.Pet.PetId });
             }

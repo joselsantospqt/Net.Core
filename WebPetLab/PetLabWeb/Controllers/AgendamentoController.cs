@@ -136,7 +136,7 @@ namespace PetLabWeb.Controllers
                 var agendamento = await ApiRemove(_sessionToken.Token, id, "Agendamento");
 
                 if (agendamento != null)
-                    SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "Agendamento criado com sucesso !");
+                    SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "Agendamento Excluido com sucesso !");
                 else
                     SessionExtensionsHelp.SetObject(this.HttpContext.Session, "Mensagem", "Houve uma falhar ao excluir o agendamento !");
 

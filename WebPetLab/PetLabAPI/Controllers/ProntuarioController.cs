@@ -30,7 +30,7 @@ namespace PetLabAPI.Controllers
 
 
         [HttpGet("getAll")]
-        [Authorize]
+      
         public ActionResult GetAll()
         {
             var getAllPet = _ServiceProntuario.GetAll();
@@ -41,7 +41,7 @@ namespace PetLabAPI.Controllers
 
 
         [HttpGet("{id:Guid}")]
-        [Authorize]
+       
         public ActionResult GetById([FromRoute] Guid id)
         {
 
@@ -146,7 +146,6 @@ namespace PetLabAPI.Controllers
         }
 
         [HttpGet("GetProntuarioDetalhesById/{Id:Guid}")]
-        [Authorize]
         public ActionResult GetProntuarioDetalhesById([FromRoute] Guid id)
         {
             var prontuario = _ServiceProntuario.GetProntuarioById(id);

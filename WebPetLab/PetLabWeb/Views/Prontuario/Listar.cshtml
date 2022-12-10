@@ -90,7 +90,10 @@
                                                                 <td> @Html.DisplayFor(modelItem => Model.ListaPets.Where(x => x.Id.Equals(item.Pet.PetId)).First().Nome)</td>
                                                                 <td> @Html.DisplayFor(modelItem => Model.ListaMedicos.Where(x => x.Id.Equals(item.Medico.UsuarioId)).First().Nome)</td>
                                                                 <td>
-                                                                    @Html.ActionLink("", "Editar", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-pen yellow", data_toggle = "tooltip", title = "Editar" }) |
+                                                                    @if (UsuarioPerfil == ETipoUsuario.Medico)
+                                                                    {
+                                                                        @Html.ActionLink("", "Editar", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-pen yellow", data_toggle = "tooltip", title = "Editar" })
+                                                                    } |
                                                                     @Html.ActionLink("", "Deletar", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-trash yellow", data_toggle = "tooltip", title = "Deletar" })|
                                                                     @Html.ActionLink("", "Detalhes", new { id = item.Id }, new { @class = "bi-sharp bi-solid bi-inbox yellow", data_toggle = "tooltip", title = "Detalhes" })
                                                                 </td>
@@ -114,12 +117,12 @@
 </main>
 
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
-    <script type="text/javascript">
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip()
-        })
-    </script>
-}
+        <script type="text/javascript">
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            })
+        </script>
+    }
